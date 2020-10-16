@@ -1,0 +1,13 @@
+{% if features['area'] %}
+  {{ choose(['what', 'which']) }}
+  {{ thing_plural if plural else thing_singular }}
+  in {{ features['area'] }}
+  {{ 'are' if plural else 'is' }}
+  {{ optional('there') }}
+  {% include 'meta/around_query_proximity_prefix.jinja2' %}
+
+  {{ features['center_nwr'][0][1] }}
+  {{ optional('?') }}
+{% else %}
+  {% include 'common/name_what_in.jinja2' %}
+{% endif %}

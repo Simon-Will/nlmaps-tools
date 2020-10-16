@@ -1,3 +1,6 @@
+from collections import defaultdict
+from pathlib import Path
+import os
 import re
 import random
 
@@ -18,21 +21,19 @@ def merge_templates(templ1, templ2):
     }
 
 
-COMMON_TEMPLATES = {
-    'count': {
-        'common/count_are_there.jinja2', 'common/count_how_many.jinja2',
-        'common/count_in_how_many.jinja2',
-    },
-    'latlong': {
-        'common/latlong_where.jinja2', 'common/latlong_show.jinja2'
-    },
-}
+def collect_templates(subdir_basename):
+    templates = defaultdict(set)
+    subdir = (Path(os.path.dirname(os.path.abspath(__file__)))
+              / 'en_templates' / subdir_basename)
+    for template in os.listdir(subdir):
+        prefix = template.split('_')[0]
+        templates[prefix].add('{}/{}'.format(subdir_basename, template))
+    return templates
 
-IN_QUERY_ONLY_TEMPLATES = {
-    'count': {'in_query/count_does_have.jinja2'}
-}
 
-AROUND_QUERY_ONLY_TEMPLATES = {}
+COMMON_TEMPLATES = collect_templates('common')
+IN_QUERY_ONLY_TEMPLATES = collect_templates('in_query')
+AROUND_QUERY_ONLY_TEMPLATES = collect_templates('around_query')
 
 IN_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES, IN_QUERY_ONLY_TEMPLATES)
 AROUND_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES,
@@ -172,7 +173,7 @@ def generate_en(features):
 
 def main():
     thing_table = special_phrases_table()
-    for i in range(50):
+    for i in range(1000):
         features = generate_features(thing_table)
         print(generate_en(features))
         print(generate_mrl(features))

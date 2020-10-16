@@ -1,6 +1,7 @@
-{% include('meta/in_location.jinja2') %}{{ optional(',', 0.5) }}
 how {{ 'many' if plural else 'much' }}
 {{ thing_plural if plural else thing_singular }}
-{{ 'are' if plural else 'is' }}
-there
+does
+{% include 'meta/in_query_bare_location.jinja2' %}
+
+have
 {{ optional('?') }}

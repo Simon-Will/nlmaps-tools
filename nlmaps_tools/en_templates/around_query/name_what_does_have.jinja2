@@ -1,0 +1,29 @@
+{% if features['area'] and optional('separate_area_and_nwr') %}
+  {{ choose(['what', 'which']) }}
+  {{ thing_plural if plural else thing_singular }}
+  {% if choose('early_does') %}
+    does
+    {{ features['area'] }}
+    have
+    {% include 'meta/around_query_proximity_prefix.jinja2' %}
+
+    {{ features['center_nwr'][0][1] }}
+  {% else %}
+    {% include 'meta/around_query_proximity_prefix.jinja2' %}
+
+    {{ features['center_nwr'][0][1] }}
+    does
+    {{ features['area'] }}
+    have
+  {% endif %}
+  {{ optional('?') }}
+{% else %}
+  {# XXX: With cardinal direction set, this sounds like a simple query#}
+  {{ choose(['what', 'which']) }}
+  {{ thing_plural if plural else thing_singular }}
+  does
+  {{ features['area'] }}
+  have
+  {% include 'meta/around_query_proximity_standalone.jinja2' %}
+  {{ optional('?') }}
+{% endif %}

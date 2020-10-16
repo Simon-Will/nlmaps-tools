@@ -5,22 +5,19 @@ IN_LOCATION => in|near|close to|around LOCATION || card of PURE_LOCATION
 What are the names of all THING east of POI in AREA
 Show me THING in walking distance of 
 
-What PLURAL(THING) are there in LOCATION -> name
-Which PLURAL(THING) are there in LOCATION -> name
-In LOCATION, what PLURAL(THINGS) are there -> name
-What PLURAL(THING) in LOCATION -> name
-Which PLURAL(THING) in LOCATION -> name
-PLURAL(THING) in LOCATION -> name
-THING in LOCATION -> name
-Name PLURAL(THING) in LOCATION -> name
-Name (the|all) PLURAL(THING) in LOCATION -> name
-What PLURAL(THING) does LOCATION have -> name
-Which PLURAL(THING) does LOCATION have -> name
-What are the names …
-Give me the names …
-||| near -> DIST_INTOWN
-||| around -> DIST_OUTTOWN
-||| close to|in walking distance from|of -> WALKING_DIST
+✓What PLURAL(THING) are there in LOCATION -> name
+✓Which PLURAL(THING) are there in LOCATION -> name
+✓What PLURAL(THING) in LOCATION -> name
+✓Which PLURAL(THING) in LOCATION -> name
+✓PLURAL(THING) in LOCATION -> name
+✓THING in LOCATION -> name
+✓Name PLURAL(THING) in LOCATION -> name
+✓Name (the|all) PLURAL(THING) in LOCATION -> name
+✓What PLURAL(THING) does LOCATION have -> name
+✓Which PLURAL(THING) does LOCATION have -> name
+✓What are the names …
+✓Give me the names …
+✓In LOCATION, what PLURAL(THINGS) are there -> name
 
 Are there any PLURAL(THING) in LOCATION -> least
 Are there some PLURAL(THING) in LOCATION -> least
@@ -45,17 +42,21 @@ In LOCATION, is there any THING -> least
 ✓Give|Show me any PLURAL(THING) in LOCATION -> latlong
 ✓Where in LOCATION are there? (any|some)? PLURAL(THING) -> latlong
 ✓Where in LOCATION is there? (a|some)? THING -> latlong
-IN LOCATION, where is|are there …
+Where is any THING in LOCATION -> latlong
+✓IN LOCATION, where is|are there … -> latlong
 
 ✓How many PLURAL(THING) are there in LOCATION -> count
 ✓How many THING are there in LOCATION -> count
 ✓How much THING are there in LOCATION -> count
+✓How many THING does LOCATION have? ->
 ✓Are there many PLURAL(THING) in LOCATION -> count
 ✓Is there many PLURAL(THING) in LOCATION -> count
 ✓Is there much THING in LOCATION -> count
 ✓Does LOCATION have many PLURAL(THING) -> count
 ✓Does LOCATION have many THING -> count
 ✓In LOCATION, how many PLURAL(THING) are there -> count
+✓Does AREA have many THING near|around|in walking distance of REFERENCE -> count
+✓Does AROUND_LOCATION have many THING nearby|around it|within walking distance|within 1 km
 
 What|which THING is nearest|closest from|to|of LOCATION -> topx1
 What|which is the nearest|closest THING from|to|of LOCATION -> topx1

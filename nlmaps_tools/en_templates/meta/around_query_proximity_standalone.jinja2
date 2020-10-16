@@ -1,0 +1,21 @@
+{% if features['cardinal_direction'] %}
+  in {{ choose(['the', 'its']) }} {{ features['cardinal_direction'] }}
+{% elif sym_str_equal(features['maxdist'], 'DIST_INTOWN') %}
+  {{ choose(['nearby', 'closeby', 'near it']) }}
+{% elif sym_str_equal(features['maxdist'], 'DIST_OUTTOWN') %}
+  {{ choose(['around it', 'in its surroundings', 'surrounding it'], [0.7, 0.15, 0.15]) }}
+{% elif sym_str_equal(features['maxdist'], 'WALKING_DIST') %}
+  {{ choose(['in', 'within']) }} walking distance
+{% elif sym_str_equal(features['maxdist'], 'DIST_DAYTRIP') %}
+  {{ choose(['within', 'less than']) }}
+  a day trip {{ choose(['of', 'from'], [0.3, 0.7]) }}
+{% else %}
+  {% set within_or_less_than = choose(['within', 'less than']) %}
+  {{ within_or_less_than }}
+  {% if choose(['km', '']) %}{# kilometers #}
+    {{ int(features['maxdist']) // 1000 }}{{ choose(['km', ' km', ' kilometers', ' kilometres'], [0.25, 0.25, 0.25, 0.25]) }}
+  {% else %}{# meters #}
+    {{ features['maxdist'] }}{{ choose(['m', ' m', ' meters', ' metres'], [0.25, 0.25, 0.25, 0.25]) }}
+  {% endif %}
+  {{ 'away' if within_or_less_than == 'less than' else '' }}
+{% endif %}

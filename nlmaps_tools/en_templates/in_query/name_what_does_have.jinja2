@@ -1,0 +1,7 @@
+{{ choose(['what', 'which']) }}
+{{ thing_plural if plural else thing_singular }}
+does
+{% include 'meta/in_query_bare_location.jinja2' %}
+
+have
+{{ optional('?') }}

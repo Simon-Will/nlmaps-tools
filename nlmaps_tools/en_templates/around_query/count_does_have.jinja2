@@ -1,0 +1,20 @@
+{% if features['area'] and optional('separate_area_and_nwr') %}
+  does
+  {{ features['area'] }}
+  have
+  {{ 'many' if plural else 'much' }}
+  {{ thing_plural if plural else thing_singular }}
+  {% include 'meta/around_query_proximity_prefix.jinja2' %}
+
+  {{ features['center_nwr'][0][1] }}
+  {{ optional('?') }}
+{% else %}
+  does
+  {% include 'meta/around_query_bare_location.jinja2' %}
+
+  have
+  {{ 'many' if plural else 'much' }}
+  {{ thing_plural if plural else thing_singular }}
+  {% include 'meta/around_query_proximity_standalone.jinja2' %}
+  {{ optional('?') }}
+{% endif %}

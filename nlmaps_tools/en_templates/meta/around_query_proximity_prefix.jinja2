@@ -1,0 +1,32 @@
+{% if features['cardinal_direction'] %}
+  {{ features['cardinal_direction'] }} of
+
+{% elif sym_str_equal(features['maxdist'], 'DIST_INTOWN') %}
+  {{ choose(['near', 'close to'], [0.6, 0.4]) }}
+
+{% elif sym_str_equal(features['maxdist'], 'DIST_OUTTOWN') %}
+  {{ choose(['around', 'in the area of', 'in the surroundings of', 'surrounding'], [0.6, 0.2, 0.1, 0.1]) }}
+
+{% elif sym_str_equal(features['maxdist'], 'WALKING_DIST') %}
+  {{ choose(['in', 'within']) }} walking distance
+  {{ choose(['of', 'from'], [0.4, 0.6]) }}
+
+{% elif sym_str_equal(features['maxdist'], 'DIST_DAYTRIP') %}
+  {% set within_or_less_than = choose(['within', 'less than']) %}
+  {{ within_or_less_than }}
+  a day trip
+  {{ 'away' if within_or_less_than == 'less than' else '' }}
+  {{ choose(['of', 'from'], [0.3, 0.7]) }}
+
+{% else %}
+  {% set within_or_less_than = choose(['within', 'less than']) %}
+  {{ within_or_less_than }}
+  {% if choose(['km', '']) %}{# kilometers #}
+    {{ int(features['maxdist']) // 1000 }}{{ choose(['km', ' km', ' kilometers', ' kilometres'], [0.25, 0.25, 0.25, 0.25]) }}
+  {% else %}{# meters #}
+    {{ features['maxdist'] }}{{ choose(['m', ' m', ' meters', ' metres'], [0.25, 0.25, 0.25, 0.25]) }}
+  {% endif %}
+  {{ 'away' if within_or_less_than == 'less than' else '' }}
+  {{ choose(['of', 'from'], [0.4, 0.6]) }}
+
+{% endif %}

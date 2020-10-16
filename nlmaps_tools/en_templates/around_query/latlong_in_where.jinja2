@@ -1,0 +1,17 @@
+{% if features['area'] and optional('separate_area_and_nwr') %}
+  in {{ features['area'] }}{{ optional(',', 0.5) }}
+  where
+  {{ 'are' if plural else 'is' }}
+  {{ optional('there') }}
+  {% if plural %}
+    {{ choose(['any', 'some', '']) }}
+  {% else %}
+    {{ choose(['a', 'any', 'some', '']) }}
+  {% endif %}
+  {{ thing_plural if plural else thing_singular }}
+  {% include 'meta/around_query_proximity_prefix.jinja2' %}
+  {{ features['center_nwr'][0][1] }}
+  {{ optional('?') }}
+{% else %}
+  {% include('in_query/latlong_in_where.jinja2') %}
+{% endif %}

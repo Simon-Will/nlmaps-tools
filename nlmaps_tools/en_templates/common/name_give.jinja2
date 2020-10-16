@@ -1,0 +1,15 @@
+{% set name_plural = choose([True, False]) %}
+{% set qword = choose(['show', 'give', 'what'], [0.2, 0.3, 0.5]) %}
+{{ qword }}
+{% if qword == 'what' %}
+  {{ 'are' if name_plural else 'is' }}
+{% else %}
+  {{ choose(['me', 'us', ''], [0.3, 0.3, 0.4]) }}
+{% endif %}
+{{ optional('the', 0.9) }}
+{{ 'names' if name_plural else 'name' }}
+of
+{{ choose(['the', 'all', 'all the', ''], [0.2, 0.2, 0.2, 0.4]) }}
+{{ thing_plural if plural else thing_singular }}
+{% include 'meta/in_location.jinja2' %}
+{{ choose(['!', '.', ''], [0.25, 0.25, 0.5]) }}

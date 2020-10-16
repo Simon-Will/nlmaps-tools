@@ -1,0 +1,13 @@
+{{ choose(['what', 'which']) }}
+{{ thing_plural if plural else thing_singular }}
+{% if choose('early_are_there') %}
+  {{ 'are' if plural else 'is' }}
+  {{ optional('there') }}
+  {% include('meta/in_location.jinja2') %}
+{% else %}
+  {% include('meta/in_location.jinja2') %}
+
+  {{ 'are' if plural else 'is' }}
+  there{##}
+{% endif %}
+{{ optional('?') }}
