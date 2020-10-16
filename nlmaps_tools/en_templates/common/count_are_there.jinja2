@@ -1,0 +1,6 @@
+{{ 'are' if plural else 'is' }}
+{{ optional('there', 0.8) }}
+{{ 'many' if plural else 'much' }}
+{{ thing_plural if plural else thing_singular }}
+{% include('meta/in_location.jinja2') %}
+{{ optional('?') }}

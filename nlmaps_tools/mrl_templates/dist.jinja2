@@ -1,0 +1,15 @@
+{% set dist_features = features %}
+dist({##}
+{% set features = dist_features['sub'][0] %}
+{% include features['query_type'] + '.jinja2' %}
+{% if dist_features['sub'][1] %}
+,{##}
+{% set features = dist_features['sub'][1] %}
+{% include features['query_type'] + '.jinja2' %}
+{% endif %}
+{% if 'for' in dist_features %}
+,for({{ quote(dist_features['for']) }}){##}
+{% elif 'unit' in dist_features %}
+,unit({{ quote(dist_features['unit']) }}){##}
+{% endif %}
+){##}

@@ -1,0 +1,20 @@
+{% extends 'base_query.jinja2' %}
+
+{% block query_content %}
+around({##}
+center({##}
+  {% if 'area' in features %}
+area(keyval('name',{{ quote(features['area']) }})){##}
+  {%  if 'center_nwr' in features %},{% endif %}
+  {% endif %}
+  {%  if 'center_nwr' in features %}
+nwr({{ render_nwr(features['center_nwr']) }}){##}
+  {% endif %}
+),{##}
+search(nwr({{ render_nwr(features['target_nwr']) }})),{##}
+maxdist({{ quote(features['maxdist']) }}){##}
+  {% if 'around_topx' in features %}
+,topx({{ quote(features['around_topx']) }}){##}
+  {% endif %}
+){##}
+{% endblock %}

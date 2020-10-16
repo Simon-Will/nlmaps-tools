@@ -1,0 +1,10 @@
+how {{ 'many' if plural else 'much' }}
+{{ thing_plural if plural else thing_singular }}
+{% if choose(['exist', ''], [0.3, 0.7]) %}
+  {{ 'exist' if plural else 'exists' }}
+{% else %}
+  {{ 'are' if plural else 'is' }}
+  {{ optional('there', 0.7) }}
+{% endif %}
+{% include('meta/in_location.jinja2') %}
+{{ optional('?') }}

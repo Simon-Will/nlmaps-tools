@@ -1,0 +1,79 @@
+PURE_LOCATION => e.g. Heidelberg or Hesse
+LOCATION => (the card of)? PURE_LOCATION
+IN_LOCATION => in|near|close to|around LOCATION || card of PURE_LOCATION
+
+What are the names of all THING east of POI in AREA
+Show me THING in walking distance of 
+
+What PLURAL(THING) are there in LOCATION -> name
+Which PLURAL(THING) are there in LOCATION -> name
+In LOCATION, what PLURAL(THINGS) are there -> name
+What PLURAL(THING) in LOCATION -> name
+Which PLURAL(THING) in LOCATION -> name
+PLURAL(THING) in LOCATION -> name
+THING in LOCATION -> name
+Name PLURAL(THING) in LOCATION -> name
+Name (the|all) PLURAL(THING) in LOCATION -> name
+What PLURAL(THING) does LOCATION have -> name
+Which PLURAL(THING) does LOCATION have -> name
+What are the names …
+Give me the names …
+||| near -> DIST_INTOWN
+||| around -> DIST_OUTTOWN
+||| close to|in walking distance from|of -> WALKING_DIST
+
+Are there any PLURAL(THING) in LOCATION -> least
+Are there some PLURAL(THING) in LOCATION -> least
+Are there PLURAL(THING) in LOCATION -> least
+Is there any THING in LOCATION -> least
+Is there some THING in LOCATION -> least
+Is there THING in LOCATION -> least
+Does LOCATION have any PLURAL(THING) -> least
+Does LOCATION have any THING -> least
+Does LOCATION have a THING -> least
+Does LOCATION have some PLURAL(THING) -> least
+Does LOCATION have some THING -> least
+In LOCATION, is there any THING -> least
+
+✓Indicate|Give|Show PLURAL(THING) in LOCATION -> latlong
+✓Indicate|Give|Show all PLURAL(THING) in LOCATION -> latlong
+✓Indicate|Give|Show some PLURAL(THING) in LOCATION -> latlong
+✓Indicate|Give|Show any PLURAL(THING) in LOCATION -> latlong
+✓Give|Show me PLURAL(THING) in LOCATION -> latlong
+✓Give|Show me all PLURAL(THING) in LOCATION -> latlong
+✓Give|Show me some PLURAL(THING) in LOCATION -> latlong
+✓Give|Show me any PLURAL(THING) in LOCATION -> latlong
+✓Where in LOCATION are there? (any|some)? PLURAL(THING) -> latlong
+✓Where in LOCATION is there? (a|some)? THING -> latlong
+IN LOCATION, where is|are there …
+
+✓How many PLURAL(THING) are there in LOCATION -> count
+✓How many THING are there in LOCATION -> count
+✓How much THING are there in LOCATION -> count
+✓Are there many PLURAL(THING) in LOCATION -> count
+✓Is there many PLURAL(THING) in LOCATION -> count
+✓Is there much THING in LOCATION -> count
+✓Does LOCATION have many PLURAL(THING) -> count
+✓Does LOCATION have many THING -> count
+✓In LOCATION, how many PLURAL(THING) are there -> count
+
+What|which THING is nearest|closest from|to|of LOCATION -> topx1
+What|which is the nearest|closest THING from|to|of LOCATION -> topx1
+THING closest|nearest from|to|of LOCATION -> topx1
+Indicate|Give|Show me the name of the THING nearest|closest from|to|of LOCATION -> topx1
+Indicate|Give|Show me the name of the nearest|closest THING from|to|of LOCATION -> topx1
+
+What are the opening hours|times of THING in LOCATION -> opening_hours
+Give me the opening hours of THING in LOCATION -> opening_hours
+When does THING in LOCATION open -> opening_hours
+Is THING in LOCATION open -> opening_hours
+When can I visit THING in LOCATION -> opening_hours
+
+What’s the website of THING in LOCATION -> website
+Give me the website of THING in LOCATION -> website
+
+
+
+To add:
+THING within walking distance of LOCATION
+how many PLURAL(THING) can be found

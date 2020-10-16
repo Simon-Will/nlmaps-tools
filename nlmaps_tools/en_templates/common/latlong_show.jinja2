@@ -1,0 +1,16 @@
+{% set qword = choose(['show', 'give', 'indicate']) %}
+{{ qword }}
+{% if qword == 'indicate' %}
+  {{ choose(['for me', 'for us', ''], [0.2, 0.2, 0.6]) }}
+{% else %}
+  {{ choose(['me', 'us', ''], [0.3, 0.3, 0.4]) }}
+{% endif %}
+{{ optional('the location of', 0.3) }}
+{% if plural %}
+  {{ choose(['all', 'some', 'any', ''], [0.3, 0.2, 0.2, 0.3]) }}
+{% else %}
+  {{ choose(['a', 'any', 'some', '']) }}
+{% endif %}
+{{ thing_plural if plural else thing_singular }}
+{% include('meta/in_location.jinja2') %}
+{{ choose(['!', '.', ''], [0.25, 0.25, 0.5]) }}

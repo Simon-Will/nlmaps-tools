@@ -1,0 +1,8 @@
+{% if features['cardinal_direction'] %}
+  {% if choose([True, False]) %}
+    {{ optional('the', 0.9) }} {{ features['cardinal_direction'] }} of
+  {% else %}
+    {{ features['cardinal_direction'] }}ern
+  {% endif %}
+{% endif %}
+{{ features['area'] }}{##}
