@@ -2,9 +2,6 @@ PURE_LOCATION => e.g. Heidelberg or Hesse
 LOCATION => (the card of)? PURE_LOCATION
 IN_LOCATION => in|near|close to|around LOCATION || card of PURE_LOCATION
 
-What are the names of all THING east of POI in AREA
-Show me THING in walking distance of 
-
 ✓What PLURAL(THING) are there in LOCATION -> name
 ✓Which PLURAL(THING) are there in LOCATION -> name
 ✓What PLURAL(THING) in LOCATION -> name
@@ -19,18 +16,20 @@ Show me THING in walking distance of
 ✓Give me the names …
 ✓In LOCATION, what PLURAL(THINGS) are there -> name
 
-Are there any PLURAL(THING) in LOCATION -> least
-Are there some PLURAL(THING) in LOCATION -> least
-Are there PLURAL(THING) in LOCATION -> least
-Is there any THING in LOCATION -> least
-Is there some THING in LOCATION -> least
-Is there THING in LOCATION -> least
-Does LOCATION have any PLURAL(THING) -> least
-Does LOCATION have any THING -> least
-Does LOCATION have a THING -> least
-Does LOCATION have some PLURAL(THING) -> least
-Does LOCATION have some THING -> least
-In LOCATION, is there any THING -> least
+✓Are there any PLURAL(THING) in LOCATION -> least
+✓Are there some PLURAL(THING) in LOCATION -> least
+✓Are there PLURAL(THING) in LOCATION -> least
+✓Is there any THING in LOCATION -> least
+✓Is there some THING in LOCATION -> least
+✓Is there THING in LOCATION -> least
+✓Does LOCATION have any PLURAL(THING) -> least
+✓Does LOCATION have any THING -> least
+✓Does LOCATION have a THING -> least
+✓Does LOCATION have some PLURAL(THING) -> least
+✓Does LOCATION have some THING -> least
+✓Does there exist any THING in LOCATION -> least
+✓Does any THING exist in LOCATION -> least
+✓In LOCATION, is there any THING -> least
 
 ✓Indicate|Give|Show PLURAL(THING) in LOCATION -> latlong
 ✓Indicate|Give|Show all PLURAL(THING) in LOCATION -> latlong

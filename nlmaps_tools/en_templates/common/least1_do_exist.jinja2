@@ -1,0 +1,12 @@
+{{ 'do' if plural else 'does' }}
+{% set there = choose([True, False]) %}
+{{ 'there exist' if there else '' }}
+{% if plural %}
+  {{ choose(['any', 'some', ''], [0.5, 0.2, 0.3]) }}
+{% else %}
+  {{ choose(['any', 'some', 'a', ''], [0.4, 0.1, 0.3, 0.2]) }}
+{% endif %}
+{{ thing_plural if plural else thing_singular }}
+{{ '' if there else 'exist' }}
+{% include('meta/in_location.jinja2') %}
+{{ optional('?') }}

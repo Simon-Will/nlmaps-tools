@@ -147,7 +147,7 @@ def generate_features(thing_table):
 
     rfeatures['qtype_shorthand'] = choose(
         ['name', 'latlong', 'least1', 'count', 'website', 'opening_hours'],
-        [0.0, 0.2, 0.0, 0.2, 0.00, 0.00]
+        [0.3, 0.2, 0.2, 0.2, 0.00, 0.00]
         #[0.3, 0.2, 0.2, 0.2, 0.05, 0.05]
     )
 
