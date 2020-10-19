@@ -22,7 +22,8 @@
   {{ choose(['what', 'which']) }}
   {{ thing_plural if plural else thing_singular }}
   does
-  {{ features['area'] }}
+  {% include 'meta/around_query_bare_location' %}
+
   have
   {% include 'meta/around_query_proximity_standalone.jinja2' %}
   {{ optional('?') }}
