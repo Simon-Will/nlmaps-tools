@@ -6,6 +6,9 @@ import re
 
 import requests
 
+# This is supposed to select older versions, but I didn’t get it to work.
+#DEFAULT_URL = 'https://wiki.openstreetmap.org/w/index.php?title=Special:Export&pages=Nominatim%2FSpecial_Phrases%2FEN&limit=1&offset=2020-10-15T13:18:00Z&curonly=&action=submit'
+
 DEFAULT_URL = 'https://wiki.openstreetmap.org/wiki/Special:Export/Nominatim/Special_Phrases/EN'
 
 PhraseTableLine = namedtuple('PhraseTableLine', ['phrase', 'key', 'value', 'operator', 'plural'])
@@ -193,10 +196,14 @@ def get_phrase_table_lines(wiki_page: str):
     return phrase_table_lines
 
 
-def download_wiki_page(url=DEFAULT_URL):
-    resp = requests.get(url)
-    return resp.text
-
+def get_wiki_page(file=None, url=DEFAULT_URL):
+    if file:
+        with open(file) as f:
+            content = f.read()
+    else:
+        resp = requests.get(url)
+        content = resp.text
+    return content
 
 def get_phrase_to_tags(phrase_table_lines):
     phrase_to_tags = defaultdict(set)
@@ -206,8 +213,8 @@ def get_phrase_to_tags(phrase_table_lines):
     return phrase_to_tags
 
 
-def action_table(url=DEFAULT_URL):
-    wiki_page = download_wiki_page(url)
+def action_table(file=None, url=DEFAULT_URL):
+    wiki_page = get_wiki_page(file, url)
     phrase_table_lines = get_phrase_table_lines(wiki_page)
     table = make_thing_table(
         pre_edit_phrase_table_lines(phrase_table_lines)
@@ -216,8 +223,8 @@ def action_table(url=DEFAULT_URL):
     return table
 
 
-def action_duplicates(url=DEFAULT_URL):
-    wiki_page = download_wiki_page(url)
+def action_duplicates(file=None, url=DEFAULT_URL):
+    wiki_page = get_wiki_page(file, url)
     phrase_table_lines = get_phrase_table_lines(wiki_page)
     phrase_to_tags = get_phrase_to_tags(phrase_table_lines)
     tags_to_phrases = defaultdict(set)
@@ -227,17 +234,17 @@ def action_duplicates(url=DEFAULT_URL):
     return tags_to_phrases
 
 
-def action_tags(url=DEFAULT_URL):
-    wiki_page = download_wiki_page(url)
+def action_tags(file=None, url=DEFAULT_URL):
+    wiki_page = get_wiki_page(file, url)
     phrase_table_lines = get_phrase_table_lines(wiki_page)
     phrase_to_tags = get_phrase_to_tags(phrase_table_lines)
     all_tags = sorted({tag for tags in phrase_to_tags.values() for tag in tags})
     return all_tags
 
 
-def main(action, url=DEFAULT_URL):
+def main(action, file=None, url=DEFAULT_URL):
     if action == 'table':
-        table = action_table(url)
+        table = action_table(file, url)
         for ttl in table:
             print(
                 '{singular} | {plural} | {tags}'
@@ -251,7 +258,7 @@ def main(action, url=DEFAULT_URL):
             )
 
     elif action == 'duplicates':
-        tags_to_phrases = action_duplicates(url)
+        tags_to_phrases = action_duplicates(file, url)
         for tags, phrases in tags_to_phrases.items():
             print('{}: {}'.format(
                 ', '.join(tags),
@@ -259,7 +266,7 @@ def main(action, url=DEFAULT_URL):
             ))
 
     else:
-        all_tags = action_tags(url)
+        all_tags = action_tags(file, url)
         for tag in all_tags:
             print(tag)
 
@@ -268,6 +275,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=['tags', 'duplicates', 'table'])
     parser.add_argument('--url', '-u', default=DEFAULT_URL)
+    parser.add_argument('--file', '-f')
     args = parser.parse_args()
     return args
 

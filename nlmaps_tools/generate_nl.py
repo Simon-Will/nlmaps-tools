@@ -1,8 +1,11 @@
+import argparse
 from collections import defaultdict
+import itertools
 from pathlib import Path
 import os
 import re
 import random
+import sys
 
 import jinja2
 
@@ -24,7 +27,7 @@ def merge_templates(templ1, templ2):
 def collect_templates(subdir_basename):
     templates = defaultdict(set)
     subdir = (Path(os.path.dirname(os.path.abspath(__file__)))
-              / 'en_templates' / subdir_basename)
+              / 'nl_templates' / subdir_basename)
     for template in os.listdir(subdir):
         prefix = template.split('_')[0]
         templates[prefix].add('{}/{}'.format(subdir_basename, template))
@@ -39,7 +42,7 @@ IN_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES, IN_QUERY_ONLY_TEMPLATES)
 AROUND_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES,
                                          AROUND_QUERY_ONLY_TEMPLATES)
 
-shorthand_to_qtype = {
+SHORTHAND_TO_QTYPE = {
     'name': (('findkey', 'name'),),
     'latlong': (Symbol('latlong'),),
     'least1': (('least', ('topx', Symbol('1'))),),
@@ -68,7 +71,7 @@ def sym_str_equal(obj1, obj2):
 
 
 ENV = jinja2.Environment(
-    loader=jinja2.PackageLoader('nlmaps_tools', 'en_templates'),
+    loader=jinja2.PackageLoader('nlmaps_tools', 'nl_templates'),
     trim_blocks=True,
     lstrip_blocks=True,
     autoescape=False,
@@ -82,16 +85,41 @@ ENV.globals['int'] = int
 
 
 def remove_superfluous_whitespace(s):
-    return re.sub(r'\s+', ' ', s).strip()
+    s = re.sub(r'\s+', ' ', s).strip()
+    if len(s) > 1 and s[-1] in ['.', '!', '?'] and s[-2] == ' ':
+        s = s[:-2] + s[-1]
+    return s
 
 
-def choose_poi():
-    poi = choose(['École Maternelle Diderot', 'Place Tirant Lo Blanc',
-                  'Westerweiden (Airbus)', "Rue d'Agier", 'Route Léon Lachamp'])
+def add_noise(s, exclude=tuple(), noise_chance=0.01):
+    excluded_indices = set()
+    for exc in exclude:
+        if exc in s:
+            start = s.index(exc)
+            # Add the indices of the excluded string
+            # and also 1 character before and after it.
+            excluded_indices.update(range(start - 1, start + len(exc) + 1))
+        else:
+            print('Error: {exc} is not in {s}', file=sys.stderr)
+
+    alphabet = [chr(n) for n in itertools.chain(range(0x41, 0x41 + 26),
+                                                range(0x61, 0x61 + 26))]
+
+    new = [
+        choose(alphabet)
+        if i not in excluded_indices and optional('add_noise', noise_chance)
+        else char
+        for i, char in enumerate(s)
+    ]
+    return ''.join(new)
+
+
+def choose_poi(pois):
+    poi = choose(pois)
     return [('name', poi)]
 
 
-def generate_features(thing_table):
+def generate_features(thing_table, areas, pois):
     rfeatures = {}
     features = {'rendering_features': rfeatures}
 
@@ -116,8 +144,7 @@ def generate_features(thing_table):
     rfeatures['plural'] = choose([True, False],
                                  [plural_chance, 1 - plural_chance])
 
-    features['area'] = choose(['Kreuzberg', 'Berlin',
-                               'Heidelberg', 'Schwäbisch Hall'])
+    features['area'] = choose(areas)
 
     features['query_type'] = choose(['around_query', 'in_query'], [0.6, 0.4])
     features['cardinal_direction'] = choose(
@@ -137,26 +164,26 @@ def generate_features(thing_table):
             )
 
         if optional('nwr_and_area', 0.75):
-            features['center_nwr'] = choose_poi()
+            features['center_nwr'] = choose_poi(pois)
         else:
             if optional('area_as_nwr', 0.5):
                 features['center_nwr'] = [('name', features['area'])]
             else:
-                features['center_nwr'] = choose_poi()
+                features['center_nwr'] = choose_poi(pois)
             del features['area']
 
     rfeatures['qtype_shorthand'] = choose(
         ['name', 'latlong', 'least1', 'count', 'website', 'opening-hours'],
-        [0.3, 0.2, 0.2, 0.2, 0.00, 0.20]
+        [0.3, 0.2, 0.2, 0.2, 0.00, 0.1]
         #[0.3, 0.2, 0.2, 0.2, 0.05, 0.05]
     )
 
-    features['qtype'] = shorthand_to_qtype[rfeatures['qtype_shorthand']]
+    features['qtype'] = SHORTHAND_TO_QTYPE[rfeatures['qtype_shorthand']]
 
     return features
 
 
-def generate_en(features):
+def generate_nl(features, noise=False):
     if features['query_type'] == 'in_query':
         templates = IN_QUERY_TEMPLATES
     elif features['query_type'] == 'around_query':
@@ -166,19 +193,69 @@ def generate_en(features):
     rfeatures = features['rendering_features']
     possible_templates = templates[rfeatures['qtype_shorthand']]
     template = ENV.get_template(choose(possible_templates))
-    return remove_superfluous_whitespace(
+
+    nl = remove_superfluous_whitespace(
         template.render(features=features, **rfeatures)
+    )
+    if optional('capitalize_first'):
+        nl = nl[0].upper() + nl[1:]
+
+    if noise:
+        proper_names = []
+        if features.get('area'):
+            proper_names.append(features['area'])
+        if features.get('center_nwr'):
+            proper_names.append(features['center_nwr'][0][1])
+        nl = add_noise(nl, exclude=proper_names)
+
+    return nl
+
+
+def omit_location(loc):
+    return (
+        re.match(r'^[\s\d]+$', loc)
+        or len(loc) > 40
+        # Allow only Unicode code blocks Basic Latin, Latin-1 Supplement, Latin
+        # Extended-A and Latin Extended-B as well as General Punctuation
+        or any(ord(char) > 0x024f and not 0x2000 <= ord(char) <= 0x206F
+               for char in loc)
     )
 
 
-def main():
-    thing_table = special_phrases_table()
-    for i in range(1000):
-        features = generate_features(thing_table)
-        print(generate_en(features))
-        print(generate_mrl(features))
-        print()
+def main(areas, pois, count=100, out_prefix=None, noise=False):
+    with open(areas) as f:
+        areas = [line.strip() for line in f if not omit_location(line)]
+    with open(pois) as f:
+        pois = [line.strip() for line in f if not omit_location(line)]
+
+    special_phrases_file = (Path(os.path.dirname(os.path.abspath(__file__)))
+                            / 'special_phrases.txt')
+    thing_table = special_phrases_table(special_phrases_file)
+    for _ in range(count):
+        features = generate_features(thing_table, areas, pois)
+        nl = generate_nl(features, noise=noise)
+        mrl = generate_mrl(features)
+        if out_prefix:
+            pass
+        else:
+            print(nl)
+            print(mrl)
+            print()
+
+
+def parse_args():
+    description = 'Generate NLMaps training data'
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('areas', help='Areas file')
+    parser.add_argument('pois', help='POIs file')
+    parser.add_argument('--count', '-c', default=100, type=int,
+                        help='Number of instances to generate')
+    parser.add_argument('--noise', default=False,
+                        action='store_true', help='Apply noise to NL query.')
+    args = parser.parse_args()
+    return args
 
 
 if __name__ == '__main__':
-    main()
+    ARGS = parse_args()
+    main(**vars(ARGS))
