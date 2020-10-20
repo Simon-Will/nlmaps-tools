@@ -2,6 +2,7 @@ from nlmaps_tools.generate_mrl import (render_nwr,)
 
 from .queries import QUERIES
 
+
 def test_render_nwr():
     assert render_nwr(
         [('name', 'Springmorgen')]
@@ -10,6 +11,10 @@ def test_render_nwr():
     assert render_nwr(
         [('name', "Rue d'Auvours")]
     ) == "keyval('name','Rue d\\'Auvours')"
+
+    assert render_nwr(
+        [('name', "Rue d'Auvours")], escape=False
+    ) == "keyval('name','Rue d'Auvours')"
 
     assert render_nwr(
         [('amenity', 'place_of_worship'), ('denomination', 'catholic')]

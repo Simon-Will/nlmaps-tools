@@ -8,8 +8,8 @@ dist({##}
 {% include features['query_type'] + '.jinja2' %}
 {% endif %}
 {% if 'for' in dist_features %}
-,for({{ quote(dist_features['for']) }}){##}
+,for({{ quote(dist_features['for'], escape) }}){##}
 {% elif 'unit' in dist_features %}
-,unit({{ quote(dist_features['unit']) }}){##}
+,unit({{ quote(dist_features['unit'], escape) }}){##}
 {% endif %}
 ){##}

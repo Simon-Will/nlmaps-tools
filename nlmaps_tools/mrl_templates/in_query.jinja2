@@ -2,7 +2,7 @@
 
 {% block query_content %}
   {% if 'area' in features %}
-area(keyval('name',{{ quote(features['area']) }})),{##}
+area(keyval('name',{{ quote(features['area'], escape) }})),{##}
   {% endif %}
-nwr({{ render_nwr(features['target_nwr']) }}){##}
+nwr({{ render_nwr(features['target_nwr'], escape) }}){##}
 {% endblock %}

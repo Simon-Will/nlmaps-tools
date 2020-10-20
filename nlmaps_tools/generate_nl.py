@@ -252,6 +252,9 @@ def parse_args():
                         help='Number of instances to generate')
     parser.add_argument('--noise', default=False,
                         action='store_true', help='Apply noise to NL query.')
+    parser.add_argument('--escape', default=False,
+                        action='store_true',
+                        help='Escape quotes in proper names')
     args = parser.parse_args()
     return args
 

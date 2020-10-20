@@ -4,17 +4,17 @@
 around({##}
 center({##}
   {% if 'area' in features %}
-area(keyval('name',{{ quote(features['area']) }})){##}
+area(keyval('name',{{ quote(features['area'], escape) }})){##}
   {%  if 'center_nwr' in features %},{% endif %}
   {% endif %}
   {%  if 'center_nwr' in features %}
-nwr({{ render_nwr(features['center_nwr']) }}){##}
+nwr({{ render_nwr(features['center_nwr'], escape) }}){##}
   {% endif %}
 ),{##}
-search(nwr({{ render_nwr(features['target_nwr']) }})),{##}
-maxdist({{ quote(features['maxdist']) }}){##}
+search(nwr({{ render_nwr(features['target_nwr'], escape) }})),{##}
+maxdist({{ quote(features['maxdist'], escape) }}){##}
   {% if 'around_topx' in features %}
-,topx({{ quote(features['around_topx']) }}){##}
+,topx({{ quote(features['around_topx'], escape) }}){##}
   {% endif %}
 ){##}
 {% endblock %}

@@ -5,42 +5,44 @@ import jinja2
 from nlmaps_tools.parse_mrl import Symbol
 
 
-def quote(string):
-    if isinstance(string, Symbol):
-        return str(string)
+def quote(s, escape=True):
+    if isinstance(s, Symbol):
+        return str(s)
 
-    content = string.translate({ord("'"): "\\'", ord('\\'): '\\\\'})
-    return "'{}'".format(content)
+    if escape:
+        s = s.translate({ord("'"): "\\'", ord('\\'): '\\\\'})
+    return "'{}'".format(s)
 
 
-def render_nwr(nwr_features):
+def render_nwr(nwr_features, escape=True):
     parts = []
     for feat in nwr_features:
         if feat[0] in ['or', 'and'] and isinstance(feat[1], tuple):
-            parts.append('{}({})'.format(feat[0], render_nwr(feat[1:])))
+            parts.append('{}({})'.format(feat[0], render_nwr(feat[1:], escape)))
         elif (len(feat) == 2 and isinstance(feat[1], tuple)
               and feat[1][0] == 'or'):
-            val = ','.join(quote(f) for f in feat[1][1:])
-            parts.append("keyval({},or({}))".format(quote(feat[0]), val))
+            val = ','.join(quote(f, escape) for f in feat[1][1:])
+            parts.append("keyval({},or({}))".format(quote(feat[0], escape), val))
         elif len(feat) == 2 and all(isinstance(f, str) for f in feat):
-            parts.append("keyval({},{})".format(quote(feat[0]), quote(feat[1])))
+            parts.append("keyval({},{})".format(quote(feat[0], escape),
+                                                quote(feat[1], escape)))
         else:
             raise ValueError('Unexpected feature part: {}'.format(feat))
 
     return ','.join(parts)
 
 
-def open_paren_after_functor(nested_tuple):
+def open_paren_after_functor(nested_tuple, escape=True):
     parts = []
     for elm in nested_tuple:
         if isinstance(elm, (str, Symbol)):
-            parts.append(quote(elm))
+            parts.append(quote(elm, escape))
         elif isinstance(elm, tuple):
             functor = elm[0]
             parts.append(
                 '{}({})'.format(
                     functor,
-                    open_paren_after_functor(elm[1:])
+                    open_paren_after_functor(elm[1:], escape)
                 )
             )
         else:
@@ -61,9 +63,9 @@ ENV.globals['open_paren_after_functor'] = open_paren_after_functor
 ENV.globals['quote'] = quote
 
 
-def generate_from_features(features):
+def generate_from_features(features, escape=True):
     template = ENV.get_template(features['query_type'] + '.jinja2')
-    return template.render(features=features)
+    return template.render(features=features, escape=escape)
 
 
 def main():

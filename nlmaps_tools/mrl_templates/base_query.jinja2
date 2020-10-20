@@ -6,4 +6,4 @@ query({##}
 {% if features['cardinal_direction'] %}
 ){##}
 {% endif %}
-,qtype({{ open_paren_after_functor(features['qtype']) }}))
+,qtype({{ open_paren_after_functor(features['qtype'], escape) }}))

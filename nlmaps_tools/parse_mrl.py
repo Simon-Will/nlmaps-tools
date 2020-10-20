@@ -310,8 +310,8 @@ class MrlGrammar:
     def useMainFeatures(self, *args, **kwargs):
         self.features = self.parseResult['features']
 
-    def parseMrl(self, mrl, escape=False):
-        if escape:
+    def parseMrl(self, mrl, is_escaped=True):
+        if not is_escaped:
             mrl = escape_backslashes_and_single_quotes(mrl)
 
         self.parseResult = {}
@@ -337,7 +337,7 @@ def filetest():
 
             mrl = line.strip()
             try:
-                features = grammar.parseMrl(mrl, escape=True)
+                features = grammar.parseMrl(mrl, is_escaped=False)
             except pp.ParseException:
                 mrl_to_features[mrl] = None
                 print(line_number, mrl)
