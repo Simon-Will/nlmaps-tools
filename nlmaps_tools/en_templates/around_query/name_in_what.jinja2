@@ -2,7 +2,7 @@
   in {{ features['area'] }}{{ optional(',', 0.5) }}
   {{ choose(['what', 'which']) }}
   {{ thing_plural if plural else thing_singular }}
-  {% if choose('early_are_there') %}
+  {% if optional('early_are_there') %}
     {{ 'are' if plural else 'is' }}
     {{ optional('there') }}
     {% include 'meta/around_query_proximity_prefix.jinja2' %}

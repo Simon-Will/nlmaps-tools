@@ -1,0 +1,8 @@
+when
+{{ choose(['are', 'do']) }}
+{{ choose(['the', 'all the', ''], [0.3, 0.3, 0.4]) }}
+{{ thing_plural if plural else thing_singular }}
+{% include 'meta/in_location.jinja2' %}
+
+open{##}
+{{ optional('?') }}

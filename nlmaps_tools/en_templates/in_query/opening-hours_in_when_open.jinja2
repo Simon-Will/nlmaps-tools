@@ -1,0 +1,7 @@
+{% include('meta/in_location.jinja2') %}{{ optional(',', 0.5) }}
+when
+{{ choose(['are', 'do']) }}
+{{ choose(['the', 'all the', ''], [0.3, 0.3, 0.4]) }}
+{{ thing_plural if plural else thing_singular }}
+open{##}
+{{ optional('?') }}

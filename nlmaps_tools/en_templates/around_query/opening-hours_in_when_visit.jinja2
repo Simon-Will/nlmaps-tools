@@ -1,0 +1,17 @@
+{% if features['area'] and optional('separate_area_and_nwr', 0.6) %}
+  when
+  {{ choose(['can I', 'can we', 'to'], [0.3, 0.3, 0.4]) }}
+  {{ choose(['visit', 'go to'], [0.6, 0.4]) }}
+  {% if plural %}
+    {{ choose(['the', 'all', 'all the', ''], [0.2, 0.2, 0.2, 0.4]) }}
+  {% else %}
+    {{ choose(['a', 'some', 'any', '']) }}
+  {% endif %}
+  {{ thing_plural if plural else thing_singular }}
+  {% include 'meta/around_query_proximity_prefix.jinja2' %}
+
+  {{ features['center_nwr'][0][1] }}
+  {{ optional('?') }}
+{% else %}
+  {% include('in_query/opening-hours_in_when_visit.jinja2') %}
+{% endif %}

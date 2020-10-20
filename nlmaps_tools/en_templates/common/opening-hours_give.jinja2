@@ -1,19 +1,18 @@
-{% set name_plural = choose([True, False]) %}
-{% set qword = choose(['show', 'give', 'what', 'which'], [0.2, 0.3, 0.3, 0.2]) %}
+{% set qword = choose(['show', 'give', 'what', 'when'], [0.2, 0.3, 0.25, 0.25]) %}
 {{ qword }}
-{% if qword in ['what', 'which'] %}
-  {{ 'are' if name_plural else 'is' }}
+{% if qword in ['what', 'when'] %}
+  are
 {% else %}
   {{ choose(['me', 'us', ''], [0.3, 0.3, 0.4]) }}
 {% endif %}
 {{ optional('the', 0.9) }}
-{{ 'names' if name_plural else 'name' }}
+opening {{ choose(['hours', 'times']) }}
 of
 {{ choose(['the', 'all', 'all the', ''], [0.2, 0.2, 0.2, 0.4]) }}
 {{ thing_plural if plural else thing_singular }}
 {% include 'meta/in_location.jinja2' %}
-{% if qword in ['what', 'which'] %}
-  {{ choose(['?', '']) }}
+{% if qword in ['what', 'when'] %}
+  {{ optional('?') }}
 {% else %}
   {{ choose(['!', '.', ''], [0.25, 0.25, 0.5]) }}
 {% endif %}

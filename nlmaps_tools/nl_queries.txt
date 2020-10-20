@@ -63,11 +63,15 @@ THING closest|nearest from|to|of LOCATION -> topx1
 Indicate|Give|Show me the name of the THING nearest|closest from|to|of LOCATION -> topx1
 Indicate|Give|Show me the name of the nearest|closest THING from|to|of LOCATION -> topx1
 
-What are the opening hours|times of THING in LOCATION -> opening_hours
-Give me the opening hours of THING in LOCATION -> opening_hours
-When does THING in LOCATION open -> opening_hours
+✓What are the opening hours|times of THING in LOCATION -> opening_hours
+✓Give me the opening hours of THING in LOCATION -> opening_hours
+✓When do/are PLURAL(THING) in LOCATION open -> opening_hours
 Is THING in LOCATION open -> opening_hours
-When can I visit THING in LOCATION -> opening_hours
+✓When can I visit PLURAL(THING) in LOCATION -> opening_hours
+✓When can I go to PLURAL(THING) in LOCATION -> opening_hours
+✓In LOCATION, when can I visit …
+✓In LOCATION, what are the opening hours of …
+✓In LOCATION, when are PLURAL(THING) open?
 
 What’s the website of THING in LOCATION -> website
 Give me the website of THING in LOCATION -> website
@@ -77,3 +81,4 @@ Give me the website of THING in LOCATION -> website
 To add:
 THING within walking distance of LOCATION
 how many PLURAL(THING) can be found
+What are the opening hours of POI in LOCATION

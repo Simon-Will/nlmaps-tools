@@ -1,10 +1,11 @@
 {% if features['area'] and optional('separate_area_and_nwr', 0.6) %}
   in {{ features['area'] }}{{ optional(',', 0.5) }}
-  how {{ 'many' if plural else 'much' }}
+  when
+  {{ choose(['are', 'do']) }}
+  {{ choose(['the', 'all the', ''], [0.3, 0.3, 0.4]) }}
   {{ thing_plural if plural else thing_singular }}
-  {% if optional('early_are_there') %}
-    {{ 'are' if plural else 'is' }}
-    {{ optional('there') }}
+  {% if optional('early_open') %}
+    open
     {% include 'meta/around_query_proximity_prefix.jinja2' %}
 
     {{ features['center_nwr'][0][1] }}
@@ -12,10 +13,9 @@
     {% include 'meta/around_query_proximity_prefix.jinja2' %}
 
     {{ features['center_nwr'][0][1] }}
-    {{ 'are' if plural else 'is' }}
-    there{##}
+    open
   {% endif %}
   {{ optional('?') }}
 {% else %}
-  {% include('in_query/count_in_how_many.jinja2') %}
+  {% include('in_query/opening-hours_in_when_open.jinja2') %}
 {% endif %}

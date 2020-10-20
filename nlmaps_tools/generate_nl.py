@@ -45,7 +45,7 @@ shorthand_to_qtype = {
     'least1': (('least', ('topx', Symbol('1'))),),
     'count': (Symbol('count'),),
     'website': (('findkey', 'website'),),
-    'opening_hours': (('findkey', 'opening_hours'),),
+    'opening-hours': (('findkey', 'opening_hours'),),
 }
 
 
@@ -146,8 +146,8 @@ def generate_features(thing_table):
             del features['area']
 
     rfeatures['qtype_shorthand'] = choose(
-        ['name', 'latlong', 'least1', 'count', 'website', 'opening_hours'],
-        [0.3, 0.2, 0.2, 0.2, 0.00, 0.00]
+        ['name', 'latlong', 'least1', 'count', 'website', 'opening-hours'],
+        [0.3, 0.2, 0.2, 0.2, 0.00, 0.20]
         #[0.3, 0.2, 0.2, 0.2, 0.05, 0.05]
     )
 

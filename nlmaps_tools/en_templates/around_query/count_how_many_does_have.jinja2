@@ -22,7 +22,7 @@
   how {{ 'many' if plural else 'much' }}
   {{ thing_plural if plural else thing_singular }}
   does
-  {% include 'meta/around_query_bare_location' %}
+  {% include 'meta/around_query_bare_location.jinja2' %}
 
   have
   {% include 'meta/around_query_proximity_standalone.jinja2' %}
