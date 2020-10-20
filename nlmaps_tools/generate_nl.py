@@ -222,25 +222,35 @@ def omit_location(loc):
     )
 
 
-def main(areas, pois, count=100, out_prefix=None, noise=False):
+def main(areas, pois, count=100, escape=False, nl_suffix='en', noise=False,
+         out_prefix=None):
     with open(areas) as f:
         areas = [line.strip() for line in f if not omit_location(line)]
     with open(pois) as f:
         pois = [line.strip() for line in f if not omit_location(line)]
 
+    if out_prefix:
+        nl_file = open(out_prefix + '.' + nl_suffix, 'w')
+        mrl_file = open(out_prefix + '.mrl', 'w')
+    else:
+        nl_file = mrl_file = sys.stdout
+
     special_phrases_file = (Path(os.path.dirname(os.path.abspath(__file__)))
                             / 'special_phrases.txt')
     thing_table = special_phrases_table(special_phrases_file)
+
     for _ in range(count):
         features = generate_features(thing_table, areas, pois)
         nl = generate_nl(features, noise=noise)
-        mrl = generate_mrl(features)
-        if out_prefix:
-            pass
-        else:
-            print(nl)
-            print(mrl)
+        mrl = generate_mrl(features, escape=escape)
+        print(nl, file=nl_file)
+        print(mrl, file=mrl_file)
+        if not out_prefix:
             print()
+
+    if out_prefix:
+        nl_file.close()
+        mrl_file.close()
 
 
 def parse_args():
@@ -250,11 +260,13 @@ def parse_args():
     parser.add_argument('pois', help='POIs file')
     parser.add_argument('--count', '-c', default=100, type=int,
                         help='Number of instances to generate')
-    parser.add_argument('--noise', default=False,
-                        action='store_true', help='Apply noise to NL query.')
     parser.add_argument('--escape', default=False,
                         action='store_true',
-                        help='Escape quotes in proper names')
+                        help='Escape quotes and backslashes in proper names')
+    parser.add_argument('--noise', default=False,
+                        action='store_true', help='Apply noise to NL query.')
+    parser.add_argument('--out-prefix', '-o',
+                        help='Write dataset to files beginning with prefix')
     args = parser.parse_args()
     return args
 
