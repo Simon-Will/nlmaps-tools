@@ -110,6 +110,10 @@ def pre_edit_phrase_table_lines(phrase_table_lines):
         if ptl.key == 'shop' and ptl.value == 'wine':
             continue
 
+        # This merges shop=convenience|deli|supermarket, delete for now.
+        if ptl.key == 'shop' and ptl.value == 'wine':
+            continue
+
         # Pubs are not bars, and vice versa.
         if ptl.key == 'amenity' and ptl.value == 'bar':
             if 'pub' in ptl.phrase:
@@ -149,6 +153,13 @@ def post_edit_thing_table(table):
     table.append(ThingTableLine(
         singular={'food'}, plural={'food'},
         tags={('amenity', 'restaurant'), ('amenity', 'fast_food')}
+    ))
+
+    table.append(ThingTableLine(
+        singular={'food shop', 'food store'},
+        plural={'food shops', 'food store'},
+        tags={('shop', 'convenience'), ('shop', 'deli'),
+              ('shop', 'supermarket')}
     ))
 
     table.append(ThingTableLine(

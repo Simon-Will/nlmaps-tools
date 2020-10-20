@@ -2133,6 +2133,12 @@
 |-
 | Buildings near || building || yes || near || Y 
 |-
+| Ice Cream || cuisine || ice_cream || - || N 
+|-
+| Ice Cream in || cuisine || ice_cream || in || N 
+|-
+| Ice Cream near || cuisine || ice_cream || near || N 
+|-
 | Bridleway || highway || bridleway || - || N 
 |-
 | Bridleways || highway || bridleway || - || Y 
@@ -3302,6 +3308,24 @@
 | WLAN in || internet_access || wlan || in || N 
 |-
 | WLAN near || internet_access || wlan || near || N 
+|-
+| Wifi || internet_access || wlan || - || N 
+|-
+| Wifi in || internet_access || wlan || in || N 
+|-
+| Wifi near || internet_access || wlan || near || N 
+|-
+| WLAN || internet_access || yes || - || N 
+|-
+| WLAN in || internet_access || yes || in || N 
+|-
+| WLAN near || internet_access || yes || near || N 
+|-
+| Wifi || internet_access || yes || - || N 
+|-
+| Wifi in || internet_access || yes || in || N 
+|-
+| Wifi near || internet_access || yes || near || N 
 |-
 | Roundabout || junction || roundabout || - || N 
 |-
@@ -5313,17 +5337,41 @@
 |-
 | Florists near || shop || florist || near || Y 
 |-
-| Food Shop || shop || food || - || N 
+| Food Shop || shop || convenience || - || N 
 |-
-| Food Shops || shop || food || - || Y 
+| Food Shops || shop || convenience || - || Y 
 |-
-| Food Shop in || shop || food || in || N 
+| Food Shop in || shop || convenience || in || N 
 |-
-| Food Shops in || shop || food || in || Y 
+| Food Shops in || shop || convenience || in || Y 
 |-
-| Food Shop near || shop || food || near || N 
+| Food Shop near || shop || convenience || near || N 
 |-
-| Food Shops near || shop || food || near || Y 
+| Food Shops near || shop || convenience || near || Y 
+|-
+| Food Shop || shop || deli || - || N 
+|-
+| Food Shops || shop || deli || - || Y 
+|-
+| Food Shop in || shop || deli || in || N 
+|-
+| Food Shops in || shop || deli || in || Y 
+|-
+| Food Shop near || shop || deli || near || N 
+|-
+| Food Shops near || shop || deli || near || Y 
+|-
+| Food Shop || shop || supermarket || - || N 
+|-
+| Food Shops || shop || supermarket || - || Y 
+|-
+| Food Shop in || shop || supermarket || in || N 
+|-
+| Food Shops in || shop || supermarket || in || Y 
+|-
+| Food Shop near || shop || supermarket || near || N 
+|-
+| Food Shops near || shop || supermarket || near || Y 
 |-
 | Funeral Director || shop || funeral_directors || - || N 
 |-

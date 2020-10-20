@@ -264,7 +264,10 @@ class MrlGrammar:
 
     def setMaxdist(self, s, loc, maxdist):
         # maxdist ex: [['maxdist', 'DIST_OUTTOWN']]
-        self.features['maxdist'] = maxdist[0][1]
+        dist = maxdist[0][1]
+        if isinstance(dist, str) and dist.isdigit():
+            dist = Symbol(dist)
+        self.features['maxdist'] = dist
 
     def setInQueryNwr(self, s, loc, in_query):
         # in_query ex 1: [['nwr', ['keyval', 'monitoring:bicycle', 'yes']]]
