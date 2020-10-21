@@ -207,29 +207,29 @@
 |-
 | ATMs near || amenity || atm || near || Y 
 |-
-| cash || amenity || atm || - || N 
+| Cash || amenity || atm || - || N 
 |-
-| cash || amenity || atm || - || Y 
+| Cash || amenity || atm || - || Y 
 |-
-| cash in || amenity || atm || in || N 
+| Cash in || amenity || atm || in || N 
 |-
-| cash in || amenity || atm || in || Y 
+| Cash in || amenity || atm || in || Y 
 |-
-| cash near || amenity || atm || near || N 
+| Cash near || amenity || atm || near || N 
 |-
-| cash near || amenity || atm || near || Y 
+| Cash near || amenity || atm || near || Y 
 |-
-| cash machine || amenity || atm || - || N 
+| Cash Machine || amenity || atm || - || N 
 |-
-| cash machines || amenity || atm || - || Y 
+| Cash Machines || amenity || atm || - || Y 
 |-
-| cash machine in || amenity || atm || in || N 
+| Cash Machine in || amenity || atm || in || N 
 |-
-| cash machines in || amenity || atm || in || Y 
+| Cash Machines in || amenity || atm || in || Y 
 |-
-| cash machine near || amenity || atm || near || N 
+| Cash Machine near || amenity || atm || near || N 
 |-
-| cash machines near || amenity || atm || near || Y 
+| Cash Machines near || amenity || atm || near || Y 
 |-
 | Bank || amenity || bank || - || N 
 |-
@@ -887,6 +887,18 @@
 |-
 | Fitness Centers near || amenity || gym || near || Y 
 |-
+| Fitness Studio || amenity || gym || - || N 
+|-
+| Fitness Studios || amenity || gym || - || Y 
+|-
+| Fitness Studio in || amenity || gym || in || N 
+|-
+| Fitness Studios in || amenity || gym || in || Y 
+|-
+| Fitness Studio near || amenity || gym || near || N 
+|-
+| Fitness Studios near || amenity || gym || near || Y 
+|-
 | Gym || amenity || gym || - || N 
 |-
 | Gyms || amenity || gym || - || Y 
@@ -1449,6 +1461,30 @@
 |-
 | Theatres near || amenity || theatre || near || Y 
 |-
+| Bathroom || amenity || toilets || - || N 
+|-
+| Bathrooms || amenity || toilets || - || Y 
+|-
+| Bathroom in || amenity || toilets || in || N 
+|-
+| Bathrooms in || amenity || toilets || in || Y 
+|-
+| Bathroom near || amenity || toilets || near || N 
+|-
+| Bathrooms near || amenity || toilets || near || Y 
+|-
+| Restroom || amenity || toilets || - || N 
+|-
+| Restrooms || amenity || toilets || - || Y 
+|-
+| Restroom in || amenity || toilets || in || N 
+|-
+| Restrooms in || amenity || toilets || in || Y 
+|-
+| Restroom near || amenity || toilets || near || N 
+|-
+| Restrooms near || amenity || toilets || near || Y 
+|-
 | Toilet || amenity || toilets || - || N 
 |-
 | Toilets || amenity || toilets || - || Y 
@@ -1460,6 +1496,78 @@
 | Toilet near || amenity || toilets || near || N 
 |-
 | Toilets near || amenity || toilets || near || Y 
+|-
+| Public Bathroom || amenity || toilets || - || N 
+|-
+| Public Bathrooms || amenity || toilets || - || Y 
+|-
+| Public Bathroom in || amenity || toilets || in || N 
+|-
+| Public Bathrooms in || amenity || toilets || in || Y 
+|-
+| Public Bathroom near || amenity || toilets || near || N 
+|-
+| Public Bathrooms near || amenity || toilets || near || Y 
+|-
+| Public Restroom || amenity || toilets || - || N 
+|-
+| Public Restrooms || amenity || toilets || - || Y 
+|-
+| Public Restroom in || amenity || toilets || in || N 
+|-
+| Public Restrooms in || amenity || toilets || in || Y 
+|-
+| Public Restroom near || amenity || toilets || near || N 
+|-
+| Public Restrooms near || amenity || toilets || near || Y 
+|-
+| Public Toilet || amenity || toilets || - || N 
+|-
+| Public Toilets || amenity || toilets || - || Y 
+|-
+| Public Toilet in || amenity || toilets || in || N 
+|-
+| Public Toilets in || amenity || toilets || in || Y 
+|-
+| Public Toilet near || amenity || toilets || near || N 
+|-
+| Public Toilets near || amenity || toilets || near || Y 
+|-
+| Cityhall || amenity || townhall || - || N 
+|-
+| Cityhalls || amenity || townhall || - || Y 
+|-
+| Cityhall in || amenity || townhall || in || N 
+|-
+| Cityhalls in || amenity || townhall || in || Y 
+|-
+| Cityhall near || amenity || townhall || near || N 
+|-
+| Cityhalls near || amenity || townhall || near || Y 
+|-
+| City Hall || amenity || townhall || - || N 
+|-
+| City Halls || amenity || townhall || - || Y 
+|-
+| City Hall in || amenity || townhall || in || N 
+|-
+| City Halls in || amenity || townhall || in || Y 
+|-
+| City Hall near || amenity || townhall || near || N 
+|-
+| City Halls near || amenity || townhall || near || Y 
+|-
+| Townhall || amenity || townhall || - || N 
+|-
+| Townhalls || amenity || townhall || - || Y 
+|-
+| Townhall in || amenity || townhall || in || N 
+|-
+| Townhalls in || amenity || townhall || in || Y 
+|-
+| Townhall near || amenity || townhall || near || N 
+|-
+| Townhalls near || amenity || townhall || near || Y 
 |-
 | Town Hall || amenity || townhall || - || N 
 |-
@@ -6044,6 +6152,18 @@
 | Picnic Site near || tourism || picnic_site || near || N 
 |-
 | Picnic Sites near || tourism || picnic_site || near || Y 
+|-
+| Amusement Park || tourism || theme_park || - || N 
+|-
+| Amusement Parks || tourism || theme_park || - || Y 
+|-
+| Amusement Park in || tourism || theme_park || in || N 
+|-
+| Amusement Parks in || tourism || theme_park || in || Y 
+|-
+| Amusement Park near || tourism || theme_park || near || N 
+|-
+| Amusement Parks near || tourism || theme_park || near || Y 
 |-
 | Theme Park || tourism || theme_park || - || N 
 |-
