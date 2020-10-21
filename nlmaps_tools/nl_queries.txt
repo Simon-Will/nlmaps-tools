@@ -82,3 +82,9 @@ To add:
 THING within walking distance of LOCATION
 how many PLURAL(THING) can be found
 What are the opening hours of POI in LOCATION
+wheelchair-accessible everything
+where can i eat italian food
+where can i eat anything
+where can i play tennis
+what kinds of cuisine are there
+where can i go camping

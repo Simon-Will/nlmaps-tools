@@ -2121,18 +2121,6 @@
 |-
 | School Buildings near || building || school || near || Y 
 |-
-| Shop || building || shop || - || N 
-|-
-| Shops || building || shop || - || Y 
-|-
-| Shop in || building || shop || in || N 
-|-
-| Shops in || building || shop || in || Y 
-|-
-| Shop near || building || shop || near || N 
-|-
-| Shops near || building || shop || near || Y 
-|-
 | Stadium || building || stadium || - || N 
 |-
 | Stadiums || building || stadium || - || Y 
@@ -4479,6 +4467,54 @@
 |-
 | Woods near || natural || wood || near || Y 
 |-
+| Organic Food Shop || organic || yes || - || N 
+|-
+| Organic Food Shops || organic || yes || - || Y 
+|-
+| Organic Food Shop in || organic || yes || in || N 
+|-
+| Organic Food Shops in || organic || yes || in || Y 
+|-
+| Organic Food Shop near || organic || yes || near || N 
+|-
+| Organic Food Shops near || organic || yes || near || Y 
+|-
+| Organic Shop || organic || yes || - || N 
+|-
+| Organic Shops || organic || yes || - || Y 
+|-
+| Organic Shop in || organic || yes || in || N 
+|-
+| Organic Shops in || organic || yes || in || Y 
+|-
+| Organic Shop near || organic || yes || near || N 
+|-
+| Organic Shops near || organic || yes || near || Y 
+|-
+| Organic Food Store || organic || yes || - || N 
+|-
+| Organic Food Stores || organic || yes || - || Y 
+|-
+| Organic Food Store in || organic || yes || in || N 
+|-
+| Organic Food Stores in || organic || yes || in || Y 
+|-
+| Organic Food Store near || organic || yes || near || N 
+|-
+| Organic Food Stores near || organic || yes || near || Y 
+|-
+| Organic Store || organic || yes || - || N 
+|-
+| Organic Stores || organic || yes || - || Y 
+|-
+| Organic Store in || organic || yes || in || N 
+|-
+| Organic Stores in || organic || yes || in || Y 
+|-
+| Organic Store near || organic || yes || near || N 
+|-
+| Organic Stores near || organic || yes || near || Y 
+|-
 | City || place || city || - || N 
 |-
 | Citys || place || city || - || Y 
@@ -5019,6 +5055,30 @@
 |-
 | Glass Recycling Facilities near || recycling:glass_bottles || yes || near || Y 
 |-
+| Shop || shop || * || - || N 
+|-
+| Shops || shop || * || - || Y 
+|-
+| Shop in || shop || * || in || N 
+|-
+| Shops in || shop || * || in || Y 
+|-
+| Shop near || shop || * || near || N 
+|-
+| Shops near || shop || * || near || Y 
+|-
+| Store || shop || * || - || N 
+|-
+| Stores || shop || * || - || Y 
+|-
+| Store in || shop || * || in || N 
+|-
+| Stores in || shop || * || in || Y 
+|-
+| Store near || shop || * || near || N 
+|-
+| Stores near || shop || * || near || Y 
+|-
 | Off Licence || shop || alcohol || - || N 
 |-
 | Off Licences || shop || alcohol || - || Y 
@@ -5043,6 +5103,126 @@
 |-
 | Off Licenses near || shop || alcohol || near || Y 
 |-
+| Off-Licence || shop || alcohol || - || N 
+|-
+| Off-Licences || shop || alcohol || - || Y 
+|-
+| Off-Licence in || shop || alcohol || in || N 
+|-
+| Off-Licences in || shop || alcohol || in || Y 
+|-
+| Off-Licence near || shop || alcohol || near || N 
+|-
+| Off-Licences near || shop || alcohol || near || Y 
+|-
+| Off-License || shop || alcohol || - || N 
+|-
+| Off-Licenses || shop || alcohol || - || Y 
+|-
+| Off-License in || shop || alcohol || in || N 
+|-
+| Off-Licenses in || shop || alcohol || in || Y 
+|-
+| Off-License near || shop || alcohol || near || N 
+|-
+| Off-Licenses near || shop || alcohol || near || Y 
+|-
+| Off Licence Shop || shop || alcohol || - || N 
+|-
+| Off Licence Shops || shop || alcohol || - || Y 
+|-
+| Off Licence Shop in || shop || alcohol || in || N 
+|-
+| Off Licence Shops in || shop || alcohol || in || Y 
+|-
+| Off Licence Shop near || shop || alcohol || near || N 
+|-
+| Off Licence Shops near || shop || alcohol || near || Y 
+|-
+| Off License Shop || shop || alcohol || - || N 
+|-
+| Off License Shops || shop || alcohol || - || Y 
+|-
+| Off License Shop in || shop || alcohol || in || N 
+|-
+| Off License Shops in || shop || alcohol || in || Y 
+|-
+| Off License Shop near || shop || alcohol || near || N 
+|-
+| Off License Shops near || shop || alcohol || near || Y 
+|-
+| Off-Licence Shop || shop || alcohol || - || N 
+|-
+| Off-Licence Shops || shop || alcohol || - || Y 
+|-
+| Off-Licence Shop in || shop || alcohol || in || N 
+|-
+| Off-Licence Shops in || shop || alcohol || in || Y 
+|-
+| Off-Licence Shop near || shop || alcohol || near || N 
+|-
+| Off-Licence Shops near || shop || alcohol || near || Y 
+|-
+| Off-License Shop || shop || alcohol || - || N 
+|-
+| Off-License Shops || shop || alcohol || - || Y 
+|-
+| Off-License Shop in || shop || alcohol || in || N 
+|-
+| Off-License Shops in || shop || alcohol || in || Y 
+|-
+| Off-License Shop near || shop || alcohol || near || N 
+|-
+| Off-License Shops near || shop || alcohol || near || Y 
+|-
+| Off Licence Store || shop || alcohol || - || N 
+|-
+| Off Licence Stores || shop || alcohol || - || Y 
+|-
+| Off Licence Store in || shop || alcohol || in || N 
+|-
+| Off Licence Stores in || shop || alcohol || in || Y 
+|-
+| Off Licence Store near || shop || alcohol || near || N 
+|-
+| Off Licence Stores near || shop || alcohol || near || Y 
+|-
+| Off License Store || shop || alcohol || - || N 
+|-
+| Off License Stores || shop || alcohol || - || Y 
+|-
+| Off License Store in || shop || alcohol || in || N 
+|-
+| Off License Stores in || shop || alcohol || in || Y 
+|-
+| Off License Store near || shop || alcohol || near || N 
+|-
+| Off License Stores near || shop || alcohol || near || Y 
+|-
+| Off-Licence Store || shop || alcohol || - || N 
+|-
+| Off-Licence Stores || shop || alcohol || - || Y 
+|-
+| Off-Licence Store in || shop || alcohol || in || N 
+|-
+| Off-Licence Stores in || shop || alcohol || in || Y 
+|-
+| Off-Licence Store near || shop || alcohol || near || N 
+|-
+| Off-Licence Stores near || shop || alcohol || near || Y 
+|-
+| Off-License Store || shop || alcohol || - || N 
+|-
+| Off-License Stores || shop || alcohol || - || Y 
+|-
+| Off-License Store in || shop || alcohol || in || N 
+|-
+| Off-License Stores in || shop || alcohol || in || Y 
+|-
+| Off-License Store near || shop || alcohol || near || N 
+|-
+| Off-License Stores near || shop || alcohol || near || Y 
+|-
 | Art Shop || shop || art || - || N 
 |-
 | Art Shops || shop || art || - || Y 
@@ -5054,6 +5234,18 @@
 | Art Shop near || shop || art || near || N 
 |-
 | Art Shops near || shop || art || near || Y 
+|-
+| Art Store || shop || art || - || N 
+|-
+| Art Stores || shop || art || - || Y 
+|-
+| Art Store in || shop || art || in || N 
+|-
+| Art Stores in || shop || art || in || Y 
+|-
+| Art Store near || shop || art || near || N 
+|-
+| Art Stores near || shop || art || near || Y 
 |-
 | Bakery || shop || bakery || - || N 
 |-
@@ -5085,6 +5277,18 @@
 |-
 | Beauty Shops near || shop || beauty || near || Y 
 |-
+| Beauty Store || shop || beauty || - || N 
+|-
+| Beauty Stores || shop || beauty || - || Y 
+|-
+| Beauty Store in || shop || beauty || in || N 
+|-
+| Beauty Stores in || shop || beauty || in || Y 
+|-
+| Beauty Store near || shop || beauty || near || N 
+|-
+| Beauty Stores near || shop || beauty || near || Y 
+|-
 | Beverages Shop || shop || beverages || - || N 
 |-
 | Beverages Shops || shop || beverages || - || Y 
@@ -5096,6 +5300,18 @@
 | Beverages Shop near || shop || beverages || near || N 
 |-
 | Beverages Shops near || shop || beverages || near || Y 
+|-
+| Beverages Store || shop || beverages || - || N 
+|-
+| Beverages Stores || shop || beverages || - || Y 
+|-
+| Beverages Store in || shop || beverages || in || N 
+|-
+| Beverages Stores in || shop || beverages || in || Y 
+|-
+| Beverages Store near || shop || beverages || near || N 
+|-
+| Beverages Stores near || shop || beverages || near || Y 
 |-
 | Bicycle Shop || shop || bicycle || - || N 
 |-
@@ -5109,6 +5325,18 @@
 |-
 | Bicycle Shops near || shop || bicycle || near || Y 
 |-
+| Bicycle Store || shop || bicycle || - || N 
+|-
+| Bicycle Stores || shop || bicycle || - || Y 
+|-
+| Bicycle Store in || shop || bicycle || in || N 
+|-
+| Bicycle Stores in || shop || bicycle || in || Y 
+|-
+| Bicycle Store near || shop || bicycle || near || N 
+|-
+| Bicycle Stores near || shop || bicycle || near || Y 
+|-
 | Book Shop || shop || books || - || N 
 |-
 | Book Shops || shop || books || - || Y 
@@ -5120,6 +5348,18 @@
 | Book Shop near || shop || books || near || N 
 |-
 | Book Shops near || shop || books || near || Y 
+|-
+| Book Store || shop || books || - || N 
+|-
+| Book Stores || shop || books || - || Y 
+|-
+| Book Store in || shop || books || in || N 
+|-
+| Book Stores in || shop || books || in || Y 
+|-
+| Book Store near || shop || books || near || N 
+|-
+| Book Stores near || shop || books || near || Y 
 |-
 | Butcher || shop || butcher || - || N 
 |-
@@ -5133,6 +5373,18 @@
 |-
 | Butchers near || shop || butcher || near || Y 
 |-
+| Car Dealer || shop || car || - || N 
+|-
+| Car Dealers || shop || car || - || Y 
+|-
+| Car Dealer in || shop || car || in || N 
+|-
+| Car Dealers in || shop || car || in || Y 
+|-
+| Car Dealer near || shop || car || near || N 
+|-
+| Car Dealers near || shop || car || near || Y 
+|-
 | Car Shop || shop || car || - || N 
 |-
 | Car Shops || shop || car || - || Y 
@@ -5144,6 +5396,18 @@
 | Car Shop near || shop || car || near || N 
 |-
 | Car Shops near || shop || car || near || Y 
+|-
+| Car Store || shop || car || - || N 
+|-
+| Car Stores || shop || car || - || Y 
+|-
+| Car Store in || shop || car || in || N 
+|-
+| Car Stores in || shop || car || in || Y 
+|-
+| Car Store near || shop || car || near || N 
+|-
+| Car Stores near || shop || car || near || Y 
 |-
 | Car Parts || shop || car_parts || - || N 
 |-
@@ -5169,6 +5433,18 @@
 |-
 | Carpet Shops near || shop || carpet || near || Y 
 |-
+| Carpet Store || shop || carpet || - || N 
+|-
+| Carpet Stores || shop || carpet || - || Y 
+|-
+| Carpet Store in || shop || carpet || in || N 
+|-
+| Carpet Stores in || shop || carpet || in || Y 
+|-
+| Carpet Store near || shop || carpet || near || N 
+|-
+| Carpet Stores near || shop || carpet || near || Y 
+|-
 | Car Repair || shop || car_repair || - || N 
 |-
 | Car Repairs || shop || car_repair || - || Y 
@@ -5193,6 +5469,18 @@
 |-
 | Charity Shops near || shop || charity || near || Y 
 |-
+| Charity Store || shop || charity || - || N 
+|-
+| Charity Stores || shop || charity || - || Y 
+|-
+| Charity Store in || shop || charity || in || N 
+|-
+| Charity Stores in || shop || charity || in || Y 
+|-
+| Charity Store near || shop || charity || near || N 
+|-
+| Charity Stores near || shop || charity || near || Y 
+|-
 | Chemist || shop || chemist || - || N 
 |-
 | Chemists || shop || chemist || - || Y 
@@ -5204,6 +5492,18 @@
 | Chemist near || shop || chemist || near || N 
 |-
 | Chemists near || shop || chemist || near || Y 
+|-
+| Apparel Store || shop || clothes || - || N 
+|-
+| Apparel Stores || shop || clothes || - || Y 
+|-
+| Apparel Store in || shop || clothes || in || N 
+|-
+| Apparel Stores in || shop || clothes || in || Y 
+|-
+| Apparel Store near || shop || clothes || near || N 
+|-
+| Apparel Stores near || shop || clothes || near || Y 
 |-
 | Clothes Shop || shop || clothes || - || N 
 |-
@@ -5217,6 +5517,66 @@
 |-
 | Clothes Shops near || shop || clothes || near || Y 
 |-
+| Clothes Store || shop || clothes || - || N 
+|-
+| Clothes Stores || shop || clothes || - || Y 
+|-
+| Clothes Store in || shop || clothes || in || N 
+|-
+| Clothes Stores in || shop || clothes || in || Y 
+|-
+| Clothes Store near || shop || clothes || near || N 
+|-
+| Clothes Stores near || shop || clothes || near || Y 
+|-
+| Clothing Shop || shop || clothes || - || N 
+|-
+| Clothing Shops || shop || clothes || - || Y 
+|-
+| Clothing Shop in || shop || clothes || in || N 
+|-
+| Clothing Shops in || shop || clothes || in || Y 
+|-
+| Clothing Shop near || shop || clothes || near || N 
+|-
+| Clothing Shops near || shop || clothes || near || Y 
+|-
+| Clothing Store || shop || clothes || - || N 
+|-
+| Clothing Stores || shop || clothes || - || Y 
+|-
+| Clothing Store in || shop || clothes || in || N 
+|-
+| Clothing Stores in || shop || clothes || in || Y 
+|-
+| Clothing Store near || shop || clothes || near || N 
+|-
+| Clothing Stores near || shop || clothes || near || Y 
+|-
+| Fashion Shop || shop || clothes || - || N 
+|-
+| Fashion Shops || shop || clothes || - || Y 
+|-
+| Fashion Shop in || shop || clothes || in || N 
+|-
+| Fashion Shops in || shop || clothes || in || Y 
+|-
+| Fashion Shop near || shop || clothes || near || N 
+|-
+| Fashion Shops near || shop || clothes || near || Y 
+|-
+| Fashion Store || shop || clothes || - || N 
+|-
+| Fashion Stores || shop || clothes || - || Y 
+|-
+| Fashion Store in || shop || clothes || in || N 
+|-
+| Fashion Stores in || shop || clothes || in || Y 
+|-
+| Fashion Store near || shop || clothes || near || N 
+|-
+| Fashion Stores near || shop || clothes || near || Y 
+|-
 | Computer Shop || shop || computer || - || N 
 |-
 | Computer Shops || shop || computer || - || Y 
@@ -5229,6 +5589,18 @@
 |-
 | Computer Shops near || shop || computer || near || Y 
 |-
+| Computer Store || shop || computer || - || N 
+|-
+| Computer Stores || shop || computer || - || Y 
+|-
+| Computer Store in || shop || computer || in || N 
+|-
+| Computer Stores in || shop || computer || in || Y 
+|-
+| Computer Store near || shop || computer || near || N 
+|-
+| Computer Stores near || shop || computer || near || Y 
+|-
 | Confectionery Shop || shop || confectionery || - || N 
 |-
 | Confectionery Shops || shop || confectionery || - || Y 
@@ -5240,6 +5612,18 @@
 | Confectionery Shop near || shop || confectionery || near || N 
 |-
 | Confectionery Shops near || shop || confectionery || near || Y 
+|-
+| Confectionery Store || shop || confectionery || - || N 
+|-
+| Confectionery Stores || shop || confectionery || - || Y 
+|-
+| Confectionery Store in || shop || confectionery || in || N 
+|-
+| Confectionery Stores in || shop || confectionery || in || Y 
+|-
+| Confectionery Store near || shop || confectionery || near || N 
+|-
+| Confectionery Stores near || shop || confectionery || near || Y 
 |-
 | Convenience Store || shop || convenience || - || N 
 |-
@@ -5283,6 +5667,18 @@
 |-
 | Cosmetics Shops near || shop || cosmetics || near || Y 
 |-
+| Cosmetics Store || shop || cosmetics || - || N 
+|-
+| Cosmetics Stores || shop || cosmetics || - || Y 
+|-
+| Cosmetics Store in || shop || cosmetics || in || N 
+|-
+| Cosmetics Stores in || shop || cosmetics || in || Y 
+|-
+| Cosmetics Store near || shop || cosmetics || near || N 
+|-
+| Cosmetics Stores near || shop || cosmetics || near || Y 
+|-
 | Delicatessen || shop || deli || - || N 
 |-
 | Delicatessen || shop || deli || - || Y 
@@ -5319,6 +5715,18 @@
 |-
 | Fish Shops near || shop || seafood || near || Y
 |-
+| Fish Store || shop || seafood || - || N 
+|-
+| Fish Stores || shop || seafood || - || Y 
+|-
+| Fish Store in || shop || seafood || in || N 
+|-
+| Fish Stores in || shop || seafood || in || Y 
+|-
+| Fish Store near || shop || seafood || near || N 
+|-
+| Fish Stores near || shop || seafood || near || Y
+|-
 | Seafood Shop || shop || seafood || - || N 
 |-
 | Seafood Shops || shop || seafood || - || Y 
@@ -5330,6 +5738,18 @@
 | Seafood Shop near || shop || seafood || near || N 
 |-
 | Seafood Shops near || shop || seafood || near || Y 
+|-
+| Seafood Store || shop || seafood || - || N 
+|-
+| Seafood Stores || shop || seafood || - || Y 
+|-
+| Seafood Store in || shop || seafood || in || N 
+|-
+| Seafood Stores in || shop || seafood || in || Y 
+|-
+| Seafood Store near || shop || seafood || near || N 
+|-
+| Seafood Stores near || shop || seafood || near || Y 
 |-
 | Do-It-Yourself || shop || doityourself || - || N 
 |-
@@ -5373,6 +5793,18 @@
 |-
 | Electronics Shops near || shop || electronics || near || Y 
 |-
+| Electronics Store || shop || electronics || - || N 
+|-
+| Electronics Stores || shop || electronics || - || Y 
+|-
+| Electronics Store in || shop || electronics || in || N 
+|-
+| Electronics Stores in || shop || electronics || in || Y 
+|-
+| Electronics Store near || shop || electronics || near || N 
+|-
+| Electronics Stores near || shop || electronics || near || Y 
+|-
 | Erotic Shop || shop || erotic || - || N 
 |-
 | Erotic Shops || shop || erotic || - || Y 
@@ -5385,6 +5817,18 @@
 |-
 | Erotic Shops near || shop || erotic || near || Y
 |-
+| Erotic Store || shop || erotic || - || N 
+|-
+| Erotic Stores || shop || erotic || - || Y 
+|-
+| Erotic Store in || shop || erotic || in || N 
+|-
+| Erotic Stores in || shop || erotic || in || Y 
+|-
+| Erotic Store near || shop || erotic || near || N 
+|-
+| Erotic Stores near || shop || erotic || near || Y
+|-
 | Sex Shop || shop || erotic || - || N 
 |-
 | Sex Shops || shop || erotic || - || Y 
@@ -5396,6 +5840,18 @@
 | Sex Shop near || shop || erotic || near || N 
 |-
 | Sex Shops near || shop || erotic || near || Y 
+|-
+| Sex Store || shop || erotic || - || N 
+|-
+| Sex Stores || shop || erotic || - || Y 
+|-
+| Sex Store in || shop || erotic || in || N 
+|-
+| Sex Stores in || shop || erotic || in || Y 
+|-
+| Sex Store near || shop || erotic || near || N 
+|-
+| Sex Stores near || shop || erotic || near || Y 
 |-
 | Estate Agent || shop || estate_agent || - || N 
 |-
@@ -5421,17 +5877,17 @@
 |-
 | Farm Shops near || shop || farm || near || Y 
 |-
-| Fashion Shop || shop || fashion || - || N 
+| Farm Store || shop || farm || - || N 
 |-
-| Fashion Shops || shop || fashion || - || Y 
+| Farm Stores || shop || farm || - || Y 
 |-
-| Fashion Shop in || shop || fashion || in || N 
+| Farm Store in || shop || farm || in || N 
 |-
-| Fashion Shops in || shop || fashion || in || Y 
+| Farm Stores in || shop || farm || in || Y 
 |-
-| Fashion Shop near || shop || fashion || near || N 
+| Farm Store near || shop || farm || near || N 
 |-
-| Fashion Shops near || shop || fashion || near || Y 
+| Farm Stores near || shop || farm || near || Y 
 |-
 | Florist || shop || florist || - || N 
 |-
@@ -5480,6 +5936,42 @@
 | Food Shop near || shop || supermarket || near || N 
 |-
 | Food Shops near || shop || supermarket || near || Y 
+|-
+| Food Store || shop || convenience || - || N 
+|-
+| Food Stores || shop || convenience || - || Y 
+|-
+| Food Store in || shop || convenience || in || N 
+|-
+| Food Stores in || shop || convenience || in || Y 
+|-
+| Food Store near || shop || convenience || near || N 
+|-
+| Food Stores near || shop || convenience || near || Y 
+|-
+| Food Store || shop || deli || - || N 
+|-
+| Food Stores || shop || deli || - || Y 
+|-
+| Food Store in || shop || deli || in || N 
+|-
+| Food Stores in || shop || deli || in || Y 
+|-
+| Food Store near || shop || deli || near || N 
+|-
+| Food Stores near || shop || deli || near || Y 
+|-
+| Food Store || shop || supermarket || - || N 
+|-
+| Food Stores || shop || supermarket || - || Y 
+|-
+| Food Store in || shop || supermarket || in || N 
+|-
+| Food Stores in || shop || supermarket || in || Y 
+|-
+| Food Store near || shop || supermarket || near || N 
+|-
+| Food Stores near || shop || supermarket || near || Y 
 |-
 | Funeral Director || shop || funeral_directors || - || N 
 |-
@@ -5553,6 +6045,18 @@
 |-
 | Gift Shops near || shop || gift || near || Y 
 |-
+| Gift Store || shop || gift || - || N 
+|-
+| Gift Stores || shop || gift || - || Y 
+|-
+| Gift Store in || shop || gift || in || N 
+|-
+| Gift Stores in || shop || gift || in || Y 
+|-
+| Gift Store near || shop || gift || near || N 
+|-
+| Gift Stores near || shop || gift || near || Y 
+|-
 | Greengrocer || shop || greengrocer || - || N 
 |-
 | Greengrocers || shop || greengrocer || - || Y 
@@ -5625,6 +6129,30 @@
 |-
 | Jewelry Shops near || shop || jewelry || near || Y 
 |-
+| Jewelry Store || shop || jewelry || - || N 
+|-
+| Jewelry Stores || shop || jewelry || - || Y 
+|-
+| Jewelry Store in || shop || jewelry || in || N 
+|-
+| Jewelry Stores in || shop || jewelry || in || Y 
+|-
+| Jewelry Store near || shop || jewelry || near || N 
+|-
+| Jewelry Stores near || shop || jewelry || near || Y 
+|-
+| Kiosk || shop || kiosk || - || N 
+|-
+| Kiosks || shop || kiosk || - || Y 
+|-
+| Kiosk in || shop || kiosk || in || N 
+|-
+| Kiosks in || shop || kiosk || in || Y 
+|-
+| Kiosk near || shop || kiosk || near || N 
+|-
+| Kiosks near || shop || kiosk || near || Y 
+|-
 | Kiosk Shop || shop || kiosk || - || N 
 |-
 | Kiosk Shops || shop || kiosk || - || Y 
@@ -5667,6 +6195,18 @@
 |-
 | Malls near || shop || mall || near || Y 
 |-
+| Massage || shop || massage || - || N 
+|-
+| Massages || shop || massage || - || Y 
+|-
+| Massage in || shop || massage || in || N 
+|-
+| Massages in || shop || massage || in || Y 
+|-
+| Massage near || shop || massage || near || N 
+|-
+| Massages near || shop || massage || near || Y
+|-
 | Massage Shop || shop || massage || - || N 
 |-
 | Massage Shops || shop || massage || - || Y 
@@ -5678,6 +6218,54 @@
 | Massage Shop near || shop || massage || near || N 
 |-
 | Massage Shops near || shop || massage || near || Y
+|-
+| Cellphone Shop || shop || mobile_phone || - || N 
+|-
+| Cellphone Shops || shop || mobile_phone || - || Y 
+|-
+| Cellphone Shop in || shop || mobile_phone || in || N 
+|-
+| Cellphone Shops in || shop || mobile_phone || in || Y 
+|-
+| Cellphone Shop near || shop || mobile_phone || near || N 
+|-
+| Cellphone Shops near || shop || mobile_phone || near || Y 
+|-
+| Cellphone Store || shop || mobile_phone || - || N 
+|-
+| Cellphone Stores || shop || mobile_phone || - || Y 
+|-
+| Cellphone Store in || shop || mobile_phone || in || N 
+|-
+| Cellphone Stores in || shop || mobile_phone || in || Y 
+|-
+| Cellphone Store near || shop || mobile_phone || near || N 
+|-
+| Cellphone Stores near || shop || mobile_phone || near || Y 
+|-
+| Cell Phone Shop || shop || mobile_phone || - || N 
+|-
+| Cell Phone Shops || shop || mobile_phone || - || Y 
+|-
+| Cell Phone Shop in || shop || mobile_phone || in || N 
+|-
+| Cell Phone Shops in || shop || mobile_phone || in || Y 
+|-
+| Cell Phone Shop near || shop || mobile_phone || near || N 
+|-
+| Cell Phone Shops near || shop || mobile_phone || near || Y 
+|-
+| Cell Phone Store || shop || mobile_phone || - || N 
+|-
+| Cell Phone Stores || shop || mobile_phone || - || Y 
+|-
+| Cell Phone Store in || shop || mobile_phone || in || N 
+|-
+| Cell Phone Stores in || shop || mobile_phone || in || Y 
+|-
+| Cell Phone Store near || shop || mobile_phone || near || N 
+|-
+| Cell Phone Stores near || shop || mobile_phone || near || Y 
 |-
 | Mobile Phone Shop || shop || mobile_phone || - || N 
 |-
@@ -5691,6 +6279,18 @@
 |-
 | Mobile Phone Shops near || shop || mobile_phone || near || Y 
 |-
+| Mobile Phone Store || shop || mobile_phone || - || N 
+|-
+| Mobile Phone Stores || shop || mobile_phone || - || Y 
+|-
+| Mobile Phone Store in || shop || mobile_phone || in || N 
+|-
+| Mobile Phone Stores in || shop || mobile_phone || in || Y 
+|-
+| Mobile Phone Store near || shop || mobile_phone || near || N 
+|-
+| Mobile Phone Stores near || shop || mobile_phone || near || Y 
+|-
 | Motorcycle Shop || shop || motorcycle || - || N 
 |-
 | Motorcycle Shops || shop || motorcycle || - || Y 
@@ -5703,6 +6303,18 @@
 |-
 | Motorcycle Shops near || shop || motorcycle || near || Y 
 |-
+| Motorcycle Store || shop || motorcycle || - || N 
+|-
+| Motorcycle Stores || shop || motorcycle || - || Y 
+|-
+| Motorcycle Store in || shop || motorcycle || in || N 
+|-
+| Motorcycle Stores in || shop || motorcycle || in || Y 
+|-
+| Motorcycle Store near || shop || motorcycle || near || N 
+|-
+| Motorcycle Stores near || shop || motorcycle || near || Y 
+|-
 | Music Shop || shop || music || - || N 
 |-
 | Music Shops || shop || music || - || Y 
@@ -5714,6 +6326,42 @@
 | Music Shop near || shop || music || near || N 
 |-
 | Music Shops near || shop || music || near || Y 
+|-
+| Music Store || shop || music || - || N 
+|-
+| Music Stores || shop || music || - || Y 
+|-
+| Music Store in || shop || music || in || N 
+|-
+| Music Stores in || shop || music || in || Y 
+|-
+| Music Store near || shop || music || near || N 
+|-
+| Music Stores near || shop || music || near || Y 
+|-
+| Record Shop || shop || music || - || N 
+|-
+| Record Shops || shop || music || - || Y 
+|-
+| Record Shop in || shop || music || in || N 
+|-
+| Record Shops in || shop || music || in || Y 
+|-
+| Record Shop near || shop || music || near || N 
+|-
+| Record Shops near || shop || music || near || Y 
+|-
+| Record Store || shop || music || - || N 
+|-
+| Record Stores || shop || music || - || Y 
+|-
+| Record Store in || shop || music || in || N 
+|-
+| Record Stores in || shop || music || in || Y 
+|-
+| Record Store near || shop || music || near || N 
+|-
+| Record Stores near || shop || music || near || Y 
 |-
 | Newsagent || shop || newsagent || - || N 
 |-
@@ -5739,18 +6387,6 @@
 |-
 | Opticians near || shop || optician || near || Y 
 |-
-| Organic Food Shop || shop || organic || - || N 
-|-
-| Organic Food Shops || shop || organic || - || Y 
-|-
-| Organic Food Shop in || shop || organic || in || N 
-|-
-| Organic Food Shops in || shop || organic || in || Y 
-|-
-| Organic Food Shop near || shop || organic || near || N 
-|-
-| Organic Food Shops near || shop || organic || near || Y 
-|-
 | Outdoor Shop || shop || outdoor || - || N 
 |-
 | Outdoor Shops || shop || outdoor || - || Y 
@@ -5762,6 +6398,18 @@
 | Outdoor Shop near || shop || outdoor || near || N 
 |-
 | Outdoor Shops near || shop || outdoor || near || Y 
+|-
+| Outdoor Store || shop || outdoor || - || N 
+|-
+| Outdoor Stores || shop || outdoor || - || Y 
+|-
+| Outdoor Store in || shop || outdoor || in || N 
+|-
+| Outdoor Stores in || shop || outdoor || in || Y 
+|-
+| Outdoor Store near || shop || outdoor || near || N 
+|-
+| Outdoor Stores near || shop || outdoor || near || Y 
 |-
 | Pet Shop || shop || pet || - || N 
 |-
@@ -5775,6 +6423,18 @@
 |-
 | Pet Shops near || shop || pet || near || Y 
 |-
+| Pet Store || shop || pet || - || N 
+|-
+| Pet Stores || shop || pet || - || Y 
+|-
+| Pet Store in || shop || pet || in || N 
+|-
+| Pet Stores in || shop || pet || in || Y 
+|-
+| Pet Store near || shop || pet || near || N 
+|-
+| Pet Stores near || shop || pet || near || Y 
+|-
 | Photo Shop || shop || photo || - || N 
 |-
 | Photo Shops || shop || photo || - || Y 
@@ -5787,17 +6447,17 @@
 |-
 | Photo Shops near || shop || photo || near || Y 
 |-
-| Salon || shop || salon || - || N 
+| Photo Store || shop || photo || - || N 
 |-
-| Salons || shop || salon || - || Y 
+| Photo Stores || shop || photo || - || Y 
 |-
-| Salon in || shop || salon || in || N 
+| Photo Store in || shop || photo || in || N 
 |-
-| Salons in || shop || salon || in || Y 
+| Photo Stores in || shop || photo || in || Y 
 |-
-| Salon near || shop || salon || near || N 
+| Photo Store near || shop || photo || near || N 
 |-
-| Salons near || shop || salon || near || Y 
+| Photo Stores near || shop || photo || near || Y 
 |-
 | Shoe Shop || shop || shoes || - || N 
 |-
@@ -5810,6 +6470,18 @@
 | Shoe Shop near || shop || shoes || near || N 
 |-
 | Shoe Shops near || shop || shoes || near || Y 
+|-
+| Shoe Store || shop || shoes || - || N 
+|-
+| Shoe Stores || shop || shoes || - || Y 
+|-
+| Shoe Store in || shop || shoes || in || N 
+|-
+| Shoe Stores in || shop || shoes || in || Y 
+|-
+| Shoe Store near || shop || shoes || near || N 
+|-
+| Shoe Stores near || shop || shoes || near || Y 
 |-
 | Shopping Centre || shop || shopping_centre || - || N 
 |-
@@ -5847,6 +6519,36 @@
 |-
 | Sports Shops near || shop || sports || near || Y 
 |-
+| Sports Store || shop || sports || - || N 
+|-
+| Sports Stores || shop || sports || - || Y 
+|-
+| Sports Store in || shop || sports || in || N 
+|-
+| Sports Stores in || shop || sports || in || Y 
+|-
+| Sports Store near || shop || sports || near || N 
+|-
+| Sports Stores near || shop || sports || near || Y 
+|-
+| Stationery || shop || stationery || - || N 
+|-
+| Stationerys || shop || stationery || - || Y 
+|-
+| Stationeries || shop || stationery || - || Y 
+|-
+| Stationery in || shop || stationery || in || N 
+|-
+| Stationerys in || shop || stationery || in || Y 
+|-
+| Stationeries in || shop || stationery || in || Y 
+|-
+| Stationery near || shop || stationery || near || N 
+|-
+| Stationerys near || shop || stationery || near || Y 
+|-
+| Stationeries near || shop || stationery || near || Y 
+|-
 | Stationery Shop || shop || stationery || - || N 
 |-
 | Stationery Shops || shop || stationery || - || Y 
@@ -5859,6 +6561,18 @@
 |-
 | Stationery Shops near || shop || stationery || near || Y 
 |-
+| Stationery Store || shop || stationery || - || N 
+|-
+| Stationery Stores || shop || stationery || - || Y 
+|-
+| Stationery Store in || shop || stationery || in || N 
+|-
+| Stationery Stores in || shop || stationery || in || Y 
+|-
+| Stationery Store near || shop || stationery || near || N 
+|-
+| Stationery Stores near || shop || stationery || near || Y 
+|-
 | Supermarket || shop || supermarket || - || N 
 |-
 | Supermarkets || shop || supermarket || - || Y 
@@ -5870,6 +6584,18 @@
 | Supermarket near || shop || supermarket || near || N 
 |-
 | Supermarkets near || shop || supermarket || near || Y 
+|-
+| Super Market || shop || supermarket || - || N 
+|-
+| Super Markets || shop || supermarket || - || Y 
+|-
+| Super Market in || shop || supermarket || in || N 
+|-
+| Super Markets in || shop || supermarket || in || Y 
+|-
+| Super Market near || shop || supermarket || near || N 
+|-
+| Super Markets near || shop || supermarket || near || Y 
 |-
 | Tattoo Studio || shop || tattoo || - || N 
 |-
@@ -5895,6 +6621,18 @@
 |-
 | Tobacco Shops near || shop || tobacco || near || Y 
 |-
+| Tobacco Store || shop || tobacco || - || N 
+|-
+| Tobacco Stores || shop || tobacco || - || Y 
+|-
+| Tobacco Store in || shop || tobacco || in || N 
+|-
+| Tobacco Stores in || shop || tobacco || in || Y 
+|-
+| Tobacco Store near || shop || tobacco || near || N 
+|-
+| Tobacco Stores near || shop || tobacco || near || Y 
+|-
 | Toy Shop || shop || toys || - || N 
 |-
 | Toy Shops || shop || toys || - || Y 
@@ -5906,6 +6644,18 @@
 | Toy Shop near || shop || toys || near || N 
 |-
 | Toy Shops near || shop || toys || near || Y 
+|-
+| Toy Store || shop || toys || - || N 
+|-
+| Toy Stores || shop || toys || - || Y 
+|-
+| Toy Store in || shop || toys || in || N 
+|-
+| Toy Stores in || shop || toys || in || Y 
+|-
+| Toy Store near || shop || toys || near || N 
+|-
+| Toy Stores near || shop || toys || near || Y 
 |-
 | Travel Agency || shop || travel_agency || - || N 
 |-
@@ -5937,6 +6687,18 @@
 |-
 | Video Shops near || shop || video || near || Y 
 |-
+| Video Store || shop || video || - || N 
+|-
+| Video Stores || shop || video || - || Y 
+|-
+| Video Store in || shop || video || in || N 
+|-
+| Video Stores in || shop || video || in || Y 
+|-
+| Video Store near || shop || video || near || N 
+|-
+| Video Stores near || shop || video || near || Y 
+|-
 | Off Licence || shop || wine || - || N 
 |-
 | Off Licences || shop || wine || - || Y 
@@ -5961,6 +6723,126 @@
 |-
 | Off Licenses near || shop || wine || near || Y 
 |-
+| Off-Licence || shop || wine || - || N 
+|-
+| Off-Licences || shop || wine || - || Y 
+|-
+| Off-Licence in || shop || wine || in || N 
+|-
+| Off-Licences in || shop || wine || in || Y 
+|-
+| Off-Licence near || shop || wine || near || N 
+|-
+| Off-Licences near || shop || wine || near || Y 
+|-
+| Off-License || shop || wine || - || N 
+|-
+| Off-Licenses || shop || wine || - || Y 
+|-
+| Off-License in || shop || wine || in || N 
+|-
+| Off-Licenses in || shop || wine || in || Y 
+|-
+| Off-License near || shop || wine || near || N 
+|-
+| Off-Licenses near || shop || wine || near || Y 
+|-
+| Off Licence Shop || shop || wine || - || N 
+|-
+| Off Licence Shops || shop || wine || - || Y 
+|-
+| Off Licence Shop in || shop || wine || in || N 
+|-
+| Off Licence Shops in || shop || wine || in || Y 
+|-
+| Off Licence Shop near || shop || wine || near || N 
+|-
+| Off Licence Shops near || shop || wine || near || Y 
+|-
+| Off License Shop || shop || wine || - || N 
+|-
+| Off License Shops || shop || wine || - || Y 
+|-
+| Off License Shop in || shop || wine || in || N 
+|-
+| Off License Shops in || shop || wine || in || Y 
+|-
+| Off License Shop near || shop || wine || near || N 
+|-
+| Off License Shops near || shop || wine || near || Y 
+|-
+| Off-Licence Shop || shop || wine || - || N 
+|-
+| Off-Licence Shops || shop || wine || - || Y 
+|-
+| Off-Licence Shop in || shop || wine || in || N 
+|-
+| Off-Licence Shops in || shop || wine || in || Y 
+|-
+| Off-Licence Shop near || shop || wine || near || N 
+|-
+| Off-Licence Shops near || shop || wine || near || Y 
+|-
+| Off-License Shop || shop || wine || - || N 
+|-
+| Off-License Shops || shop || wine || - || Y 
+|-
+| Off-License Shop in || shop || wine || in || N 
+|-
+| Off-License Shops in || shop || wine || in || Y 
+|-
+| Off-License Shop near || shop || wine || near || N 
+|-
+| Off-License Shops near || shop || wine || near || Y 
+|-
+| Off Licence Store || shop || wine || - || N 
+|-
+| Off Licence Stores || shop || wine || - || Y 
+|-
+| Off Licence Store in || shop || wine || in || N 
+|-
+| Off Licence Stores in || shop || wine || in || Y 
+|-
+| Off Licence Store near || shop || wine || near || N 
+|-
+| Off Licence Stores near || shop || wine || near || Y 
+|-
+| Off License Store || shop || wine || - || N 
+|-
+| Off License Stores || shop || wine || - || Y 
+|-
+| Off License Store in || shop || wine || in || N 
+|-
+| Off License Stores in || shop || wine || in || Y 
+|-
+| Off License Store near || shop || wine || near || N 
+|-
+| Off License Stores near || shop || wine || near || Y 
+|-
+| Off-Licence Store || shop || wine || - || N 
+|-
+| Off-Licence Stores || shop || wine || - || Y 
+|-
+| Off-Licence Store in || shop || wine || in || N 
+|-
+| Off-Licence Stores in || shop || wine || in || Y 
+|-
+| Off-Licence Store near || shop || wine || near || N 
+|-
+| Off-Licence Stores near || shop || wine || near || Y 
+|-
+| Off-License Store || shop || wine || - || N 
+|-
+| Off-License Stores || shop || wine || - || Y 
+|-
+| Off-License Store in || shop || wine || in || N 
+|-
+| Off-License Stores in || shop || wine || in || Y 
+|-
+| Off-License Store near || shop || wine || near || N 
+|-
+| Off-License Stores near || shop || wine || near || Y 
+|-
 | Wine Shop || shop || wine || - || N 
 |-
 | Wine Shops || shop || wine || - || Y 
@@ -5972,6 +6854,18 @@
 | Wine Shop near || shop || wine || near || N 
 |-
 | Wine Shops near || shop || wine || near || Y 
+|-
+| Wine Store || shop || wine || - || N 
+|-
+| Wine Stores || shop || wine || - || Y 
+|-
+| Wine Store in || shop || wine || in || N 
+|-
+| Wine Stores in || shop || wine || in || Y 
+|-
+| Wine Store near || shop || wine || near || N 
+|-
+| Wine Stores near || shop || wine || near || Y 
 |-
 | Nursing Home || social_facility || nursing_home || - || N 
 |-
@@ -6032,6 +6926,54 @@
 | Attraction near || tourism || attraction || near || N 
 |-
 | Attractions near || tourism || attraction || near || Y 
+|-
+| Tourist Attraction || tourism || attraction || - || N 
+|-
+| Tourist Attractions || tourism || attraction || - || Y 
+|-
+| Tourist Attraction in || tourism || attraction || in || N 
+|-
+| Tourist Attractions in || tourism || attraction || in || Y 
+|-
+| Tourist Attraction near || tourism || attraction || near || N 
+|-
+| Tourist Attractions near || tourism || attraction || near || Y 
+|-
+| Campground || tourism || camp_site || - || N 
+|-
+| Campgrounds || tourism || camp_site || - || Y 
+|-
+| Campground in || tourism || camp_site || in || N 
+|-
+| Campgrounds in || tourism || camp_site || in || Y 
+|-
+| Campground near || tourism || camp_site || near || N 
+|-
+| Campgrounds near || tourism || camp_site || near || Y 
+|-
+| Campsite || tourism || camp_site || - || N 
+|-
+| Campsites || tourism || camp_site || - || Y 
+|-
+| Campsite in || tourism || camp_site || in || N 
+|-
+| Campsites in || tourism || camp_site || in || Y 
+|-
+| Campsite near || tourism || camp_site || near || N 
+|-
+| Campsites near || tourism || camp_site || near || Y 
+|-
+| Camp Ground || tourism || camp_site || - || N 
+|-
+| Camp Grounds || tourism || camp_site || - || Y 
+|-
+| Camp Ground in || tourism || camp_site || in || N 
+|-
+| Camp Grounds in || tourism || camp_site || in || Y 
+|-
+| Camp Ground near || tourism || camp_site || near || N 
+|-
+| Camp Grounds near || tourism || camp_site || near || Y 
 |-
 | Camp Site || tourism || camp_site || - || N 
 |-
@@ -6116,6 +7058,18 @@
 | Information near || tourism || information || near || N 
 |-
 | Informations near || tourism || information || near || Y 
+|-
+| Tourist Information || tourism || information || - || N 
+|-
+| Tourist Informations || tourism || information || - || Y 
+|-
+| Tourist Information in || tourism || information || in || N 
+|-
+| Tourist Informations in || tourism || information || in || Y 
+|-
+| Tourist Information near || tourism || information || near || N 
+|-
+| Tourist Informations near || tourism || information || near || Y 
 |-
 | Motel || tourism || motel || - || N 
 |-

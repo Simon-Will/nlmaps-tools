@@ -111,7 +111,8 @@ def pre_edit_phrase_table_lines(phrase_table_lines):
             continue
 
         # This merges shop=convenience|deli|supermarket, delete for now.
-        if ptl.key == 'shop' and ptl.value == 'wine':
+        if ptl.phrase in ['food shop', 'food store',
+                          'food shops', 'food stores']:
             continue
 
         # Pubs are not bars, and vice versa.
@@ -171,6 +172,7 @@ def post_edit_thing_table(table):
         tags={('amenity', 'place_of_worship')}
     ))
 
+
     for i, ttl in enumerate(table):
         tags = tags_to_nwr(ttl.tags)
 
@@ -187,6 +189,13 @@ def post_edit_thing_table(table):
         table[i] = ThingTableLine(
             singular=ttl.singular, plural=ttl.plural, tags=tags
         )
+
+    for denomination in ['anglican', 'catholic', 'orthodox', 'protestant']:
+        table.append(ThingTableLine(
+            singular={denomination + ' church'},
+            plural={denomination + ' churchs', denomination + ' churches'},
+            tags=[('amenity', 'place_of_worship'), ('denomination', denomination)]
+        ))
 
     return table
 

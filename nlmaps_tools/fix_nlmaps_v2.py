@@ -31,6 +31,11 @@ SUBSTITUTIONS = (
     (r"keyval\(('landuse','wood'|'landuse','forest'|'natural','wood')\)", r"or(keyval('landuse','forest'),keyval('natural','wood'))"),
     (r"keyval\('amenity','nursing_home'\)", r"or(keyval('amenity','nursing_home'),keyval('social_facility','nursing_home'))"),
     (r"keyval\('(amenity|cuisine)','ice_cream'\)", r"or(keyval('amenity','ice_cream'),keyval('cuisine','ice_cream'))"),
+    (r"keyval\('amenity','emergency_phone'\)", r"keyval('emergency','phone')"),
+    (r"keyval\('shop','organic'\)", r"keyval('organic',or('only','yes'))"),
+    (r"keyval\('building','shop'\)", r"keyval('shop','*')"),
+    (r"keyval\('shop','fashion'\)", r"keyval('shop','clothes')"),
+    (r"or\(keyval\('organic','only'\),keyval\('organic','yes'\))", r"keyval('organic',or('only','yes'))"),
 )
 
 
@@ -84,6 +89,10 @@ def fix_area_without_center_nwr(mrl):
     return mrl
 
 
+def has_unfixable_deprecated_tag(mrl):
+    return "'shop','salon'" in mrl
+
+
 def get_findkey_value(mrl):
     m = re.search(r"qtype\(findkey\('([^']+)'\)\)", mrl)
     if m:
@@ -105,6 +114,10 @@ def main(mrl_infile, en_infile, mrl_outfile, en_outfile):
                 if en.startswith(prefix):
                     print('Deleting:', en)
                     continue
+
+            if has_unfixable_deprecated_tag(mrl):
+                print('Deleting:', en)
+                continue
 
             for sub in SUBSTITUTIONS:
                 mrl = re.sub(sub[0], sub[1], mrl)
