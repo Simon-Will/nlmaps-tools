@@ -40,30 +40,14 @@ generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.train" 50000 noise
 generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.dev" 2000 noise
 generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.test" 20000 noise
 
-mkdir -p "$V3_DIR/v3$SUFFIX.normal.plusv2"
-TRAIN_LEN=$(wc -l "$V2_DIR/nlmaps.v2.train.mrl")
-DEV_LEN=$(wc -l "$V2_DIR/nlmaps.v2.dev.mrl")
-TEST_LEN=$(wc -l "$V2_DIR/nlmaps.v2.test.mrl")
-cat "$V2_DIR/nlmaps.v2.train.mrl" \
-    <(sed "$((TRAIN_LEN + 1))"',$d' "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.train.mrl") \
-    >"$V3_DIR/v3$SUFFIX.normal.plusv2.train.mrl"
-cat "$V2_DIR/nlmaps.v2.dev.mrl" \
-    <(sed "$((DEV_LEN + 1))"',$d' "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.dev.mrl") \
-    >"$V3_DIR/v3$SUFFIX.normal.plusv2.dev.mrl"
-cat "$V2_DIR/nlmaps.v2.dev.mrl" \
-    <(sed "$((DEV_LEN + 1))"',$d' "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.dev.mrl") \
-    >"$V3_DIR/v3$SUFFIX.normal.plusv2.dev.mrl"
-
-mkdir -p "$V3_DIR/v3$SUFFIX.noise.plusv2"
-TRAIN_LEN=$(wc -l "$V2_DIR/nlmaps.v2.train.mrl")
-DEV_LEN=$(wc -l "$V2_DIR/nlmaps.v2.dev.mrl")
-TEST_LEN=$(wc -l "$V2_DIR/nlmaps.v2.test.mrl")
-cat "$V2_DIR/nlmaps.v2.train.mrl" \
-    <(sed "$((TRAIN_LEN + 1))"',$d' "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.train.mrl") \
-    >"$V3_DIR/v3$SUFFIX.noise.plusv2.train.mrl"
-cat "$V2_DIR/nlmaps.v2.dev.mrl" \
-    <(sed "$((DEV_LEN + 1))"',$d' "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.dev.mrl") \
-    >"$V3_DIR/v3$SUFFIX.noise.plusv2.dev.mrl"
-cat "$V2_DIR/nlmaps.v2.dev.mrl" \
-    <(sed "$((DEV_LEN + 1))"',$d' "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.dev.mrl") \
-    >"$V3_DIR/v3$SUFFIX.noise.plusv2.dev.mrl"
+for type in normal noise; do
+    mkdir -p "$V3_DIR/v3$SUFFIX.$type.plusv2"
+    for split in train dev test; do
+        len=$(wc -l <"$V2_DIR/nlmaps.v2.$split.mrl")
+        for ext in en mrl; do
+            cat "$V2_DIR/nlmaps.v2.$split.$ext" \
+                <(head -n "$len" "$V3_DIR/v3$SUFFIX.$type/nlmaps.v3$SUFFIX.$split.$ext") \
+                >"$V3_DIR/v3$SUFFIX.$type.plusv2/nlmaps.v3$SUFFIX.$split.$ext"
+        done
+    done
+done
