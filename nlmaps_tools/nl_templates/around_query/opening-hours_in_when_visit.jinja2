@@ -1,4 +1,5 @@
 {% if features['area'] and optional('separate_area_and_nwr', 0.6) %}
+  in {{ features['area'] }}{{ optional(',', 0.5) }}
   when
   {{ choose(['can I', 'can we', 'to'], [0.3, 0.3, 0.4]) }}
   {{ choose(['visit', 'go to'], [0.6, 0.4]) }}

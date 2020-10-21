@@ -100,7 +100,8 @@ def add_noise(s, exclude=tuple(), noise_chance=0.01):
             # and also 1 character before and after it.
             excluded_indices.update(range(start - 1, start + len(exc) + 1))
         else:
-            print('Error: {exc} is not in {s}', file=sys.stderr)
+            print('Error: {exc!r} is not in {s!r}'.format(exc=exc, s=s),
+                  file=sys.stderr)
 
     alphabet = [chr(n) for n in itertools.chain(range(0x41, 0x41 + 26),
                                                 range(0x61, 0x61 + 26))]
@@ -193,6 +194,7 @@ def generate_nl(features, noise=False):
     rfeatures = features['rendering_features']
     possible_templates = templates[rfeatures['qtype_shorthand']]
     template = ENV.get_template(choose(possible_templates))
+    rfeatures['template'] = template  # This is only saved as debugging info.
 
     nl = remove_superfluous_whitespace(
         template.render(features=features, **rfeatures)
@@ -224,10 +226,13 @@ def omit_location(loc):
 
 def main(areas, pois, count=100, escape=False, nl_suffix='en', noise=False,
          out_prefix=None):
+    random.seed(42)
     with open(areas) as f:
-        areas = [line.strip() for line in f if not omit_location(line)]
+        areas = [remove_superfluous_whitespace(line)
+                 for line in f if not omit_location(line)]
     with open(pois) as f:
-        pois = [line.strip() for line in f if not omit_location(line)]
+        pois = [remove_superfluous_whitespace(line)
+                for line in f if not omit_location(line)]
 
     if out_prefix:
         nl_file = open(out_prefix + '.' + nl_suffix, 'w')
