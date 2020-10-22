@@ -1185,6 +1185,18 @@
 |-
 | Police near || amenity || police || near || N 
 |-
+| Postbox || amenity || post_box || - || N 
+|-
+| Postboxes || amenity || post_box || - || Y 
+|-
+| Postbox in || amenity || post_box || in || N 
+|-
+| Postboxes in || amenity || post_box || in || Y 
+|-
+| Postbox near || amenity || post_box || near || N 
+|-
+| Postboxes near || amenity || post_box || near || Y 
+|-
 | Post Box || amenity || post_box || - || N 
 |-
 | Post Boxes || amenity || post_box || - || Y 
@@ -4298,6 +4310,30 @@
 | Mud near || natural || mud || near || N 
 |-
 | Muds near || natural || mud || near || Y 
+|-
+| Hill || natural || peak || - || N 
+|-
+| Hills || natural || peak || - || Y 
+|-
+| Hill in || natural || peak || in || N 
+|-
+| Hills in || natural || peak || in || Y 
+|-
+| Hill near || natural || peak || near || N 
+|-
+| Hills near || natural || peak || near || Y 
+|-
+| Mountain || natural || peak || - || N 
+|-
+| Mountains || natural || peak || - || Y 
+|-
+| Mountain in || natural || peak || in || N 
+|-
+| Mountains in || natural || peak || in || Y 
+|-
+| Mountain near || natural || peak || near || N 
+|-
+| Mountains near || natural || peak || near || Y 
 |-
 | Peak || natural || peak || - || N 
 |-
