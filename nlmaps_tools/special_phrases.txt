@@ -2181,18 +2181,6 @@
 |-
 | Terraces near || building || terrace || near || Y 
 |-
-| Tower || building || tower || - || N 
-|-
-| Towers || building || tower || - || Y 
-|-
-| Tower in || building || tower || in || N 
-|-
-| Towers in || building || tower || in || Y 
-|-
-| Tower near || building || tower || near || N 
-|-
-| Towers near || building || tower || near || Y 
-|-
 | Railway Station || building || train_station || - || N 
 |-
 | Railway Stations || building || train_station || - || Y 
@@ -4023,6 +4011,18 @@
 |-
 | Water Parks near || leisure || water_park || near || Y 
 |-
+| Tower || man_made || tower || - || N 
+|-
+| Towers || man_made || tower || - || Y 
+|-
+| Tower in || man_made || tower || in || N 
+|-
+| Towers in || man_made || tower || in || Y 
+|-
+| Tower near || man_made || tower || near || N 
+|-
+| Towers near || man_made || tower || near || Y 
+|-
 | Water well || man_made || water_well || - || N 
 |-
 | Water wells || man_made || water_well || - || Y 
@@ -4046,6 +4046,18 @@
 | Windmill near || man_made || windmill || near || N 
 |-
 | Windmills near || man_made || windmill || near || Y 
+|-
+| Wind Mill || man_made || windmill || - || N 
+|-
+| Wind Mills || man_made || windmill || - || Y 
+|-
+| Wind Mill in || man_made || windmill || in || N 
+|-
+| Wind Mills in || man_made || windmill || in || Y 
+|-
+| Wind Mill near || man_made || windmill || near || N 
+|-
+| Wind Mills near || man_made || windmill || near || Y 
 |-
 | Maypole || man_made || maypole || - || N
 |-
@@ -4172,6 +4184,18 @@
 | Cape near || natural || cape || near || N 
 |-
 | Capes near || natural || cape || near || Y 
+|-
+| Cave || natural || cave_entrance || - || N 
+|-
+| Caves || natural || cave_entrance || - || Y 
+|-
+| Cave in || natural || cave_entrance || in || N 
+|-
+| Caves in || natural || cave_entrance || in || Y 
+|-
+| Cave near || natural || cave_entrance || near || N 
+|-
+| Caves near || natural || cave_entrance || near || Y 
 |-
 | Cave Entrance || natural || cave_entrance || - || N 
 |-
@@ -4502,6 +4526,102 @@
 | Wood near || natural || wood || near || N 
 |-
 | Woods near || natural || wood || near || Y 
+|-
+| Oneway || oneway || yes || - || N 
+|-
+| Oneways || oneway || yes || - || Y 
+|-
+| Oneway in || oneway || yes || in || N 
+|-
+| Oneways in || oneway || yes || in || Y 
+|-
+| Oneway near || oneway || yes || near || N 
+|-
+| Oneways near || oneway || yes || near || Y 
+|-
+| One-way || oneway || yes || - || N 
+|-
+| One-ways || oneway || yes || - || Y 
+|-
+| One-way in || oneway || yes || in || N 
+|-
+| One-ways in || oneway || yes || in || Y 
+|-
+| One-way near || oneway || yes || near || N 
+|-
+| One-ways near || oneway || yes || near || Y 
+|-
+| One Way Road || oneway || yes || - || N 
+|-
+| One Way Roads || oneway || yes || - || Y 
+|-
+| One Way Road in || oneway || yes || in || N 
+|-
+| One Way Roads in || oneway || yes || in || Y 
+|-
+| One Way Road near || oneway || yes || near || N 
+|-
+| One Way Roads near || oneway || yes || near || Y 
+|-
+| Oneway Road || oneway || yes || - || N 
+|-
+| Oneway Roads || oneway || yes || - || Y 
+|-
+| Oneway Road in || oneway || yes || in || N 
+|-
+| Oneway Roads in || oneway || yes || in || Y 
+|-
+| Oneway Road near || oneway || yes || near || N 
+|-
+| Oneway Roads near || oneway || yes || near || Y 
+|-
+| One-way Road || oneway || yes || - || N 
+|-
+| One-way Roads || oneway || yes || - || Y 
+|-
+| One-way Road in || oneway || yes || in || N 
+|-
+| One-way Roads in || oneway || yes || in || Y 
+|-
+| One-way Road near || oneway || yes || near || N 
+|-
+| One-way Roads near || oneway || yes || near || Y 
+|-
+| One Way Street || oneway || yes || - || N 
+|-
+| One Way Streets || oneway || yes || - || Y 
+|-
+| One Way Street in || oneway || yes || in || N 
+|-
+| One Way Streets in || oneway || yes || in || Y 
+|-
+| One Way Street near || oneway || yes || near || N 
+|-
+| One Way Streets near || oneway || yes || near || Y 
+|-
+| Oneway Street || oneway || yes || - || N 
+|-
+| Oneway Streets || oneway || yes || - || Y 
+|-
+| Oneway Street in || oneway || yes || in || N 
+|-
+| Oneway Streets in || oneway || yes || in || Y 
+|-
+| Oneway Street near || oneway || yes || near || N 
+|-
+| Oneway Streets near || oneway || yes || near || Y 
+|-
+| One-way Street || oneway || yes || - || N 
+|-
+| One-way Streets || oneway || yes || - || Y 
+|-
+| One-way Street in || oneway || yes || in || N 
+|-
+| One-way Streets in || oneway || yes || in || Y 
+|-
+| One-way Street near || oneway || yes || near || N 
+|-
+| One-way Streets near || oneway || yes || near || Y 
 |-
 | Organic Food Shop || organic || yes || - || N 
 |-
@@ -5397,6 +5517,12 @@
 |-
 | Book Stores near || shop || books || near || Y 
 |-
+| Butcher's || shop || butcher || - || N 
+|-
+| Butcher's in || shop || butcher || in || N 
+|-
+| Butcher's near || shop || butcher || near || N 
+|-
 | Butcher || shop || butcher || - || N 
 |-
 | Butchers || shop || butcher || - || Y 
@@ -5685,11 +5811,11 @@
 |-
 | Copy Shops near || shop || copyshop || near || Y 
 |-
-| Cosmetics || shop || copyshop || - || Y 
+| Cosmetics || shop || cosmetics || - || Y 
 |-
-| Cosmetics in || shop || copyshop || in || Y 
+| Cosmetics in || shop || cosmetics || in || Y 
 |-
-| Cosmetics near || shop || copyshop || near || Y 
+| Cosmetics near || shop || cosmetics || near || Y 
 |-
 | Cosmetics Shop || shop || cosmetics || - || N 
 |-

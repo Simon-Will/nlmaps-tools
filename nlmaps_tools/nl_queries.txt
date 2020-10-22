@@ -14,7 +14,8 @@ IN_LOCATION => in|near|close to|around LOCATION || card of PURE_LOCATION
 ✓Which PLURAL(THING) does LOCATION have -> name
 ✓What are the names …
 ✓Give me the names …
-✓In LOCATION, what PLURAL(THINGS) are there -> name
+✓In LOCATION, what PLURAL(THING) are there -> name
+What PLURAL(THING) can I walk to from LOCATION -> name (only walking_dist)
 
 ✓Are there any PLURAL(THING) in LOCATION -> least
 ✓Are there some PLURAL(THING) in LOCATION -> least
@@ -30,6 +31,7 @@ IN_LOCATION => in|near|close to|around LOCATION || card of PURE_LOCATION
 ✓Does there exist any THING in LOCATION -> least
 ✓Does any THING exist in LOCATION -> least
 ✓In LOCATION, is there any THING -> least
+Is there at least one THING in LOCATION -> least
 
 ✓Indicate|Give|Show PLURAL(THING) in LOCATION -> latlong
 ✓Indicate|Give|Show all PLURAL(THING) in LOCATION -> latlong
@@ -88,3 +90,8 @@ where can i eat anything
 where can i play tennis
 what kinds of cuisine are there
 where can i go camping
+vegan restaurants
+vegan cafes
+where can i have a barbecue
+where can i rent a car
+where can i buy *
