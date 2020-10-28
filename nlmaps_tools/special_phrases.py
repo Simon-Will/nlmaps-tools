@@ -86,10 +86,16 @@ def make_thing_table(phrase_table_lines):
             for pl_cand in line2.plural:
                 if is_plural_of(sg, pl_cand):
                     return True
+            for sg2 in line2.singular:
+                if sg == sg2:
+                    return True
 
         for sg in line2.singular:
             for pl_cand in line1.plural:
                 if is_plural_of(sg, pl_cand):
+                    return True
+            for sg1 in line1.singular:
+                if sg == sg1:
                     return True
 
         return False
@@ -174,6 +180,10 @@ def post_edit_thing_table(table):
 
 
     for i, ttl in enumerate(table):
+        # Asking for off license also yields wine shop, but not vice versa.
+        if 'off license' in ttl.singular:
+            ttl.tags.add(('shop', 'wine'))
+
         tags = tags_to_nwr(ttl.tags)
 
         # Discard building=church etc. because these tags are more sensible.

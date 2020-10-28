@@ -417,6 +417,18 @@
 |-
 | Bus Stations near || amenity || bus_station || near || Y 
 |-
+| Café || amenity || cafe || - || N 
+|-
+| Cafés || amenity || cafe || - || Y 
+|-
+| Café in || amenity || cafe || in || N 
+|-
+| Cafés in || amenity || cafe || in || Y 
+|-
+| Café near || amenity || cafe || near || N 
+|-
+| Cafés near || amenity || cafe || near || Y 
+|-
 | Cafe || amenity || cafe || - || N 
 |-
 | Cafes || amenity || cafe || - || Y 
@@ -839,6 +851,42 @@
 |-
 | Petrol Stations near || amenity || fuel || near || Y 
 |-
+| Churchyard || amenity || grave_yard || - || N 
+|-
+| Churchyards || amenity || grave_yard || - || Y 
+|-
+| Churchyard in || amenity || grave_yard || in || N 
+|-
+| Churchyards in || amenity || grave_yard || in || Y 
+|-
+| Churchyard near || amenity || grave_yard || near || N 
+|-
+| Churchyards near || amenity || grave_yard || near || Y 
+|-
+| Church Yard || amenity || grave_yard || - || N 
+|-
+| Church Yards || amenity || grave_yard || - || Y 
+|-
+| Church Yard in || amenity || grave_yard || in || N 
+|-
+| Church Yards in || amenity || grave_yard || in || Y 
+|-
+| Church Yard near || amenity || grave_yard || near || N 
+|-
+| Church Yards near || amenity || grave_yard || near || Y 
+|-
+| Graveyard || amenity || grave_yard || - || N 
+|-
+| Graveyards || amenity || grave_yard || - || Y 
+|-
+| Graveyard in || amenity || grave_yard || in || N 
+|-
+| Graveyards in || amenity || grave_yard || in || Y 
+|-
+| Graveyard near || amenity || grave_yard || near || N 
+|-
+| Graveyards near || amenity || grave_yard || near || Y 
+|-
 | Grave Yard || amenity || grave_yard || - || N 
 |-
 | Grave Yards || amenity || grave_yard || - || Y 
@@ -940,6 +988,42 @@
 | Ice Cream in || amenity || ice_cream || in || N 
 |-
 | Ice Cream near || amenity || ice_cream || near || N 
+|-
+| Ice Cream Parlor || amenity || ice_cream || - || N 
+|-
+| Ice Cream Parlors || amenity || ice_cream || - || Y 
+|-
+| Ice Cream Parlor in || amenity || ice_cream || in || N 
+|-
+| Ice Cream Parlors in || amenity || ice_cream || in || Y 
+|-
+| Ice Cream Parlor near || amenity || ice_cream || near || N 
+|-
+| Ice Cream Parlors near || amenity || ice_cream || near || Y 
+|-
+| Ice Cream Parlour || amenity || ice_cream || - || N 
+|-
+| Ice Cream Parlours || amenity || ice_cream || - || Y 
+|-
+| Ice Cream Parlour in || amenity || ice_cream || in || N 
+|-
+| Ice Cream Parlours in || amenity || ice_cream || in || Y 
+|-
+| Ice Cream Parlour near || amenity || ice_cream || near || N 
+|-
+| Ice Cream Parlours near || amenity || ice_cream || near || Y 
+|-
+| Ice Cream Shop || amenity || ice_cream || - || N 
+|-
+| Ice Cream Shops || amenity || ice_cream || - || Y 
+|-
+| Ice Cream Shop in || amenity || ice_cream || in || N 
+|-
+| Ice Cream Shops in || amenity || ice_cream || in || Y 
+|-
+| Ice Cream Shop near || amenity || ice_cream || near || N 
+|-
+| Ice Cream Shops near || amenity || ice_cream || near || Y 
 |-
 | Karaoke || amenity || karaoke_box || - || N
 |-
@@ -1184,6 +1268,18 @@
 | Police in || amenity || police || in || N 
 |-
 | Police near || amenity || police || near || N 
+|-
+| Police Station || amenity || police || - || N 
+|-
+| Police Stations || amenity || police || - || Y 
+|-
+| Police Station in || amenity || police || in || N 
+|-
+| Police Stations in || amenity || police || in || Y 
+|-
+| Police Station near || amenity || police || near || N 
+|-
+| Police Stations near || amenity || police || near || Y 
 |-
 | Postbox || amenity || post_box || - || N 
 |-
@@ -1833,18 +1929,6 @@
 |-
 | Churches near || building || church || near || Y 
 |-
-| City Hall || building || city_hall || - || N 
-|-
-| City Halls || building || city_hall || - || Y 
-|-
-| City Hall in || building || city_hall || in || N 
-|-
-| City Halls in || building || city_hall || in || Y 
-|-
-| City Hall near || building || city_hall || near || N 
-|-
-| City Halls near || building || city_hall || near || Y 
-|-
 | Civic Building || building || civic || - || N 
 |-
 | Civic Buildings || building || civic || - || Y 
@@ -2157,18 +2241,6 @@
 |-
 | Synagogues near || building || synagogue || near || Y 
 |-
-| Store || building || store || - || N 
-|-
-| Stores || building || store || - || Y 
-|-
-| Store in || building || store || in || N 
-|-
-| Stores in || building || store || in || Y 
-|-
-| Store near || building || store || near || N 
-|-
-| Stores near || building || store || near || Y 
-|-
 | Terrace || building || terrace || - || N 
 |-
 | Terraces || building || terrace || - || Y 
@@ -2234,6 +2306,42 @@
 | Ice Cream in || cuisine || ice_cream || in || N 
 |-
 | Ice Cream near || cuisine || ice_cream || near || N 
+|-
+| Ice Cream Parlor || cuisine || ice_cream || - || N 
+|-
+| Ice Cream Parlors || cuisine || ice_cream || - || Y 
+|-
+| Ice Cream Parlor in || cuisine || ice_cream || in || N 
+|-
+| Ice Cream Parlors in || cuisine || ice_cream || in || Y 
+|-
+| Ice Cream Parlor near || cuisine || ice_cream || near || N 
+|-
+| Ice Cream Parlors near || cuisine || ice_cream || near || Y 
+|-
+| Ice Cream Parlour || cuisine || ice_cream || - || N 
+|-
+| Ice Cream Parlours || cuisine || ice_cream || - || Y 
+|-
+| Ice Cream Parlour in || cuisine || ice_cream || in || N 
+|-
+| Ice Cream Parlours in || cuisine || ice_cream || in || Y 
+|-
+| Ice Cream Parlour near || cuisine || ice_cream || near || N 
+|-
+| Ice Cream Parlours near || cuisine || ice_cream || near || Y 
+|-
+| Ice Cream Shop || cuisine || ice_cream || - || N 
+|-
+| Ice Cream Shops || cuisine || ice_cream || - || Y 
+|-
+| Ice Cream Shop in || cuisine || ice_cream || in || N 
+|-
+| Ice Cream Shops in || cuisine || ice_cream || in || Y 
+|-
+| Ice Cream Shop near || cuisine || ice_cream || near || N 
+|-
+| Ice Cream Shops near || cuisine || ice_cream || near || Y 
 |-
 | Bridleway || highway || bridleway || - || N 
 |-
@@ -3047,7 +3155,27 @@
 |-
 | Rest Area || highway || rest_area || - || N
 |-
+| Rest Areas || highway || rest_area || - || Y 
+|-
+| Rest Area in || highway || rest_area || in || N 
+|-
+| Rest Areas in || highway || rest_area || in || Y 
+|-
+| Rest Area near || highway || rest_area || near || N 
+|-
+| Rest Areas near || highway || rest_area || near || Y 
+|-
 | Rest Stop || highway || rest_area || - || N
+|-
+| Rest Stops || highway || rest_area || - || Y 
+|-
+| Rest Stop in || highway || rest_area || in || N 
+|-
+| Rest Stops in || highway || rest_area || in || Y 
+|-
+| Rest Stop near || highway || rest_area || near || N 
+|-
+| Rest Stops near || highway || rest_area || near || Y 
 |-
 | Road || highway || road || - || N 
 |-
@@ -5234,6 +5362,54 @@
 | Store near || shop || * || near || N 
 |-
 | Stores near || shop || * || near || Y 
+|-
+| Alcohol Shop || shop || alcohol || - || N 
+|-
+| Alcohol Shops || shop || alcohol || - || Y 
+|-
+| Alcohol Shop in || shop || alcohol || in || N 
+|-
+| Alcohol Shops in || shop || alcohol || in || Y 
+|-
+| Alcohol Shop near || shop || alcohol || near || N 
+|-
+| Alcohol Shops near || shop || alcohol || near || Y 
+|-
+| Alcohol Store || shop || alcohol || - || N 
+|-
+| Alcohol Stores || shop || alcohol || - || Y 
+|-
+| Alcohol Store in || shop || alcohol || in || N 
+|-
+| Alcohol Stores in || shop || alcohol || in || Y 
+|-
+| Alcohol Store near || shop || alcohol || near || N 
+|-
+| Alcohol Stores near || shop || alcohol || near || Y 
+|-
+| Liquor Shop || shop || alcohol || - || N 
+|-
+| Liquor Shops || shop || alcohol || - || Y 
+|-
+| Liquor Shop in || shop || alcohol || in || N 
+|-
+| Liquor Shops in || shop || alcohol || in || Y 
+|-
+| Liquor Shop near || shop || alcohol || near || N 
+|-
+| Liquor Shops near || shop || alcohol || near || Y 
+|-
+| Liquor Store || shop || alcohol || - || N 
+|-
+| Liquor Stores || shop || alcohol || - || Y 
+|-
+| Liquor Store in || shop || alcohol || in || N 
+|-
+| Liquor Stores in || shop || alcohol || in || Y 
+|-
+| Liquor Store near || shop || alcohol || near || N 
+|-
+| Liquor Stores near || shop || alcohol || near || Y 
 |-
 | Off Licence || shop || alcohol || - || N 
 |-
