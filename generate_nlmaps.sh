@@ -21,6 +21,7 @@ generate() {
     local out_prefix="$1"
     local count="$2"
     local noise="$3"
+    echo "Generating $out_prefix ($count instances)"
     if [ "$noise" = noise ]; then
         python -m nlmaps_tools.generate_nl --noise --count "$count" \
                -o "$out_prefix" "$AREAS" "$POIS"
@@ -45,9 +46,11 @@ for type in normal noise; do
     for split in train dev test; do
         len=$(wc -l <"$V2_DIR/nlmaps.v2.$split.mrl")
         for ext in en mrl; do
+            merged="$V3_DIR/v3$SUFFIX.$type.plusv2/nlmaps.v3$SUFFIX.$split.$ext"
+            echo "Merging new and old $split into $merged"
             cat "$V2_DIR/nlmaps.v2.$split.$ext" \
                 <(head -n "$len" "$V3_DIR/v3$SUFFIX.$type/nlmaps.v3$SUFFIX.$split.$ext") \
-                >"$V3_DIR/v3$SUFFIX.$type.plusv2/nlmaps.v3$SUFFIX.$split.$ext"
+                >"$merged"
         done
     done
 done
