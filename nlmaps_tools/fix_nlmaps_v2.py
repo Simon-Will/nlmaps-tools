@@ -20,6 +20,7 @@ SUBSTITUTIONS = (
     (r"keyval\('highway','(secondary_link|secondary)'\)", r"keyval('highway',or('secondary','secondary_link'))"),
     (r"keyval\('highway','(trunk_link|trunk)'\)", r"keyval('highway',or('trunk','trunk_link'))"),
     (r"keyval\('building','farm'\)", r"keyval('building',or('farm','farm_auxiliary'))"),
+    (r"keyval\('shop','alcohol'\)", r"keyval('shop',or('alcohol','wine'))"),
     (r"keyval\('shop','wine'\)", r"keyval('shop',or('alcohol','wine'))"),
     (r"keyval\('shop','fish'\)", r"keyval('shop','seafood')"),
     (r"keyval\('shop','food'\)", r"keyval('shop',or('convenience','deli','supermarket'))"),
@@ -35,7 +36,9 @@ SUBSTITUTIONS = (
     (r"keyval\('shop','organic'\)", r"keyval('organic',or('only','yes'))"),
     (r"keyval\('building','shop'\)", r"keyval('shop','*')"),
     (r"keyval\('shop','fashion'\)", r"keyval('shop','clothes')"),
-    (r"or\(keyval\('organic','only'\),keyval\('organic','yes'\))", r"keyval('organic',or('only','yes'))"),
+    (r"or\(keyval\('organic','only'\),keyval\('organic','yes'\)\)", r"keyval('organic',or('only','yes'))"),
+    (r"keyval\('amenity','park'\)", r"keyval('leisure','park')"),
+    (r"keyval\('amenity','atm'\)", r"or(keyval('amenity','atm'),keyval('atm','yes'))"),
 )
 
 
