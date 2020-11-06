@@ -95,3 +95,4 @@ vegan cafes
 where can i have a barbecue
 where can i rent a car
 where can i buy *
+POI in LOCATION -> area(name: LOCATION), target_nwr(name: POI)
