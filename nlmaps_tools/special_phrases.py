@@ -121,6 +121,10 @@ def pre_edit_phrase_table_lines(phrase_table_lines):
                           'food shops', 'food stores']:
             continue
 
+        # This merges amenity=drinking_water and natural=water delete for now.
+        if ptl.phrase == 'water' and ptl.value == 'drinking_water':
+            continue
+
         # Pubs are not bars, and vice versa.
         if ptl.key == 'amenity' and ptl.value == 'bar':
             if 'pub' in ptl.phrase:
@@ -143,6 +147,20 @@ def pre_edit_phrase_table_lines(phrase_table_lines):
 
 
 def tags_to_nwr(tags):
+    # Group vals of same key under one tag.
+    # E.g. [('shop', 'alcohol'), ('shop', 'wine')]
+    # -> [('shop', ('or', 'alcohol', 'wine'))]
+    vals_by_key = defaultdict(set)
+    for key, val in tags:
+        vals_by_key[key].add(val)
+    tags = []
+    for key, vals in vals_by_key.items():
+        if len(vals) == 1:
+            tags.append((key, vals.pop()))
+        else:
+            tags.append((key, ('or', *sorted(vals))))
+
+    # Form a suitable nwr value out of the tags.
     if len(tags) == 1:
         tags = [tags.pop()]
     elif len(tags) > 1:
@@ -183,6 +201,10 @@ def post_edit_thing_table(table):
         # Asking for off license also yields wine shop, but not vice versa.
         if 'off license' in ttl.singular:
             ttl.tags.add(('shop', 'wine'))
+
+        if 'water' in ttl.singular:
+            ttl.tags.add(('amenity', 'drinking_water'))
+            ttl.tags.add(('drinking_water', 'yes'))
 
         tags = tags_to_nwr(ttl.tags)
 

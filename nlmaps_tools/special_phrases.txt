@@ -291,6 +291,18 @@
 |-
 | Barbecue grills near || amenity || bbq || near || Y 
 |-
+| Barbecue site || amenity || bbq || - || N 
+|-
+| Barbecue sites || amenity || bbq || - || Y 
+|-
+| Barbecue site in || amenity || bbq || in || N 
+|-
+| Barbecue sites in || amenity || bbq || in || Y 
+|-
+| Barbecue site near || amenity || bbq || near || N 
+|-
+| Barbecue sites near || amenity || bbq || near || Y 
+|-
 | Bbq || amenity || bbq || - || N 
 |-
 | Bbqs || amenity || bbq || - || Y 
@@ -302,6 +314,18 @@
 | Bbq near || amenity || bbq || near || N 
 |-
 | Bbqs near || amenity || bbq || near || Y 
+|-
+| Bbq site || amenity || bbq || - || N 
+|-
+| Bbq sites || amenity || bbq || - || Y 
+|-
+| Bbq site in || amenity || bbq || in || N 
+|-
+| Bbq sites in || amenity || bbq || in || Y 
+|-
+| Bbq site near || amenity || bbq || near || N 
+|-
+| Bbq sites near || amenity || bbq || near || Y 
 |-
 | Bench || amenity || bench || - || N 
 |-
@@ -519,6 +543,30 @@
 |-
 | Cinemas near || amenity || cinema || near || Y 
 |-
+| Movie Theater || amenity || cinema || - || N 
+|-
+| Movie Theaters || amenity || cinema || - || Y 
+|-
+| Movie Theater in || amenity || cinema || in || N 
+|-
+| Movie Theaters in || amenity || cinema || in || Y 
+|-
+| Movie Theater near || amenity || cinema || near || N 
+|-
+| Movie Theaters near || amenity || cinema || near || Y 
+|-
+| Movie Theatre || amenity || cinema || - || N 
+|-
+| Movie Theatres || amenity || cinema || - || Y 
+|-
+| Movie Theatre in || amenity || cinema || in || N 
+|-
+| Movie Theatres in || amenity || cinema || in || Y 
+|-
+| Movie Theatre near || amenity || cinema || near || N 
+|-
+| Movie Theatres near || amenity || cinema || near || Y 
+|-
 | Clinic || amenity || clinic || - || N 
 |-
 | Clinics || amenity || clinic || - || Y 
@@ -681,11 +729,47 @@
 |-
 | Drinking Water near || amenity || drinking_water || near || N 
 |-
+| Drinking Water Dispenser || amenity || drinking_water || - || N 
+|-
+| Drinking Water Dispensers || amenity || drinking_water || - || Y 
+|-
+| Drinking Water Dispenser in || amenity || drinking_water || in || N 
+|-
+| Drinking Water Dispensers in || amenity || drinking_water || in || Y 
+|-
+| Drinking Water Dispenser near || amenity || drinking_water || near || N 
+|-
+| Drinking Water Dispensers near || amenity || drinking_water || near || Y 
+|-
+| Drinking Water Station || amenity || drinking_water || - || N 
+|-
+| Drinking Water Stations || amenity || drinking_water || - || Y 
+|-
+| Drinking Water Station in || amenity || drinking_water || in || N 
+|-
+| Drinking Water Stations in || amenity || drinking_water || in || Y 
+|-
+| Drinking Water Station near || amenity || drinking_water || near || N 
+|-
+| Drinking Water Stations near || amenity || drinking_water || near || Y 
+|-
 | Water || amenity || drinking_water || - || N 
 |-
 | Water in || amenity || drinking_water || in || N 
 |-
 | Water near || amenity || drinking_water || near || N 
+|-
+| Water Dispenser || amenity || drinking_water || - || N 
+|-
+| Water Dispensers || amenity || drinking_water || - || Y 
+|-
+| Water Dispenser in || amenity || drinking_water || in || N 
+|-
+| Water Dispensers in || amenity || drinking_water || in || Y 
+|-
+| Water Dispenser near || amenity || drinking_water || near || N 
+|-
+| Water Dispensers near || amenity || drinking_water || near || Y 
 |-
 | Driving School || amenity || driving_school || - || N 
 |-
@@ -2570,6 +2654,48 @@
 | Winerys near || craft || winery || near || Y 
 |-
 | Wineries near || craft || winery || near || Y 
+|-
+| Drinking Water || drinking_water || yes || - || N 
+|-
+| Drinking Water in || drinking_water || yes || in || N 
+|-
+| Drinking Water near || drinking_water || yes || near || N 
+|-
+| Drinking Water Dispenser || drinking_water || yes || - || N 
+|-
+| Drinking Water Dispensers || drinking_water || yes || - || Y 
+|-
+| Drinking Water Dispenser in || drinking_water || yes || in || N 
+|-
+| Drinking Water Dispensers in || drinking_water || yes || in || Y 
+|-
+| Drinking Water Dispenser near || drinking_water || yes || near || N 
+|-
+| Drinking Water Dispensers near || drinking_water || yes || near || Y 
+|-
+| Drinking Water Station || drinking_water || yes || - || N 
+|-
+| Drinking Water Stations || drinking_water || yes || - || Y 
+|-
+| Drinking Water Station in || drinking_water || yes || in || N 
+|-
+| Drinking Water Stations in || drinking_water || yes || in || Y 
+|-
+| Drinking Water Station near || drinking_water || yes || near || N 
+|-
+| Drinking Water Stations near || drinking_water || yes || near || Y 
+|-
+| Drinking Water Well || drinking_water || yes || - || N 
+|-
+| Drinking Water Wells || drinking_water || yes || - || Y 
+|-
+| Drinking Water Well in || drinking_water || yes || in || N 
+|-
+| Drinking Water Wells in || drinking_water || yes || in || Y 
+|-
+| Drinking Water Well near || drinking_water || yes || near || N 
+|-
+| Drinking Water Wells near || drinking_water || yes || near || Y 
 |-
 | Ambulance Station || emergency || ambulance_station || - || N 
 |-

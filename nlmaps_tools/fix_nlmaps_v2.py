@@ -39,6 +39,7 @@ SUBSTITUTIONS = (
     (r"or\(keyval\('organic','only'\),keyval\('organic','yes'\)\)", r"keyval('organic',or('only','yes'))"),
     (r"keyval\('amenity','park'\)", r"keyval('leisure','park')"),
     (r"keyval\('amenity','atm'\)", r"or(keyval('amenity','atm'),keyval('atm','yes'))"),
+    (r"keyval\('(building|historic)','tower'\)", r"keyval('man_made','tower')"),
 )
 
 
