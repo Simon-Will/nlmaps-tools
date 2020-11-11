@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
+import argparse
 import re
-import sys
 
 FINDKEY_WHITELIST = {'name', 'opening_hours', 'website', 'wheelchair'}
 
@@ -21,6 +21,8 @@ SUBSTITUTIONS = (
     (r"keyval\('highway','(trunk_link|trunk)'\)", r"keyval('highway',or('trunk','trunk_link'))"),
     (r"keyval\('building','farm'\)", r"keyval('building',or('farm','farm_auxiliary'))"),
     (r"keyval\('shop','alcohol'\)", r"keyval('shop',or('alcohol','wine'))"),
+    # All shop=wine instances in NLMaps v2 ask for off-licence stores (and none
+    # for “wine store”), which is why putting shop=alcohol|wine is alright.
     (r"keyval\('shop','wine'\)", r"keyval('shop',or('alcohol','wine'))"),
     (r"keyval\('shop','fish'\)", r"keyval('shop','seafood')"),
     (r"keyval\('shop','food'\)", r"keyval('shop',or('convenience','deli','supermarket'))"),
@@ -104,7 +106,7 @@ def get_findkey_value(mrl):
     return None
 
 
-def main(mrl_infile, en_infile, mrl_outfile, en_outfile):
+def main(mrl_infile, en_infile, mrl_outfile, en_outfile, quiet=False):
     with open(mrl_infile) as mrl_inf, open(en_infile) as en_inf,\
          open(mrl_outfile, 'w') as mrl_outf, open(en_outfile, 'w') as en_outf:
         for mrl, en in zip(mrl_inf, en_inf):
@@ -116,11 +118,13 @@ def main(mrl_infile, en_infile, mrl_outfile, en_outfile):
                 prefix = findkey_value.replace('_', ' ').replace(':', ' ')
                 prefix += ' '
                 if en.startswith(prefix):
-                    print('Deleting:', en)
+                    if not quiet:
+                        print('Deleting:', en)
                     continue
 
             if has_unfixable_deprecated_tag(mrl):
-                print('Deleting:', en)
+                if not quiet:
+                    print('Deleting:', en)
                 continue
 
             for sub in SUBSTITUTIONS:
@@ -136,6 +140,33 @@ def main(mrl_infile, en_infile, mrl_outfile, en_outfile):
             print(en, file=en_outf)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Fix errors in NLMaps v2')
+    parser.add_argument(
+        'mrl_infile',
+        help='NLMaps v2 MRL file'
+    )
+    parser.add_argument(
+        'en_infile',
+        help='NLMaps v2 english NL file corresponding to mrl_infile'
+    )
+    parser.add_argument(
+        'mrl_outfile',
+        help='Output file for writing the fixed mrls'
+    )
+    parser.add_argument(
+        'en_outfile',
+        help='Output file for writing the corresponding english queries'
+    )
+    parser.add_argument(
+        '--quiet', '-q',
+        action='store_true', default=False,
+        help='Suppress information about deleted queries '
+    )
+
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
-    assert len(sys.argv) == 5
-    main(*sys.argv[1:5])
+    ARGS = parse_args()
+    main(**vars(ARGS))
