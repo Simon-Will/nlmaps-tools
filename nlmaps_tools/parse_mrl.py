@@ -4,6 +4,8 @@ import pyparsing as pp
 
 
 class Symbol:
+    """This is used for handling unquoted MRL literals like latlong or
+    count, and it is also used for numbers like 5000."""
 
     def __init__(self, string):
         self.string = string
@@ -19,7 +21,17 @@ class Symbol:
 
 
 def escape_backslashes_and_single_quotes(mrl, _ignore_matches=tuple()):
-    # Fails for mrls containing a name with the string '), or ')) in it.
+    """Escape quoted name values in an MRL by prepending a backslash.
+
+    A single quote inside a single-quoted name will be rendered as \\'
+    A backslash inside a single-quoted name will be rendered as \\\\
+
+    E.g., if the MRL contains "keyval('name','Rue d' Fleur')", this will be
+    turned into "keyval('name','Rue d\\' Fleur')".
+
+    This function fails for mrls containing a name with the string ') or ')) in
+    it.
+    """
     regex = r"keyval\( *'name', *'(.*?)'\)[,)]"
     for idx, match in enumerate(re.finditer(regex, mrl)):
         value = match.group(1)
@@ -35,6 +47,11 @@ def escape_backslashes_and_single_quotes(mrl, _ignore_matches=tuple()):
 
 
 def make_tuples(nested_iterable):
+    """Convert a nested iterable into nested tuples.
+
+    >>> make_tuples([Symbol('latlong'), ['least', ['topx', Symbol('1')]]])
+    (Symbol('latlong'), ('least', ('topx', Symbol('1'))))
+    """
     if isinstance(nested_iterable, (str, Symbol)):
         return nested_iterable
     elif hasattr(nested_iterable, '__iter__'):
@@ -44,6 +61,11 @@ def make_tuples(nested_iterable):
 
 
 def get_tags(*nwr_args):
+    """Get a tree of tags from an MRL’s nwr arguments.
+
+    >>> get_tags(*[pp.ParseResults(['keyval', 'amenity', 'restaurant']), pp.ParseResults(['or', ['keyval', 'shop', 'alcohol'], ['keyval', 'shop', 'wine']])])
+    [('amenity', 'restaurant'), ('or', ('shop', 'alcohol'), ('shop', 'wine'))]
+    """
     tags = []
     for arg in nwr_args:
         if arg[0] == 'keyval':
@@ -314,6 +336,20 @@ class MrlGrammar:
         self.features = self.parseResult['features']
 
     def parseMrl(self, mrl, is_escaped=True):
+        """Parse an MRL into its tokens and feature representation.
+
+        :param mrl: The MRL string
+
+        :param is_escaped: Whether singlq quotes and backslashes inside quoted
+            areas in the mrl are already escaped in the incoming MRL. E.g.:
+                MRL contains "keyval('name','Rue d' Fleur')" -> is_escaped=False
+                MRL contains "keyval('name','Rue d\\' Fleur')" -> is_escaped=True
+            If your MRL comes from an NLMaps dataset, your should probably set
+            is_escaped=False.
+
+        :return: The parse result dict containing the keys 'keys' and
+            'features'.
+        """
         if not is_escaped:
             mrl = escape_backslashes_and_single_quotes(mrl)
 
