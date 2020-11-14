@@ -64,11 +64,23 @@ ENV.globals['quote'] = quote
 
 
 def generate_from_features(features, escape=True):
+    """Generate an MRL from its features.
+
+    :param features: A dict of features like those obtained by parsing with
+        nlmaps_tools.parse_mrl.MrlGrammar.parseMrl
+    :param escape: Whether to escape single quotes and backslashes inside
+        quoted values
+    :return: The generated MRL
+
+    >>> generate_from_features({'tags': [('name', 'Heidelberg')], 'area': 'Heidelberg', 'target_nwr': [('amenity', 'restaurant')], 'query_type': 'in_query', 'qtype': (Symbol('latlong'), ('nodup', ('findkey', 'cuisine')))})
+    "query(area(keyval('name','Heidelberg')),nwr(keyval('amenity','restaurant')),qtype(latlong,nodup(findkey('cuisine'))))"
+
+    """
     template = ENV.get_template(features['query_type'] + '.jinja2')
     return template.render(features=features, escape=escape)
 
 
-def main():
+def test():
     features = {
         'tags': [('name', 'Heidelberg')],
         'area': 'Heidelberg',
@@ -90,4 +102,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    test()
