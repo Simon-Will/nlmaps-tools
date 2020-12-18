@@ -17,9 +17,9 @@ def quote(s, escape=True):
 def render_nwr(nwr_features, escape=True):
     parts = []
     for feat in nwr_features:
-        if feat[0] in ['or', 'and'] and isinstance(feat[1], tuple):
+        if feat[0] in ['or', 'and'] and isinstance(feat[1], (list, tuple)):
             parts.append('{}({})'.format(feat[0], render_nwr(feat[1:], escape)))
-        elif (len(feat) == 2 and isinstance(feat[1], tuple)
+        elif (len(feat) == 2 and isinstance(feat[1], (list, tuple))
               and feat[1][0] == 'or'):
             val = ','.join(quote(f, escape) for f in feat[1][1:])
             parts.append("keyval({},or({}))".format(quote(feat[0], escape), val))
@@ -37,7 +37,7 @@ def open_paren_after_functor(nested_tuple, escape=True):
     for elm in nested_tuple:
         if isinstance(elm, (str, Symbol)):
             parts.append(quote(elm, escape))
-        elif isinstance(elm, tuple):
+        elif isinstance(elm, (list, tuple)):
             functor = elm[0]
             parts.append(
                 '{}({})'.format(
