@@ -5315,17 +5315,17 @@
 |-
 | Stations near || railway || station || near || Y 
 |-
-| Subway Station || railway || subway || - || N 
+| Subway Station || station || subway || - || N 
 |-
-| Subway Stations || railway || subway || - || Y 
+| Subway Stations || station || subway || - || Y 
 |-
-| Subway Station in || railway || subway || in || N 
+| Subway Station in || station || subway || in || N 
 |-
-| Subway Stations in || railway || subway || in || Y 
+| Subway Stations in || station || subway || in || Y 
 |-
-| Subway Station near || railway || subway || near || N 
+| Subway Station near || station || subway || near || N 
 |-
-| Subway Stations near || railway || subway || near || Y 
+| Subway Stations near || station || subway || near || Y 
 |-
 | Subway Entrance || railway || subway_entrance || - || N 
 |-
