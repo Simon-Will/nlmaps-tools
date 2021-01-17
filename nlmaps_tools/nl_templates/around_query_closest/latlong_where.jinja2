@@ -29,4 +29,4 @@ where
 {% else %}
 {% include 'meta/around_query_bare_location.jinja2' %}
 {% endif %}
-{{ choose(['?', '']) }}
+{{ optional('?') }}
