@@ -7,7 +7,7 @@ when
 {% if plural %}
 {{ choose(['are', 'do']) }}
 {% else %}
-{{ thing_singular }}
+{{ choose(['is', 'does']) }}
 {% endif %}
 {{ optional('the', 0.8) }}
 
@@ -33,5 +33,6 @@ when
 {% else %}
 {% include 'meta/around_query_bare_location.jinja2' %}
 {% endif %}
+
 open{##}
 {{ optional('?') }}

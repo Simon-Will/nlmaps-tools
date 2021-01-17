@@ -37,6 +37,7 @@ def collect_templates(subdir_basename):
 COMMON_TEMPLATES = collect_templates('common')
 IN_QUERY_ONLY_TEMPLATES = collect_templates('in_query')
 AROUND_QUERY_ONLY_TEMPLATES = collect_templates('around_query')
+CLOSEST_AROUND_QUERY_TEMPLATES = collect_templates('closest_around_query')
 
 IN_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES, IN_QUERY_ONLY_TEMPLATES)
 AROUND_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES,
@@ -168,6 +169,7 @@ def generate_poi_query_features(thing_table, areas, pois):
             if optional('closest', 0.3):
                 features['around_topx'] = Symbol('1')
                 features['maxdist'] = Symbol('DIST_INTOWN')
+                rfeatures['plural'] = choose([True, False], [0.1, 0.9])
             else:
                 features['maxdist'] = choose(
                     [Symbol('DIST_INTOWN'), Symbol('DIST_OUTTOWN'),
@@ -185,11 +187,17 @@ def generate_poi_query_features(thing_table, areas, pois):
                 features['center_nwr'] = choose_poi(pois)
             del features['area']
 
-    rfeatures['qtype_shorthand'] = choose(
-        ['name', 'latlong', 'least1', 'count', 'website', 'opening-hours'],
-        [0.3, 0.2, 0.2, 0.2, 0.00, 0.1]
-        #[0.3, 0.2, 0.2, 0.2, 0.05, 0.05]
-    )
+    if features.get('around_topx'):
+        rfeatures['qtype_shorthand'] = choose(
+            ['name', 'latlong', 'website', 'opening-hours'],
+            [0.4, 0.4, 0.00, 0.2]
+        )
+    else:
+        rfeatures['qtype_shorthand'] = choose(
+            ['name', 'latlong', 'least1', 'count', 'website', 'opening-hours'],
+            [0.3, 0.2, 0.2, 0.2, 0.00, 0.1]
+            #[0.3, 0.2, 0.2, 0.2, 0.05, 0.05]
+        )
 
     features['qtype'] = SHORTHAND_TO_QTYPE[rfeatures['qtype_shorthand']]
 
@@ -200,7 +208,10 @@ def generate_nl(features, noise=False):
     if features['query_type'] == 'in_query':
         templates = IN_QUERY_TEMPLATES
     elif features['query_type'] == 'around_query':
-        templates = AROUND_QUERY_TEMPLATES
+        if features.get('around_topx'):
+            templates = CLOSEST_AROUND_QUERY_TEMPLATES
+        else:
+            templates = AROUND_QUERY_TEMPLATES
     else:
         templates = COMMON_TEMPLATES
     rfeatures = features['rendering_features']

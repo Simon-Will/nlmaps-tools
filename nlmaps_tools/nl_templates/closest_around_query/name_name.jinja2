@@ -30,7 +30,7 @@ name
 {% else %}
 {{ choose(['closest', 'nearest', 'next']) }}
 {{ thing_plural if plural else thing_singular }}
-% endif %}
+{% endif %}
 
 {{ choose(['from', 'to', 'of'], [0.4, 0.4, 0.2]) }}
 
