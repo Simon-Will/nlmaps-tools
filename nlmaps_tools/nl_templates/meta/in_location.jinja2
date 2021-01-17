@@ -3,6 +3,8 @@
 
   {% include 'meta/around_query_bare_location.jinja2' %}
 {% else %}
-  in
-  {% include 'meta/in_query_bare_location.jinja2' %}
+  {% if features['area'] %}
+    in
+    {% include 'meta/in_query_bare_location.jinja2' %}
+  {% endif %}
 {% endif %}

@@ -1,0 +1,12 @@
+when
+{% if plural %}
+{{ choose(['are', 'do']) }}
+{% else %}
+{{ choose(['is', 'does']) }}
+{% endif %}
+{{ optional('the') }}
+{{ thing_plural if plural else thing_singular}}
+{% include 'meta/in_location.jinja2' %}
+
+open{##}
+{{ optional('?') }}

@@ -1,0 +1,7 @@
+when
+{{ choose(['can I', 'can we', 'to'], [0.3, 0.3, 0.4]) }}
+{{ choose(['visit', 'go to'], [0.6, 0.4]) }}
+{{ optional('the') }}
+{{ thing_plural if plural else thing_singular }}
+{% include 'meta/in_location.jinja2' %}
+{{ optional('?') }}

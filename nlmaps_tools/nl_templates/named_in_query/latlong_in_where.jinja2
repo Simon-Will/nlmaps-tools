@@ -1,0 +1,10 @@
+{% if features['area'] %}
+  {% include('meta/in_location.jinja2') %}{{ optional(',', 0.5) }}
+  where
+  {{ 'are' if plural else 'is' }}
+  {{ optional('the') }}
+  {{ thing_plural if plural else thing_singular }}
+  {{ optional('?') }}
+{% else %}
+  {% include('named_in_query/latlong_where.jinja2') %}
+{% endif %}

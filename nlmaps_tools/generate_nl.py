@@ -37,6 +37,7 @@ def collect_templates(subdir_basename):
 COMMON_TEMPLATES = collect_templates('common')
 IN_QUERY_ONLY_TEMPLATES = collect_templates('in_query')
 AROUND_QUERY_ONLY_TEMPLATES = collect_templates('around_query')
+NAMED_IN_QUERY_TEMPLATES = collect_templates('named_in_query')
 CLOSEST_AROUND_QUERY_TEMPLATES = collect_templates('closest_around_query')
 
 IN_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES, IN_QUERY_ONLY_TEMPLATES)
@@ -134,33 +135,45 @@ def generate_poi_query_features(thing_table, areas, pois):
     features = {'rendering_features': rfeatures}
 
     idx = random.randint(0, len(thing_table) - 1)
-    thing = thing_table[idx]
-    features['target_nwr'] = thing.tags
-    if thing.singular:
-        rfeatures['thing_singular'] = choose(thing.singular)
-        if thing.plural:
-            plural_chance = 0.7
+    rfeatures['named_entity'] = choose([True, False], [0.05, 0.95])
+    rfeatures['named_entity'] = True
+    if rfeatures['named_entity']:
+        # Query for name tag, e.g. name=Völkerschlachtdenkmal.
+        features['query_type'] = 'in_query'
+        rfeatures['thing_singular'] = rfeatures['thing_plural'] = choose(pois)
+        features['target_nwr'] = [('name', rfeatures['thing_singular'])]
+        rfeatures['plural'] = False
+        if optional('with_area', 0.6):
+            features['area'] = choose(areas)
+    else:
+        # Normal query by non-name tags, e.g. amenity=restaurant.
+        thing = thing_table[idx]
+        features['target_nwr'] = thing.tags
+        if thing.singular:
+            rfeatures['thing_singular'] = choose(thing.singular)
+            if thing.plural:
+                plural_chance = 0.7
+                rfeatures['thing_plural'] = choose(thing.plural)
+            else:
+                plural_chance = 0.0
+                rfeatures['thing_plural'] = rfeatures['thing_singular']
+        elif thing.plural:
+            plural_chance = 1.0
             rfeatures['thing_plural'] = choose(thing.plural)
         else:
-            plural_chance = 0.0
-            rfeatures['thing_plural'] = rfeatures['thing_singular']
-    elif thing.plural:
-        plural_chance = 1.0
-        rfeatures['thing_plural'] = choose(thing.plural)
-    else:
-        raise ValueError('Neither singular nor plural in thing: {}'
-                         .format(thing))
+            raise ValueError('Neither singular nor plural in thing: {}'
+                             .format(thing))
 
-    rfeatures['plural'] = choose([True, False],
-                                 [plural_chance, 1 - plural_chance])
+        rfeatures['plural'] = choose([True, False],
+                                     [plural_chance, 1 - plural_chance])
 
-    features['area'] = choose(areas)
+        features['area'] = choose(areas)
 
-    features['query_type'] = choose(['around_query', 'in_query'], [0.6, 0.4])
-    features['cardinal_direction'] = choose(
-        [None, 'east', 'north', 'south', 'west'],
-        [0.7, 0.075, 0.075, 0.075, 0.075]
-    )
+        features['query_type'] = choose(['around_query', 'in_query'], [0.6, 0.4])
+        features['cardinal_direction'] = choose(
+            [None, 'east', 'north', 'south', 'west'],
+            [0.7, 0.075, 0.075, 0.075, 0.075]
+        )
 
     if features['query_type'] == 'around_query':
         if features['cardinal_direction']:
@@ -187,7 +200,12 @@ def generate_poi_query_features(thing_table, areas, pois):
                 features['center_nwr'] = choose_poi(pois)
             del features['area']
 
-    if features.get('around_topx'):
+    if rfeatures['named_entity']:
+        rfeatures['qtype_shorthand'] = choose(
+            ['latlong', 'website', 'opening-hours'],
+            [0.6, 0.00, 0.4]
+        )
+    elif features.get('around_topx'):
         rfeatures['qtype_shorthand'] = choose(
             ['name', 'latlong', 'website', 'opening-hours'],
             [0.4, 0.4, 0.00, 0.2]
@@ -206,7 +224,10 @@ def generate_poi_query_features(thing_table, areas, pois):
 
 def generate_nl(features, noise=False):
     if features['query_type'] == 'in_query':
-        templates = IN_QUERY_TEMPLATES
+        if features['rendering_features'].get('named_entity'):
+            templates = NAMED_IN_QUERY_TEMPLATES
+        else:
+            templates = IN_QUERY_TEMPLATES
     elif features['query_type'] == 'around_query':
         if features.get('around_topx'):
             templates = CLOSEST_AROUND_QUERY_TEMPLATES

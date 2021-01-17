@@ -1,0 +1,6 @@
+where {% include('meta/in_location.jinja2') %}
+
+{{ 'are' if plural else 'is' }}
+{{ optional('the') }}
+{{ thing_plural if plural else thing_singular }}
+{{ optional('?') }}

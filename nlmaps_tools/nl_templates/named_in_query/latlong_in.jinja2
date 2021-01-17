@@ -1,0 +1,3 @@
+{{ thing_plural if plural else thing_singular }}
+{% include 'meta/in_location.jinja2' %}
+{{ choose(['!', '.', ''], [0.25, 0.25, 0.5]) }}

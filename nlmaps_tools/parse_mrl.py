@@ -411,6 +411,7 @@ def test():
         "dist(query(area(keyval('name','Edinburgh')),nwr(keyval('name','Palace of Holyroodhouse')),qtype(latlong)),query(area(keyval('name','Edinburgh')),nwr(keyval('name','Camera Obscura')),qtype(latlong)))",
         "dist(query(around(center(area(keyval('name','Edinburgh')),nwr(keyval('name','Palace of Holyroodhouse'))),search(nwr(keyval('name','Edinburgh Waverley'),keyval('railway','station'))),maxdist(DIST_INTOWN)),qtype(latlong)))",
         "dist(query(area(keyval('name','Heidelberg')),nwr(keyval('name','Heidelberger Schloss')),qtype(latlong)),query(area(keyval('name','Heidelberg')),nwr(keyval('name','Heidelberg Hbf')),qtype(least(topx(1)))),for('walk'))",
+        "query(nwr(keyval('amenity','restaurant')),qtype(latlong))",
     ]
 
     for mrl in test_mrls:

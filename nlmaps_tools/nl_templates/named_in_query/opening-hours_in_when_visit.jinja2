@@ -1,0 +1,11 @@
+{% if features['area'] %}
+  {% include('meta/in_location.jinja2') %}{{ optional(',', 0.5) }}
+  when
+  {{ choose(['can I', 'can we', 'to'], [0.3, 0.3, 0.4]) }}
+  {{ choose(['visit', 'go to'], [0.6, 0.4]) }}
+  {{ optional('the') }}
+  {{ thing_plural if plural else thing_singular }}
+  {{ optional('?') }}
+{% else %}
+  {% include('named_in_query/opening-hours_give.jinja2') %}
+{% endif %}
