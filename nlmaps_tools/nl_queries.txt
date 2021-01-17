@@ -59,12 +59,6 @@ Where is any THING in LOCATION -> latlong
 ✓Does AREA have many THING near|around|in walking distance of REFERENCE -> count
 ✓Does AROUND_LOCATION have many THING nearby|around it|within walking distance|within 1 km
 
-What|which THING is nearest|closest from|to|of LOCATION -> topx1
-What|which is the nearest|closest THING from|to|of LOCATION -> topx1
-THING closest|nearest from|to|of LOCATION -> topx1
-Indicate|Give|Show me the name of the THING nearest|closest from|to|of LOCATION -> topx1
-Indicate|Give|Show me the name of the nearest|closest THING from|to|of LOCATION -> topx1
-
 ✓What are the opening hours|times of THING in LOCATION -> opening_hours
 ✓Give me the opening hours of THING in LOCATION -> opening_hours
 ✓When do/are PLURAL(THING) in LOCATION open -> opening_hours
@@ -74,6 +68,24 @@ Is THING in LOCATION open -> opening_hours
 ✓In LOCATION, when can I visit …
 ✓In LOCATION, what are the opening hours of …
 ✓In LOCATION, when are PLURAL(THING) open?
+
+✓THING closest|nearest from|to|of LOCATION -> topx1, latlong
+✓Where is the THING (that is) nearest to LOCATION -> topx1, latlong
+✓Where is the nearest THING to LOCATION -> topx1, latlong
+✓IN LOCATION, where is the THING (that is) closest to LOCATION -> topx1, latlong
+✓IN LOCATION, where is the closest THING to LOCATION -> topx1, latlong
+
+✓What|which THING is next|nearest|closest from|to|of LOCATION -> topx1, name
+✓What|which is the nearest|closest THING from|to|of LOCATION -> topx1, name
+✓What|which is the THING (that is) nearest|closest from|to|of LOCATION -> topx1, name
+✓Give|Show me the name of the THING (that is) nearest|closest from|to|of LOCATION -> topx1, name
+✓Give|Show me the name of the nearest|closest THING from|to|of LOCATION -> topx1, name
+✓Name the THING (that is) closest to LOCATION -> topx1, name
+✓IN LOCATION, …
+
+✓When are the opening hours of the THING that is closest to LOCATION? -> topx1, opening_hours
+✓Give me the opening hours of the THING that is closest to LOCATION? -> topx1, opening_hours
+✓IN LOCATION, …
 
 What’s the website of THING in LOCATION -> website
 Give me the website of THING in LOCATION -> website
@@ -96,3 +108,9 @@ where can i have a barbecue
 where can i rent a car
 where can i buy *
 POI in LOCATION -> area(name: LOCATION), target_nwr(name: POI)
+
+
+DIST
+====
+
+How far is THING1 in LOC1 from THING2 in LOC2

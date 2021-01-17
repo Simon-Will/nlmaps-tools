@@ -121,6 +121,14 @@ def choose_poi(pois):
 
 
 def generate_features(thing_table, areas, pois):
+    return generate_poi_query_features(thing_table, areas, pois)
+
+
+def generate_dist_query_features(thing_table, areas, pois):
+    pass
+
+
+def generate_poi_query_features(thing_table, areas, pois):
     rfeatures = {}
     features = {'rendering_features': rfeatures}
 
@@ -157,12 +165,16 @@ def generate_features(thing_table, areas, pois):
         if features['cardinal_direction']:
             features['maxdist'] = Symbol('DIST_OUTTOWN')
         else:
-            features['maxdist'] = choose(
-                [Symbol('DIST_INTOWN'), Symbol('DIST_OUTTOWN'),
-                 Symbol('WALKING_DIST'), Symbol('DIST_DAYTRIP'),
-                 str(random.randint(1, 100)) + '000'],
-                [0.3, 0.25, 0.2, 0.1, 0.15]
-            )
+            if optional('closest', 0.3):
+                features['around_topx'] = Symbol('1')
+                features['maxdist'] = Symbol('DIST_INTOWN')
+            else:
+                features['maxdist'] = choose(
+                    [Symbol('DIST_INTOWN'), Symbol('DIST_OUTTOWN'),
+                     Symbol('WALKING_DIST'), Symbol('DIST_DAYTRIP'),
+                     str(random.randint(1, 100)) + '000'],
+                    [0.3, 0.25, 0.2, 0.1, 0.15]
+                )
 
         if optional('nwr_and_area', 0.75):
             features['center_nwr'] = choose_poi(pois)

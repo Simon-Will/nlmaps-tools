@@ -1,0 +1,32 @@
+{% set separate_area_and_nwr = optional(1) %}
+{% if features['area'] and separate_area_and_nwr %}
+  in {{ features['area'] }}{{ optional(',', 0.5) }}
+{% endif %}
+
+where
+{{ 'are' if plural else 'is' }}
+{{ optional('the', 0.8) }}
+
+{% if optional('thing_first') %}
+{{ thing_plural if plural else thing_singular }}
+
+{% if plural %}
+{{ choose(['that are', 'which are', ''], [0.25, 0.25, 0.5]) }}
+{% else %}
+{{ choose(['that is', 'which is', ''], [0.25, 0.25, 0.5]) }}
+{% endif %}
+
+{{ choose(['closest', 'nearest', 'next']) }}
+{% else %}
+{{ choose(['closest', 'nearest', 'next']) }}
+{{ thing_plural if plural else thing_singular }}
+{% endif %}
+
+{{ choose(['from', 'to', 'of'], [0.4, 0.4, 0.2]) }}
+
+{% if features['area'] and separate_area_and_nwr %}
+{{ features['center_nwr'][0][1] }}
+{% else %}
+{% include 'meta/around_query_bare_location.jinja2' %}
+{% endif %}
+{{ choose(['?', '']) }}
