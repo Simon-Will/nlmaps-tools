@@ -6569,6 +6569,18 @@
 |-
 | Hi-Fis near || shop || hifi || near || Y 
 |-
+| Hi-Fi Shop || shop || hifi || - || N 
+|-
+| Hi-Fi Shops || shop || hifi || - || Y 
+|-
+| Hi-Fi Shop in || shop || hifi || in || N 
+|-
+| Hi-Fi Shops in || shop || hifi || in || Y 
+|-
+| Hi-Fi Shop near || shop || hifi || near || N 
+|-
+| Hi-Fi Shops near || shop || hifi || near || Y 
+|-
 | Insurance || office || insurance || - || N 
 |-
 | Insurances || office || insurance || - || Y 

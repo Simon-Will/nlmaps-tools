@@ -4,39 +4,25 @@
 {% endif %}
 
 {% if optional('give', 0.6) %}
-{{ choose(['show', 'give']) }}
-{{ choose(['me', 'us', ''], [0.3, 0.3, 0.4]) }}
-{{ optional('the', 0.8) }}
-name
-of 
-{{ optional('the', 0.8) }}
+  {{ choose(['show', 'give']) }}
+  {{ choose(['me', 'us', ''], [0.3, 0.3, 0.4]) }}
+  {{ optional('the', 0.8) }}
+  name
+  of 
+  {{ optional('the', 0.8) }}
 {% else %}
-name
-{{ optional('of') }}
-{{ optional('the', 0.8) }}
+  name
+  {{ optional('of') }}
+  {{ optional('the', 0.8) }}
 {% endif %}
 
-
-{% if optional('thing_first') %}
-{{ thing_plural if plural else thing_singular }}
-
-{% if plural %}
-{{ choose(['that are', 'which are', ''], [0.25, 0.25, 0.5]) }}
-{% else %}
-{{ choose(['that is', 'which is', ''], [0.25, 0.25, 0.5]) }}
-{% endif %}
-
-{{ choose(['closest', 'nearest', 'next']) }}
-{% else %}
-{{ choose(['closest', 'nearest', 'next']) }}
-{{ thing_plural if plural else thing_singular }}
-{% endif %}
+{% include 'meta/closest_around_query_closest_thing.jinja2' %}
 
 {{ choose(['from', 'to', 'of'], [0.4, 0.4, 0.2]) }}
 
 {% if features['area'] and separate_area_and_nwr %}
-{{ features['center_nwr'][0][1] }}
+  {{ features['center_nwr'][0][1] }}
 {% else %}
-{% include 'meta/around_query_bare_location.jinja2' %}
+  {% include 'meta/around_query_bare_location.jinja2' %}
 {% endif %}
 {{ choose(['!', '.', ''], [0.25, 0.25, 0.5]) }}

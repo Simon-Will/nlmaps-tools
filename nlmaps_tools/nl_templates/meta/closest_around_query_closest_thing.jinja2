@@ -1,0 +1,14 @@
+{% if optional('thing_first') %}
+  {{ thing_plural if plural else thing_singular }}
+
+  {% if plural %}
+    {{ choose(['that are', 'which are', ''], [0.25, 0.25, 0.5]) }}
+  {% else %}
+    {{ choose(['that is', 'which is', ''], [0.25, 0.25, 0.5]) }}
+  {% endif %}
+
+  {{ choose(['closest', 'nearest', 'next']) }}
+{% else %}
+  {{ choose(['closest', 'nearest', 'next']) }}
+  {{ thing_plural if plural else thing_singular }}
+{% endif %}

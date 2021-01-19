@@ -113,4 +113,25 @@ POI in LOCATION -> area(name: LOCATION), target_nwr(name: POI)
 DIST
 ====
 
-How far is THING1 in LOC1 from THING2 in LOC2
+What is the distance between|from A and|to B
+What's the distance between|from A and|to B
+Tell/Give me the the distance between|from A and B
+How long|far is the distance between|from A and|to B
+How far (apart) is A from B?
+How far is A apart from B?
+How far (is it) from A to B
+Tell me how far it is from A to B
+
+Type 1
+In LOCATION, tell me the distance of NE and NE
+Tell me the distance from NE to NE in LOCATION
+
+Type 2
+Tell me the distance from NE in LOCATION to NE in LOCATION
+from NE in LOCATION to NE in LOCATION how far
+from NE in LOCATION, how far to NE in LOCATION
+How far apart are NE in LOCATION and NE in LOCATION
+
+Type 3
+✓Tell me the distance from LOCATION to the closest THING
+✓How far is it to the closest THING from LOCATION

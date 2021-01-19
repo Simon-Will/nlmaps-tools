@@ -1,0 +1,21 @@
+{% include 'meta/dist_tell_distance.jinja2' %}
+
+{% set old_features = features %}
+{% set features = features['sub'][0] %}
+{% if optional('location_first') %}
+  {{ choose(['from', 'between']) }}
+  {% include 'meta/around_query_bare_location.jinja2' %}
+
+  {{ choose(['to', 'and']) }}
+  {{ optional('the', 0.8) }}
+  {% include 'meta/closest_around_query_closest_thing.jinja2' %}
+{% else %}
+  {{ choose(['from', 'between']) }}
+  {{ optional('the', 0.8) }}
+  {% include 'meta/closest_around_query_closest_thing.jinja2' %}
+
+  {{ choose(['to', 'and']) }}
+  {% include 'meta/around_query_bare_location.jinja2' %}
+{% endif %}
+{% set features = old_features %}
+{{ choose(['?', '!', '.', ''], [0.3, 0.15, 0.15, 0.4]) }}

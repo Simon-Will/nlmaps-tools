@@ -1,0 +1,27 @@
+{% set qword1 = choose(['distance', 'how', 'tell_how'], [0.6, 0.3, 0.1]) %}
+{% if qword1 == 'distance' %}
+  {% set qword2 = choose(['give', 'what', 'how']) %}
+  {% if qword2 == 'give' %}
+    {{ choose(['tell', 'give', 'show']) }}
+    {{ choose(['me', 'us', ''], [0.3, 0.3, 0.4]) }}
+  {% elif qword2 == 'give' %}
+    {{ choose(['what is', 'what’s', "what's"]) }}
+  {% else %}
+    how
+    {{ choose(['far', 'long']) }}
+    {{ optional('is', 0.8) }}
+  {% endif %}
+  {{ optional('the', 0.8) }}
+  distance
+{% elif qword1 == 'how' %}
+  how
+  {{ choose(['far', 'long']) }}
+  {{ optional('apart', 0.2) }}
+  {{ choose(['is it', 'is', ''], [0.5, 0.1, 0.4]) }}
+{% else %}
+  tell
+  {{ choose(['me', 'us', ''], [0.3, 0.3, 0.4]) }}
+  how
+  {{ choose(['far', 'long']) }}
+  {{ choose(['it is', 'is it', 'is', ''], [0.4, 0.2, 0.1, 0.3]) }}
+{% endif %}

@@ -1,0 +1,17 @@
+{% include 'meta/dist_tell_distance.jinja2' %}
+
+{{ choose(['from', 'between']) }}
+{{ first_thing_plural if first_plural else first_thing_singular }}
+{% set old_features = features %}
+{% set features = features['sub'][0] %}
+{% include 'meta/in_location.jinja2' %}
+{% set features = old_features %}
+
+{{ choose(['to', 'and']) }}
+
+{{ second_thing_plural if second_plural else second_thing_singular }}
+{% set old_features = features %}
+{% set features = features['sub'][1] %}
+{% include 'meta/in_location.jinja2' %}
+{% set features = old_features %}
+{{ choose(['?', '!', '.', ''], [0.3, 0.15, 0.15, 0.4]) }}

@@ -10,21 +10,7 @@ when
 {{ choose(['is', 'does']) }}
 {% endif %}
 {{ optional('the', 0.8) }}
-
-{% if optional('thing_first') %}
-{{ thing_plural if plural else thing_singular }}
-
-{% if plural %}
-{{ choose(['that are', 'which are', ''], [0.25, 0.25, 0.5]) }}
-{% else %}
-{{ choose(['that is', 'which is', ''], [0.25, 0.25, 0.5]) }}
-{% endif %}
-
-{{ choose(['closest', 'nearest', 'next']) }}
-{% else %}
-{{ choose(['closest', 'nearest', 'next']) }}
-{{ thing_plural if plural else thing_singular }}
-{% endif %}
+{% include 'meta/closest_around_query_closest_thing.jinja2' %}
 
 {{ choose(['from', 'to', 'of'], [0.4, 0.4, 0.2]) }}
 

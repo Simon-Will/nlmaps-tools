@@ -37,12 +37,18 @@ def collect_templates(subdir_basename):
 COMMON_TEMPLATES = collect_templates('common')
 IN_QUERY_ONLY_TEMPLATES = collect_templates('in_query')
 AROUND_QUERY_ONLY_TEMPLATES = collect_templates('around_query')
+DIST_SAME_AREA_ONLY_TEMPLATES = collect_templates('dist_same_area')
+
 NAMED_IN_QUERY_TEMPLATES = collect_templates('named_in_query')
 CLOSEST_AROUND_QUERY_TEMPLATES = collect_templates('closest_around_query')
+DIST_CLOSEST_TEMPLATES = collect_templates('dist_closest')
+DIST_DIFF_AREA_TEMPLATES = collect_templates('dist_diff_area')
 
 IN_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES, IN_QUERY_ONLY_TEMPLATES)
 AROUND_QUERY_TEMPLATES = merge_templates(COMMON_TEMPLATES,
                                          AROUND_QUERY_ONLY_TEMPLATES)
+DIST_SAME_AREA_TEMPLATES = merge_templates(DIST_SAME_AREA_ONLY_TEMPLATES,
+                                           DIST_DIFF_AREA_TEMPLATES)
 
 SHORTHAND_TO_QTYPE = {
     'name': (('findkey', 'name'),),
@@ -123,53 +129,98 @@ def choose_poi(pois):
 
 
 def generate_features(thing_table, areas, pois):
+    if optional('dist', 0.1):
+        return generate_dist_query_features(thing_table, areas, pois)
     return generate_poi_query_features(thing_table, areas, pois)
 
 
 def generate_dist_query_features(thing_table, areas, pois):
-    pass
+    rfeatures = {'qtype_shorthand': 'dist'}
+    features = {'rendering_features': rfeatures, 'query_type': 'dist'}
+    if optional('closest'):
+        around_query = generate_tag_query_features(thing_table, areas, pois,
+                                                   closest=True)
+        features['sub'] = [around_query]
+        rfeatures['dist_type'] = 'closest'
+        rfeatures['plural'] = around_query['rendering_features']['plural']
+        rfeatures['thing_singular'
+                  ] = around_query['rendering_features']['thing_singular']
+        rfeatures['thing_plural'
+                  ] = around_query['rendering_features']['thing_plural']
+    else:
+        rfeatures['dist_type'] = choose(['same_area', 'diff_area'], [0.3, 0.7])
+        if rfeatures['dist_type'] == 'same_area':
+            in_query_1 = generate_ne_query_features(areas, pois, with_area=True)
+            in_query_2 = generate_ne_query_features(areas, pois, with_area=False)
+            in_query_2['area'] = in_query_1['area']
+        else:
+            in_query_1 = generate_ne_query_features(areas, pois)
+            in_query_2 = generate_ne_query_features(areas, pois)
+        features['sub'] = [in_query_1, in_query_2]
+        rfeatures['first_plural'
+                  ] = in_query_1['rendering_features']['plural']
+        rfeatures['first_thing_singular'
+                  ] = in_query_1['rendering_features']['thing_singular']
+        rfeatures['first_thing_plural'
+                  ] = in_query_1['rendering_features']['thing_plural']
+        rfeatures['second_plural'
+                  ] = in_query_2['rendering_features']['plural']
+        rfeatures['second_thing_singular'
+                  ] = in_query_2['rendering_features']['thing_singular']
+        rfeatures['second_thing_plural'
+                  ] = in_query_2['rendering_features']['thing_plural']
+    return features
 
 
-def generate_poi_query_features(thing_table, areas, pois):
+def generate_poi_query_features(thing_table, areas, pois, ne=None,
+                                around=None, closest=None):
+    if ne or (ne is None and optional('named_entity_query', 0.05)):
+        return generate_ne_query_features(areas, pois)
+    else:
+        return generate_tag_query_features(thing_table, areas, pois,
+                                           around=around, closest=closest)
+
+
+def generate_tag_query_features(thing_table, areas, pois, around=None,
+                                closest=None):
+    if closest is True:
+        around = True
     rfeatures = {}
     features = {'rendering_features': rfeatures}
 
     idx = random.randint(0, len(thing_table) - 1)
-    rfeatures['named_entity'] = choose([True, False], [0.05, 0.95])
-    rfeatures['named_entity'] = True
-    if rfeatures['named_entity']:
-        # Query for name tag, e.g. name=Völkerschlachtdenkmal.
-        features['query_type'] = 'in_query'
-        rfeatures['thing_singular'] = rfeatures['thing_plural'] = choose(pois)
-        features['target_nwr'] = [('name', rfeatures['thing_singular'])]
-        rfeatures['plural'] = False
-        if optional('with_area', 0.6):
-            features['area'] = choose(areas)
-    else:
-        # Normal query by non-name tags, e.g. amenity=restaurant.
-        thing = thing_table[idx]
-        features['target_nwr'] = thing.tags
-        if thing.singular:
-            rfeatures['thing_singular'] = choose(thing.singular)
-            if thing.plural:
-                plural_chance = 0.7
-                rfeatures['thing_plural'] = choose(thing.plural)
-            else:
-                plural_chance = 0.0
-                rfeatures['thing_plural'] = rfeatures['thing_singular']
-        elif thing.plural:
-            plural_chance = 1.0
+    thing = thing_table[idx]
+    features['target_nwr'] = thing.tags
+    if thing.singular:
+        rfeatures['thing_singular'] = choose(thing.singular)
+        if thing.plural:
+            plural_chance = 0.7
             rfeatures['thing_plural'] = choose(thing.plural)
         else:
-            raise ValueError('Neither singular nor plural in thing: {}'
-                             .format(thing))
+            plural_chance = 0.0
+            rfeatures['thing_plural'] = rfeatures['thing_singular']
+    elif thing.plural:
+        plural_chance = 1.0
+        rfeatures['thing_plural'] = choose(thing.plural)
+    else:
+        raise ValueError('Neither singular nor plural in thing: {}'
+                            .format(thing))
 
-        rfeatures['plural'] = choose([True, False],
-                                     [plural_chance, 1 - plural_chance])
+    rfeatures['plural'] = choose([True, False],
+                                    [plural_chance, 1 - plural_chance])
 
-        features['area'] = choose(areas)
+    features['area'] = choose(areas)
 
+    if around:
+        features['query_type'] = 'around_query'
+    elif around is False:
+        features['query_type'] = 'in_query'
+    else:  # around is None
         features['query_type'] = choose(['around_query', 'in_query'], [0.6, 0.4])
+
+    if closest:
+        features['cardinal_direction'] = None
+    else:
         features['cardinal_direction'] = choose(
             [None, 'east', 'north', 'south', 'west'],
             [0.7, 0.075, 0.075, 0.075, 0.075]
@@ -179,7 +230,7 @@ def generate_poi_query_features(thing_table, areas, pois):
         if features['cardinal_direction']:
             features['maxdist'] = Symbol('DIST_OUTTOWN')
         else:
-            if optional('closest', 0.3):
+            if closest or (closest is None and optional('closest', 0.3)):
                 features['around_topx'] = Symbol('1')
                 features['maxdist'] = Symbol('DIST_INTOWN')
                 rfeatures['plural'] = choose([True, False], [0.1, 0.9])
@@ -200,12 +251,7 @@ def generate_poi_query_features(thing_table, areas, pois):
                 features['center_nwr'] = choose_poi(pois)
             del features['area']
 
-    if rfeatures['named_entity']:
-        rfeatures['qtype_shorthand'] = choose(
-            ['latlong', 'website', 'opening-hours'],
-            [0.6, 0.00, 0.4]
-        )
-    elif features.get('around_topx'):
+    if features.get('around_topx'):
         rfeatures['qtype_shorthand'] = choose(
             ['name', 'latlong', 'website', 'opening-hours'],
             [0.4, 0.4, 0.00, 0.2]
@@ -222,8 +268,33 @@ def generate_poi_query_features(thing_table, areas, pois):
     return features
 
 
+def generate_ne_query_features(areas, pois, with_area=None):
+    rfeatures = {'named_entity': True}
+    features = {'rendering_features': rfeatures}
+    features['query_type'] = 'in_query'
+    rfeatures['thing_singular'] = rfeatures['thing_plural'] = choose(pois)
+    features['target_nwr'] = [('name', rfeatures['thing_singular'])]
+    rfeatures['plural'] = False
+    if with_area is True or (with_area is None and optional('with_area', 0.6)):
+        features['area'] = choose(areas)
+
+    rfeatures['qtype_shorthand'] = choose(
+        ['latlong', 'website', 'opening-hours'],
+        [0.6, 0.00, 0.4]
+    )
+    features['qtype'] = SHORTHAND_TO_QTYPE[rfeatures['qtype_shorthand']]
+    return features
+
+
 def generate_nl(features, noise=False):
-    if features['query_type'] == 'in_query':
+    rfeatures = features['rendering_features']
+    if rfeatures.get('dist_type') == 'closest':
+        templates = DIST_CLOSEST_TEMPLATES
+    elif rfeatures.get('dist_type') == 'same_area':
+        templates = DIST_SAME_AREA_TEMPLATES
+    elif rfeatures.get('dist_type') == 'diff_area':
+        templates = DIST_DIFF_AREA_TEMPLATES
+    elif features['query_type'] == 'in_query':
         if features['rendering_features'].get('named_entity'):
             templates = NAMED_IN_QUERY_TEMPLATES
         else:
@@ -235,7 +306,6 @@ def generate_nl(features, noise=False):
             templates = AROUND_QUERY_TEMPLATES
     else:
         templates = COMMON_TEMPLATES
-    rfeatures = features['rendering_features']
     possible_templates = templates[rfeatures['qtype_shorthand']]
     template = ENV.get_template(choose(possible_templates))
     rfeatures['template'] = template  # This is only saved as debugging info.
@@ -261,6 +331,7 @@ def omit_location(loc):
     return (
         re.match(r'^[\s\d]+$', loc)
         or len(loc) > 40
+        or len(loc) < 2
         # Allow only Unicode code blocks Basic Latin, Latin-1 Supplement, Latin
         # Extended-A and Latin Extended-B as well as General Punctuation
         or any(ord(char) > 0x024f and not 0x2000 <= ord(char) <= 0x206F
