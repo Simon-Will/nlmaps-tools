@@ -24,6 +24,7 @@ DEFAULT_BOUNDING_BOXES = (
     BoundingBox(45, 8, 47, 10),  # Milan
     BoundingBox(47, 18, 49, 20),  # Budapest
     BoundingBox(59, 24, 61, 26),  # Helsinki
+    BoundingBox(-25, -48, -23, -46),  # São Paulo
 )
 
 AREA_TEMPLATE = jinja2.Template("""
