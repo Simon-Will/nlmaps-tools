@@ -3,7 +3,7 @@
 import argparse
 import re
 
-FINDKEY_WHITELIST = {'name', 'opening_hours', 'website', 'wheelchair'}
+FINDKEY_WHITELIST = {'name', 'opening_hours', 'website'}
 
 SUBSTITUTIONS = (
     (r"keyval\('cuisine','vegetarian'\)", r"keyval('diet:vegetarian',or('only','yes'))"),
