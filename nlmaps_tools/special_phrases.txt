@@ -723,6 +723,12 @@
 |-
 | Dojang near || amenity || dojo || near || Y 
 |-
+| Drinking Water || drinking_water || yes || - || N 
+|-
+| Drinking Water in || drinking_water || yes || in || N 
+|-
+| Drinking Water near || drinking_water || yes || near || N 
+|-
 | Drinking Water || amenity || drinking_water || - || N 
 |-
 | Drinking Water in || amenity || drinking_water || in || N 
@@ -994,54 +1000,6 @@
 | Grit bin near || amenity || grit_bin || near || N 
 |-
 | Grit bins near || amenity || grit_bin || near || Y
-|-
-| Fitness Centre || amenity || gym || - || N 
-|-
-| Fitness Centres || amenity || gym || - || Y 
-|-
-| Fitness Centre in || amenity || gym || in || N 
-|-
-| Fitness Centres in || amenity || gym || in || Y 
-|-
-| Fitness Centre near || amenity || gym || near || N 
-|-
-| Fitness Centres near || amenity || gym || near || Y 
-|-
-| Fitness Center || amenity || gym || - || N 
-|-
-| Fitness Centers || amenity || gym || - || Y 
-|-
-| Fitness Center in || amenity || gym || in || N 
-|-
-| Fitness Centers in || amenity || gym || in || Y 
-|-
-| Fitness Center near || amenity || gym || near || N 
-|-
-| Fitness Centers near || amenity || gym || near || Y 
-|-
-| Fitness Studio || amenity || gym || - || N 
-|-
-| Fitness Studios || amenity || gym || - || Y 
-|-
-| Fitness Studio in || amenity || gym || in || N 
-|-
-| Fitness Studios in || amenity || gym || in || Y 
-|-
-| Fitness Studio near || amenity || gym || near || N 
-|-
-| Fitness Studios near || amenity || gym || near || Y 
-|-
-| Gym || amenity || gym || - || N 
-|-
-| Gyms || amenity || gym || - || Y 
-|-
-| Gym in || amenity || gym || in || N 
-|-
-| Gyms in || amenity || gym || in || Y 
-|-
-| Gym near || amenity || gym || near || N 
-|-
-| Gyms near || amenity || gym || near || Y 
 |-
 | Hospital || amenity || hospital || - || N 
 |-
@@ -4049,6 +4007,54 @@
 |-
 | Fishing Areas near || leisure || fishing || near || Y 
 |-
+| Fitness Centre || leisure || fitness_centre || - || N 
+|-
+| Fitness Centres || leisure || fitness_centre || - || Y 
+|-
+| Fitness Centre in || leisure || fitness_centre || in || N 
+|-
+| Fitness Centres in || leisure || fitness_centre || in || Y 
+|-
+| Fitness Centre near || leisure || fitness_centre || near || N 
+|-
+| Fitness Centres near || leisure || fitness_centre || near || Y 
+|-
+| Fitness Center || leisure || fitness_centre || - || N 
+|-
+| Fitness Centers || leisure || fitness_centre || - || Y 
+|-
+| Fitness Center in || leisure || fitness_centre || in || N 
+|-
+| Fitness Centers in || leisure || fitness_centre || in || Y 
+|-
+| Fitness Center near || leisure || fitness_centre || near || N 
+|-
+| Fitness Centers near || leisure || fitness_centre || near || Y 
+|-
+| Fitness Studio || leisure || fitness_centre || - || N 
+|-
+| Fitness Studios || leisure || fitness_centre || - || Y 
+|-
+| Fitness Studio in || leisure || fitness_centre || in || N 
+|-
+| Fitness Studios in || leisure || fitness_centre || in || Y 
+|-
+| Fitness Studio near || leisure || fitness_centre || near || N 
+|-
+| Fitness Studios near || leisure || fitness_centre || near || Y 
+|-
+| Gym || leisure || fitness_centre || - || N 
+|-
+| Gyms || leisure || fitness_centre || - || Y 
+|-
+| Gym in || leisure || fitness_centre || in || N 
+|-
+| Gyms in || leisure || fitness_centre || in || Y 
+|-
+| Gym near || leisure || fitness_centre || near || N 
+|-
+| Gyms near || leisure || fitness_centre || near || Y 
+|-
 | Garden || leisure || garden || - || N 
 |-
 | Gardens || leisure || garden || - || Y 
@@ -6365,6 +6371,30 @@
 |-
 | Florists near || shop || florist || near || Y 
 |-
+| Flower Shop || shop || florist || - || N 
+|-
+| Flower Shops || shop || florist || - || Y 
+|-
+| Flower Shop in || shop || florist || in || N 
+|-
+| Flower Shops in || shop || florist || in || Y 
+|-
+| Flower Shop near || shop || florist || near || N 
+|-
+| Flower Shops near || shop || florist || near || Y 
+|-
+| Flower Store || shop || florist || - || N 
+|-
+| Flower Stores || shop || florist || - || Y 
+|-
+| Flower Store in || shop || florist || in || N 
+|-
+| Flower Stores in || shop || florist || in || Y 
+|-
+| Flower Store near || shop || florist || near || N 
+|-
+| Flower Stores near || shop || florist || near || Y 
+|-
 | Food Shop || shop || convenience || - || N 
 |-
 | Food Shops || shop || convenience || - || Y 
@@ -6449,17 +6479,29 @@
 |-
 | Funeral Directors near || shop || funeral_directors || near || Y 
 |-
-| Furniture || shop || furniture || - || N 
+| Furniture Shop || shop || furniture || - || N 
 |-
-| Furnitures || shop || furniture || - || Y 
+| Furniture Shops || shop || furniture || - || Y 
 |-
-| Furniture in || shop || furniture || in || N 
+| Furniture Shop in || shop || furniture || in || N 
 |-
-| Furnitures in || shop || furniture || in || Y 
+| Furniture Shops in || shop || furniture || in || Y 
 |-
-| Furniture near || shop || furniture || near || N 
+| Furniture Shop near || shop || furniture || near || N 
 |-
-| Furnitures near || shop || furniture || near || Y 
+| Furniture Shops near || shop || furniture || near || Y 
+|-
+| Furniture Store || shop || furniture || - || N 
+|-
+| Furniture Stores || shop || furniture || - || Y 
+|-
+| Furniture Store in || shop || furniture || in || N 
+|-
+| Furniture Stores in || shop || furniture || in || Y 
+|-
+| Furniture Store near || shop || furniture || near || N 
+|-
+| Furniture Stores near || shop || furniture || near || Y 
 |-
 | Garden Centre || shop || garden_centre || - || N 
 |-
