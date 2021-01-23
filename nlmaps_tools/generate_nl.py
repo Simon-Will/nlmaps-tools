@@ -140,13 +140,15 @@ def generate_dist_query_features(thing_table, areas, pois):
     if optional('closest'):
         around_query = generate_tag_query_features(thing_table, areas, pois,
                                                    closest=True)
+        around_query['qtype_shorthand'] = 'latlong'
+        around_query['qtype'] = SHORTHAND_TO_QTYPE['latlong']
         features['sub'] = [around_query]
         rfeatures['dist_type'] = 'closest'
         rfeatures['plural'] = around_query['rendering_features']['plural']
         rfeatures['thing_singular'
-                  ] = around_query['rendering_features']['thing_singular']
+                  ] = around_query['rendering_features'].get('thing_singular')
         rfeatures['thing_plural'
-                  ] = around_query['rendering_features']['thing_plural']
+                  ] = around_query['rendering_features'].get('thing_plural')
     else:
         rfeatures['dist_type'] = choose(['same_area', 'diff_area'], [0.3, 0.7])
         if rfeatures['dist_type'] == 'same_area':
@@ -156,19 +158,25 @@ def generate_dist_query_features(thing_table, areas, pois):
         else:
             in_query_1 = generate_ne_query_features(areas, pois)
             in_query_2 = generate_ne_query_features(areas, pois)
+        in_query_1['qtype_shorthand'] = 'latlong'
+        in_query_1['qtype'] = SHORTHAND_TO_QTYPE['latlong']
+        in_query_2['qtype_shorthand'] = 'latlong'
+        in_query_2['qtype'] = SHORTHAND_TO_QTYPE['latlong']
         features['sub'] = [in_query_1, in_query_2]
+
         rfeatures['first_plural'
                   ] = in_query_1['rendering_features']['plural']
         rfeatures['first_thing_singular'
-                  ] = in_query_1['rendering_features']['thing_singular']
+                  ] = in_query_1['rendering_features'].get('thing_singular')
         rfeatures['first_thing_plural'
-                  ] = in_query_1['rendering_features']['thing_plural']
+                  ] = in_query_1['rendering_features'].get('thing_plural')
         rfeatures['second_plural'
                   ] = in_query_2['rendering_features']['plural']
         rfeatures['second_thing_singular'
-                  ] = in_query_2['rendering_features']['thing_singular']
+                  ] = in_query_2['rendering_features'].get('thing_singular')
         rfeatures['second_thing_plural'
-                  ] = in_query_2['rendering_features']['thing_plural']
+
+                  ] = in_query_2['rendering_features'].get('thing_plural')
     return features
 
 
@@ -207,7 +215,7 @@ def generate_tag_query_features(thing_table, areas, pois, around=None,
                             .format(thing))
 
     rfeatures['plural'] = choose([True, False],
-                                    [plural_chance, 1 - plural_chance])
+                                 [plural_chance, 1 - plural_chance])
 
     features['area'] = choose(areas)
 
@@ -233,7 +241,11 @@ def generate_tag_query_features(thing_table, areas, pois, around=None,
             if closest or (closest is None and optional('closest', 0.3)):
                 features['around_topx'] = Symbol('1')
                 features['maxdist'] = Symbol('DIST_INTOWN')
-                rfeatures['plural'] = choose([True, False], [0.1, 0.9])
+                if 0 < plural_chance < 1:
+                    # If the plural chance is not 0 or 1, then singular and
+                    # plural forms exist. The singular should be very much
+                    # preferred for the closest question type.
+                    rfeatures['plural'] = choose([True, False], [0.1, 0.9])
             else:
                 features['maxdist'] = choose(
                     [Symbol('DIST_INTOWN'), Symbol('DIST_OUTTOWN'),
