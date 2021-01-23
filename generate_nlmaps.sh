@@ -32,14 +32,14 @@ generate() {
 }
 
 mkdir -p "$V3_DIR/v3$SUFFIX.normal"
-generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.train" 50000
-generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.dev" 2000
-generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.test" 20000
+generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.train" 100000
+generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.dev" 4000
+generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.test" 40000
 
 mkdir -p "$V3_DIR/v3$SUFFIX.noise"
-generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.train" 50000 noise
-generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.dev" 2000 noise
-generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.test" 20000 noise
+generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.train" 100000 noise
+generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.dev" 4000 noise
+generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.test" 40000 noise
 
 for type in normal noise; do
     mkdir -p "$V3_DIR/v3$SUFFIX.$type.plusv2"
