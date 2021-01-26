@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 SUFFIX="$1"
 V2_DIR="$2"
 AREAS="$3"
@@ -31,25 +33,29 @@ generate() {
     fi
 }
 
+declare -A LENGTHS
+for split in train dev test; do
+    LENGTHS["$split"]=$(wc -l <"$V2_DIR/nlmaps.v2.$split.mrl")
+done
+
 mkdir -p "$V3_DIR/v3$SUFFIX.normal"
-generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.train" 100000
-generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.dev" 4000
-generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.test" 40000
+generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.train" "$((2 * "${LENGTHS[train]}"))"
+generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.dev" "$((2 * "${LENGTHS[dev]}"))"
+generate "$V3_DIR/v3$SUFFIX.normal/nlmaps.v3$SUFFIX.test" "$((2 * "${LENGTHS[test]}"))"
 
 mkdir -p "$V3_DIR/v3$SUFFIX.noise"
-generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.train" 100000 noise
-generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.dev" 4000 noise
-generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.test" 40000 noise
+generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.train" "$((2 * "${LENGTHS[train]}"))" noise
+generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.dev" "$((2 * "${LENGTHS[dev]}"))" noise
+generate "$V3_DIR/v3$SUFFIX.noise/nlmaps.v3$SUFFIX.test" "$((2 * "${LENGTHS[test]}"))" noise
 
 for type in normal noise; do
     mkdir -p "$V3_DIR/v3$SUFFIX.$type.plusv2"
     for split in train dev test; do
-        len=$(wc -l <"$V2_DIR/nlmaps.v2.$split.mrl")
         for ext in en mrl; do
             merged="$V3_DIR/v3$SUFFIX.$type.plusv2/nlmaps.v3$SUFFIX.$split.$ext"
             echo "Merging new and old $split into $merged"
             cat "$V2_DIR/nlmaps.v2.$split.$ext" \
-                <(head -n "$len" "$V3_DIR/v3$SUFFIX.$type/nlmaps.v3$SUFFIX.$split.$ext") \
+                <(head -n "${LENGTHS["$split"]}" "$V3_DIR/v3$SUFFIX.$type/nlmaps.v3$SUFFIX.$split.$ext") \
                 >"$merged"
         done
     done
