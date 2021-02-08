@@ -130,7 +130,10 @@ class MrlGrammar:
         ).setParseAction(self.makeSymbol)
 
 
-        integer = pp.Word(pp.nums).setParseAction(self.makeSymbol)
+        integer = (
+            pp.Word(pp.nums)
+            ^ (pp.Suppress("'") + pp.Word(pp.nums) + pp.Suppress("'"))
+        ).setParseAction(self.makeSymbol)
 
         distance_term = distance_symbol ^ integer
 
@@ -364,6 +367,7 @@ def filetest():
     import sys
     grammar = MrlGrammar()
     testfile = '/media/data/Dauerhaft/Studium/Computerlinguistik/Master-Arbeit/data/nlmaps_v2.1/split_1_train_dev_test/nlmaps.v2.train.mrl'
+    #testfile = '/media/data/Dauerhaft/Studium/Computerlinguistik/Master-Arbeit/data/nlmaps_v3delta/v3delta.normal/nlmaps.v3delta.train.mrl'
 
     mrl_to_features = {}
     max_fails = 10
@@ -412,6 +416,7 @@ def test():
         "dist(query(around(center(area(keyval('name','Edinburgh')),nwr(keyval('name','Palace of Holyroodhouse'))),search(nwr(keyval('name','Edinburgh Waverley'),keyval('railway','station'))),maxdist(DIST_INTOWN)),qtype(latlong)))",
         "dist(query(area(keyval('name','Heidelberg')),nwr(keyval('name','Heidelberger Schloss')),qtype(latlong)),query(area(keyval('name','Heidelberg')),nwr(keyval('name','Heidelberg Hbf')),qtype(least(topx(1)))),for('walk'))",
         "query(nwr(keyval('amenity','restaurant')),qtype(latlong))",
+        "query(around(center(area(keyval('name','Heidelberg')),nwr(keyval('name','INF 325'))),search(nwr(keyval('shop','supermarket'),or(keyval('organic','only'),keyval('organic','yes')))),maxdist('5000')),qtype(latlong))",
     ]
 
     for mrl in test_mrls:

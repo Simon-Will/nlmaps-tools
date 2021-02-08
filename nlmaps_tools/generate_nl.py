@@ -250,7 +250,7 @@ def generate_tag_query_features(thing_table, areas, pois, around=None,
                 features['maxdist'] = choose(
                     [Symbol('DIST_INTOWN'), Symbol('DIST_OUTTOWN'),
                      Symbol('WALKING_DIST'), Symbol('DIST_DAYTRIP'),
-                     str(random.randint(1, 100)) + '000'],
+                     Symbol(str(random.randint(1, 100)) + '000')],
                     [0.3, 0.25, 0.2, 0.1, 0.15]
                 )
 
@@ -367,8 +367,8 @@ def main(areas, pois, count=100, escape=False, nl_suffix='en', noise=False,
     else:
         nl_file = mrl_file = sys.stdout
 
-    special_phrases_file = (Path(os.path.dirname(os.path.abspath(__file__)))
-                            / 'special_phrases.txt')
+    special_phrases_file = (Path(__file__)
+                            / '../data/special_phrases.txt').resolve()
     thing_table = special_phrases_table(special_phrases_file)
 
     for _ in range(count):

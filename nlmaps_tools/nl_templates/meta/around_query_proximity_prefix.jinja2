@@ -22,9 +22,9 @@
   {% set within_or_less_than = choose(['within', 'less than']) %}
   {{ within_or_less_than }}
   {% if choose(['km', '']) %}{# kilometers #}
-    {{ int(features['maxdist']) // 1000 }}{{ choose(['km', ' km', ' kilometers', ' kilometres'], [0.25, 0.25, 0.25, 0.25]) }}
+    {{ int(features['maxdist'].string) // 1000 }}{{ choose(['km', ' km', ' kilometers', ' kilometres'], [0.25, 0.25, 0.25, 0.25]) }}
   {% else %}{# meters #}
-    {{ features['maxdist'] }}{{ choose(['m', ' m', ' meters', ' metres'], [0.25, 0.25, 0.25, 0.25]) }}
+    {{ features['maxdist'].string }}{{ choose(['m', ' m', ' meters', ' metres'], [0.25, 0.25, 0.25, 0.25]) }}
   {% endif %}
   {{ 'away' if within_or_less_than == 'less than' else '' }}
   {{ choose(['of', 'from'], [0.4, 0.6]) }}
