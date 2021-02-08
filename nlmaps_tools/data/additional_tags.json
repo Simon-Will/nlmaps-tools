@@ -1,0 +1,27 @@
+{
+    "diet:vegan": [
+        "yes",
+        "no",
+        "only"
+    ],
+    "diet:vegetarian": [
+        "yes",
+        "no",
+        "only"
+    ],
+    "diet:gluten_free": [
+        "yes",
+        "no",
+        "only"
+    ],
+    "diet:kosher": [
+        "yes",
+        "no",
+        "only"
+    ],
+    "diet:lactose_free": [
+        "yes",
+        "no",
+        "only"
+    ]
+}
