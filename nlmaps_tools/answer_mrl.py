@@ -27,7 +27,24 @@ def has_name(tags):
 
 
 def geojson(elements):
-    features = [elm.geometry() for elm in elements]
+    # TODO: Handle relations correctly.
+    features = []
+    for elm in elements:
+        if elm.type() not in ['node', 'way']:
+            continue
+        popup = '<b>{}</b><br>lat: {} lon: {}<br>{}'.format(
+            element_name(elm), elm.lat(), elm.lon(),
+            '<br>'.join('{}: {}'.format(key, val)
+                        for key, val in elm.tags().items())
+        )
+        feature = {
+            'type': 'Feature',
+            'geometry': elm.geometry(),
+            'properties': {
+                'popupContent': popup
+            }
+        }
+        features.append(feature)
     return {'type': 'FeatureCollection', 'features': features}
 
 
@@ -65,13 +82,17 @@ def answer_in_query(features, overpass_url=OVERPASS_URL):
     elif has_name(features['target_nwr']):
         template = ENV.get_template('in_query/name.jinja2')
     else:
-        ans = {}
-        ans['type'] = 'error'
-        ans['error'] = 'No area and no name=* tag present.'
+        ans = {'type': 'error', 'error': 'No area and no name=* tag present.'}
         return ans
 
     ql = template.render(features=features)
-    result = overpass.query(ql)
+    try:
+        result = overpass.query(ql)
+    except:
+        ans = {'type': 'error',
+               'error': 'Error when retrieving result. Maybe a Timeout?'}
+        return ans
+
     elements = result.elements()
 
     answers = {'type': 'sub', 'sub': [], 'geojson': geojson(elements)}
@@ -91,24 +112,29 @@ def answer(features):
 
 
 def load_features(mrl, escaped=False):
-    mrl = mrl.strip()
-    if mrl.startswith('dist(') or mrl.startswith('query('):
-        grammar = MrlGrammar()
-        try:
-            parseResult = grammar.parseMrl(mrl, is_escaped=escaped)
-        except:
-            print('Could not parse MRL: {}'.format(mrl), file=sys.stderr)
-            sys.exit(1)
-        features = parseResult['features']
+    if isinstance(mrl, str):
+        mrl = mrl.strip()
+        if mrl.startswith('dist(') or mrl.startswith('query('):
+            grammar = MrlGrammar()
+            try:
+                parseResult = grammar.parseMrl(mrl, is_escaped=escaped)
+            except:
+                return None
+                #print('Could not parse MRL: {}'.format(mrl), file=sys.stderr)
+                #sys.exit(1)
+            features = parseResult['features']
+
     elif isinstance(mrl, dict) and 'query_type' in mrl:
         features = mrl
+
     else:
         try:
             features = json.loads(mrl)
         except:
-            print('Could not load MRL features from following JSON: {}'
-                  .format(mrl), file=sys.stderr)
-            sys.exit(1)
+            return None
+            #print('Could not load MRL features from following JSON: {}'
+            #      .format(mrl), file=sys.stderr)
+            #sys.exit(1)
     return features
 
 
