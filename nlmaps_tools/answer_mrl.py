@@ -4,7 +4,6 @@ import itertools
 import json
 import logging
 import math
-import sys
 import traceback
 
 from geopy.distance import geodesic
@@ -392,8 +391,6 @@ def load_features(mrl, escaped=False):
                 parseResult = grammar.parseMrl(mrl, is_escaped=escaped)
             except:
                 return None
-                #print('Could not parse MRL: {}'.format(mrl), file=sys.stderr)
-                #sys.exit(1)
             features = parseResult['features']
 
     elif isinstance(mrl, dict) and 'query_type' in mrl:
@@ -404,9 +401,6 @@ def load_features(mrl, escaped=False):
             features = json.loads(mrl)
         except:
             return None
-            #print('Could not load MRL features from following JSON: {}'
-            #      .format(mrl), file=sys.stderr)
-            #sys.exit(1)
     return features
 
 
