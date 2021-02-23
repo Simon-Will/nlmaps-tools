@@ -1,0 +1,8 @@
+{% import "macros.jinja2" as M %}
+{% if features['area'] %}
+{{ M.area(features) }}
+{{ M.nwr(features['target_nwr']) }}
+{% else %}
+{{ M.nwr(features['target_nwr'], area=none) }}
+{% endif %}
+out geom;

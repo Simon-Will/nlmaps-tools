@@ -1,0 +1,14 @@
+{% import "macros.jinja2" as M %}
+{% if features['area'] %}
+{{ M.area(features) }}
+{{ M.nwr(features['center_nwr'], result_set='.center') }}
+{% else %}
+{{ M.nwr(features['center_nwr'], area=none, result_set='.center') }}
+{% endif %}
+{{ M.nwr(features['target_nwr'], area='around.center:' + features['maxdist']|dist_lookup) }}
+{% if features['around_topx'] %}
+.center out geom;
+make separator "name" = "separator" -> .sep;
+.sep out;
+{% endif %}
+out geom;

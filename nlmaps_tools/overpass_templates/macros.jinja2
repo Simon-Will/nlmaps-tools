@@ -1,0 +1,46 @@
+{% macro tag(key, value, area=none, prev_set=none, next_set=none) %}
+nwr{##}
+{{ prev_set if prev_set else '' }}{##}
+["{{ key|esc }}"{##}
+{% if value == '*' %}
+]{##}
+{% else %}
+="{{ value|esc }}"]{##}
+{% endif %}
+{% if area %}
+({{ area }}){##}
+{% endif %}
+{{ ' -> ' + next_set if next_set else '' }}{##}
+;{##}
+{% endmacro %}
+
+{% macro nwr(nwr_features, area='area.a', result_set=none) %}
+{% set ns = namespace(prev_set=none, next_set=none) %}
+{% for feat in nwr_features %}
+  {% if loop.index == nwr_features|length %}
+    {% set ns.next_set = result_set %}
+  {% else %}
+    {% set ns.next_set = '.res' + loop.index|string %}
+  {% endif %}
+  {% if feat[0] == 'or' %}
+(
+  {% for f in feat[1:] %}
+  {{ tag(f[0], f[1], area=area, prev_set=ns.prev_set) }}
+  {% endfor %}
+){##}
+{{ ' -> ' + ns.next_set if ns.next_set else '' }}{##}
+;
+  {% else %}
+{{ tag(feat[0], feat[1], area=area, prev_set=ns.prev_set, next_set=ns.next_set) }}
+  {% endif %}
+  {% set ns.prev_set = ns.next_set %}
+{% endfor %}
+{% endmacro %}
+
+{% macro area(features, area_var='.a') %}
+  {% if features['area_id'] %}
+area({{ features['area_id'] }}) -> {{ area_var }};
+  {% else %}
+area["name"="{{ features['area']|esc }}"] -> {{ area_var }};
+  {% endif %}
+{% endmacro %}

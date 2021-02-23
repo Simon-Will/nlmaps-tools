@@ -1,7 +1,0 @@
-area[name="{{ esc(features['area']) }}"]->.a;
-nwr(area.a){##}
-{% for key, val in features['target_nwr'] %}
-["{{ esc(key) }}"="{{ esc(val) }}"]{##}
-{% endfor %}
-;
-out geom;
