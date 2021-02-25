@@ -387,7 +387,7 @@ def answer_simple_query(features):
             and features.get('cardinal_direction')
             and n_result):
         card = features['cardinal_direction']
-        bbox = n_result.toJSON()[0]['boundingbox']
+        bbox = [float(coord) for coord in n_result.toJSON()[0]['boundingbox']]
         elements = chop_to_cardinal_direction(elements, bbox, card)
 
     centers, targets, target_id_min_dist = handle_around_topx(elements,
