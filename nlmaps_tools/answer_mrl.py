@@ -46,7 +46,29 @@ class AnsweringError(Exception):
         return {'type': 'error', 'error': error}
 
 
-# This does not properly deal with nested ors.
+def get_tags_in_nwr_features(nwr_features, exclude=tuple()):
+    tags = []
+    for feat in nwr_features:
+        if feat[0] in ['or', 'and'] and isinstance(feat[1], (list, tuple)):
+            for key, val in feat[1:]:
+                if key not in exclude:
+                    tags.append((key, val))
+        elif (len(feat) == 2 and isinstance(feat[1], (list, tuple))
+              and feat[1][0] == 'or'):
+            for val in feat[1][1:]:
+                if feat[0] not in exclude:
+                    tags.append((feat[0], val))
+        elif len(feat) == 2 and all(isinstance(f, str) for f in feat):
+            if feat[0] not in exclude:
+                tags.append((feat[0], feat[1]))
+        else:
+            raise ValueError('Unexpected feature part: {}'.format(feat))
+
+    return tags
+
+
+# This does not properly deal with nested ors, but that is not really supported
+# currently anyway.
 def canonicalize_nwr_features(nwr_features):
     parts = []
     for feat in nwr_features:
@@ -67,7 +89,7 @@ def canonicalize_nwr_features(nwr_features):
 
 
 def add_name_tags(nwr_features,
-                    name_keys=('int_name', 'alt_name', 'name:en')):
+                  name_keys=('int_name', 'alt_name', 'name:en')):
     parts = []
     for feat in nwr_features:
         if feat[0] in ['or', 'and'] and isinstance(feat[1], (list, tuple)):
@@ -130,6 +152,12 @@ def latlong(element):
             lon = bounds['minlon'] + 0.5 * (bounds['maxlon'] - bounds['minlon'])
             return (lat, lon)
     return None
+
+
+def contains(bbox, coords):
+    minlat, maxlat, minlon, maxlon = bbox
+    lat, lon = coords
+    return minlat <= lat <= maxlat and minlon <= lon <= maxlon
 
 
 def geojson(elements):
@@ -225,10 +253,59 @@ def add_area_id(features):
         area_id = n_result.areaId()
         if area_id:
             features['area_id'] = area_id
+            return n_result
+    return None
 
 
-def limit_to_closest(centers, targets, limit, max_dist):
+def substitute_reference_name(features, n_result):
+    if n_result:
+        return features
+    else:
+        center_nwr = features.get('center_nwr')
+        if center_nwr:
+            tags = get_tags_in_nwr_features(
+                center_nwr, exclude=('int_name', 'alt_name', 'name:en'))
+            if len(tags) == 1 and tags[0][0] == 'name':
+                name = tags[0][1]
+                center_n_result = nominatim_query(name)
+                results = center_n_result.toJSON()
+                if results:
+                    new_tag = (results[0]['osm_type'], results[0]['osm_id'])
+                    features['center_nwr'] = [new_tag]
+
+
+def chop_to_cardinal_direction(elements, bbox, cardinal_direction):
+    minlat, maxlat, minlon, maxlon = bbox
+    if cardinal_direction == 'north':
+        minlat = minlat + (maxlat - minlat) / 2
+    elif cardinal_direction == 'east':
+        if minlon == -180 and minlat == 180:
+            pass
+            # TODO: Handle case where area spans 180 ° meridian.
+        else:
+            minlon = minlon + (maxlon - minlon) / 2
+    elif cardinal_direction == 'south':
+        maxlat = maxlat - (maxlat - minlat) / 2
+    elif cardinal_direction == 'west':
+        if minlon == -180 and minlat == 180:
+            pass
+            # TODO: Handle case where area spans 180 ° meridian.
+        else:
+            maxlon = maxlon - (maxlon - minlon) / 2
+
+    remaining_elements = []
+    for elm in elements:
+        coords = latlong(elm)
+        if coords and not contains((minlat, maxlat, minlon, maxlon), coords):
+            continue
+        remaining_elements.append(elm)
+    return remaining_elements
+
+
+def limit_to_closest(centers, targets, limit, max_dist, cardinal_direction):
     # max_dist has to be in km
+
+    # TODO: Handle cardinal direction
 
     ids_closest_to_some_center = set()
     target_coords_by_id = {
@@ -284,7 +361,9 @@ def handle_around_topx(elements, features):
                                      str(features['maxdist'])))
             max_dist /= 1000  # Convert to km
             targets, target_id_min_dist = limit_to_closest(
-                centers, targets, limit_to, max_dist)
+                centers, targets, limit_to, max_dist,
+                features.get('cardinal_direction')
+            )
 
     return centers, targets, target_id_min_dist
 
@@ -297,11 +376,19 @@ def answer_simple_query(features):
     else:
         dist = False
 
-    add_area_id(features)
+    n_result = add_area_id(features)
 
     template_name = features['query_type'] + '.jinja2'
+    substitute_reference_name(features, n_result)
     o_result = overpass_query(features, template_name)
     elements = o_result.elements()
+
+    if (features['query_type'] == 'in_query'
+            and features.get('cardinal_direction')
+            and n_result):
+        card = features['cardinal_direction']
+        bbox = n_result.toJSON()[0]['boundingbox']
+        elements = chop_to_cardinal_direction(elements, bbox, card)
 
     centers, targets, target_id_min_dist = handle_around_topx(elements,
                                                               features)

@@ -14,6 +14,17 @@ nwr{##}
 ;{##}
 {% endmacro %}
 
+{% macro by_id(osm_type, osm_id, area=none, prev_set=none, next_set=none) %}
+{{ osm_type }}
+{{ prev_set if prev_set else '' }}{##}
+({{ osm_id }})
+{% if area %}
+({{ area }}){##}
+{% endif %}
+{{ ' -> ' + next_set if next_set else '' }}{##}
+;{##}
+{% endmacro %}
+
 {% macro nwr(nwr_features, area='area.a', result_set=none) %}
 {% set ns = namespace(prev_set=none, next_set=none) %}
 {% for feat in nwr_features %}
@@ -30,6 +41,8 @@ nwr{##}
 ){##}
 {{ ' -> ' + ns.next_set if ns.next_set else '' }}{##}
 ;
+  {% elif feat[0] in ('node', 'way', 'relation') %}
+    {{ by_id(feat[0], feat[1], area=area, prev_set=ns.prev_set, next_set=ns.next_set) }}
   {% else %}
 {{ tag(feat[0], feat[1], area=area, prev_set=ns.prev_set, next_set=ns.next_set) }}
   {% endif %}
