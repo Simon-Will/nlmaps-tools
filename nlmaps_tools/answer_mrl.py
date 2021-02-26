@@ -302,12 +302,26 @@ def chop_to_cardinal_direction(elements, bbox, cardinal_direction):
     return remaining_elements
 
 
-def limit_to_closest(centers, targets, limit, max_dist, cardinal_direction):
+def cardinal_direction_applies(center_coords, target_coords,
+                               cardinal_direction=None):
+    if not cardinal_direction:
+        return True
+    center_lat, center_lon = center_coords
+    target_lat, target_lon = target_coords
+    if cardinal_direction == 'north':
+        return target_lat >= center_lat
+    elif cardinal_direction == 'east':
+        return target_lon >= center_lon
+    elif cardinal_direction == 'south':
+        return target_lat <= center_lat
+    elif cardinal_direction == 'west':
+        return target_lon <= center_lon
+
+
+def limit_to_centers(centers, targets, max_dist, max_targets,
+                     cardinal_direction):
     # max_dist has to be in km
-
-    # TODO: Handle cardinal direction
-
-    ids_closest_to_some_center = set()
+    ids_of_allowed_targets = set()
     target_coords_by_id = {
         target.id(): latlong(target) for target in targets
     }
@@ -317,19 +331,22 @@ def limit_to_closest(centers, targets, limit, max_dist, cardinal_direction):
         ids_and_dists = []
         for id, target_coords in target_coords_by_id.items():
             dist = geodesic(target_coords, center_coords).kilometers
-            if dist <= max_dist:
+            if dist <= max_dist and cardinal_direction_applies(
+                    center_coords, target_coords, cardinal_direction):
                 ids_and_dists.append((id, dist))
                 _, min_dist = target_id_min_dist_by_center_id[center.id()]
                 if dist < min_dist:
                     target_id_min_dist_by_center_id[center.id()] = (id, dist)
 
-        for id, dist in sorted(ids_and_dists,
-                               key=lambda id_dist: id_dist[1])[:limit]:
-            ids_closest_to_some_center.add(id)
+        if max_targets:
+            ids_and_dists.sort(key=lambda id_dist: id_dist[1])
+            ids_and_dists = ids_and_dists[:max_targets]
+        for id, dist in ids_and_dists:
+            ids_of_allowed_targets.add(id)
 
     closest_targets = [
         target for target in targets
-        if target.id() in ids_closest_to_some_center
+        if target.id() in ids_of_allowed_targets
     ]
 
     target_id_min_dist = [target_id_min_dist_by_center_id[center.id()]
@@ -341,29 +358,35 @@ def handle_around_topx(elements, features):
     centers = []
     targets = elements
     target_id_min_dist = []
+
+    for i, elm in enumerate(elements):
+        if elm.type() == 'separator':
+            print(i, elm, 'FOUND SEP')
+            centers = elements[:i]
+            targets = elements[i+1:]
+            break
+
     around_topx = features.get('around_topx')
+    max_targets = None
     if around_topx:
         try:
-            limit_to = int(str(around_topx))
+            max_targets = int(str(around_topx))
         except ValueError:
             logging.error('Invalid around_topx value in features: {}'
                           .format(features))
-            limit_to = None
 
-        for i, elm in enumerate(elements):
-            if elm.type() == 'separator':
-                centers = elements[:i]
-                targets = elements[i+1:]
-                break
-
-        if limit_to:
-            max_dist = int(DISTS.get(str(features['maxdist']),
-                                     str(features['maxdist'])))
-            max_dist /= 1000  # Convert to km
-            targets, target_id_min_dist = limit_to_closest(
-                centers, targets, limit_to, max_dist,
-                features.get('cardinal_direction')
-            )
+    cardinal_direction = features.get('cardinal_direction')
+    print('ENTERING?', max_targets, cardinal_direction)
+    print('CEN&TAR', len(centers), len(targets))
+    if max_targets or cardinal_direction:
+        max_dist = int(DISTS.get(str(features['maxdist']),
+                                 str(features['maxdist'])))
+        max_dist /= 1000  # Convert to km
+        targets, target_id_min_dist = limit_to_centers(
+            centers, targets, max_dist, max_targets,
+            cardinal_direction
+        )
+        print('CEN&TAR', len(centers), len(targets))
 
     return centers, targets, target_id_min_dist
 
@@ -390,9 +413,12 @@ def answer_simple_query(features):
         bbox = [float(coord) for coord in n_result.toJSON()[0]['boundingbox']]
         elements = chop_to_cardinal_direction(elements, bbox, card)
 
-    centers, targets, target_id_min_dist = handle_around_topx(elements,
-                                                              features)
-    elements = list(itertools.chain(centers, targets))
+    if features['query_type'] == 'around_query':
+        centers, targets, target_id_min_dist = handle_around_topx(elements,
+                                                                  features)
+    else:
+        centers = []
+        targets = elements
 
     ans = {'type': 'sub', 'sub': [], 'targets': geojson(targets)}
     if centers:

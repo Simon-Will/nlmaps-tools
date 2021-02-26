@@ -6,7 +6,7 @@
 {{ M.nwr(features['center_nwr'], area=none, result_set='.center') }}
 {% endif %}
 {{ M.nwr(features['target_nwr'], area='around.center:' + features['maxdist']|dist_lookup) }}
-{% if features['around_topx'] %}
+{% if features['around_topx'] or features['cardinal_direction'] %}
 .center out geom;
 make separator "name" = "separator" -> .sep;
 .sep out;
