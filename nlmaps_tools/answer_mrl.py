@@ -18,7 +18,8 @@ OVERPASS_URL = 'https://overpass-api.de/api/'
 
 USER_AGENT = 'NLMaps Web (https://nlmaps.gorgor.de/)'
 NOMINATIM = Nominatim(userAgent=USER_AGENT, waitBetweenQueries=1)
-OVERPASS = Overpass(endpoint=OVERPASS_URL, userAgent=USER_AGENT)
+OVERPASS = Overpass(endpoint=OVERPASS_URL, userAgent=USER_AGENT,
+                    waitBetweenQueries=1)
 
 DISTS = {
     'WALKING_DIST': '1000',
@@ -193,7 +194,7 @@ def geojson(elements):
 
 def merge_feature_collections(*feature_collections):
     features = list(itertools.chain.from_iterable(
-        coll['features'] for coll in feature_collections))
+        coll['features'] for coll in feature_collections if coll))
     return {'type': 'FeatureCollection', 'features': features}
 
 
@@ -226,7 +227,7 @@ def apply_qtype(qtype, elements):
 def overpass_query(features, template_name):
     template = ENV.get_template(template_name)
     ql = template.render(features=features)
-    print(ql)
+    logging.info('Querying Overpass: {}'.format(ql))
     try:
         result = OVERPASS.query(ql)
     except:
@@ -237,13 +238,24 @@ def overpass_query(features, template_name):
     return result
 
 
-def nominatim_query(query):
+def nominatim_query(query, params=None):
+    params = params or {}
+    logging.info('Querying Nominatim: q={}, params={}'
+                 .format(query, params))
     try:
-        result = NOMINATIM.query(query)
+        result = NOMINATIM.query(query, params=params)
     except Exception as e:
         traceback.print_exc()
         raise AnsweringError('Error when contacting Nominatim.') from e
     return result
+
+
+def get_first_area(nominatim_result):
+    for d in nominatim_result._json:
+        if 'osm_type' in d and d['osm_type'] == 'relation' and 'osm_id' in d:
+            area_id = 3600000000 + int(d['osm_id'])
+            return d, area_id
+    return None, None
 
 
 def add_area_id(features):
@@ -257,21 +269,55 @@ def add_area_id(features):
     return None
 
 
-def substitute_reference_name(features, n_result):
-    if n_result:
-        return features
-    else:
-        center_nwr = features.get('center_nwr')
-        if center_nwr:
-            tags = get_tags_in_nwr_features(
-                center_nwr, exclude=('int_name', 'alt_name', 'name:en'))
-            if len(tags) == 1 and tags[0][0] == 'name':
-                name = tags[0][1]
-                center_n_result = nominatim_query(name)
-                results = center_n_result.toJSON()
-                if results:
-                    new_tag = (results[0]['osm_type'], results[0]['osm_id'])
-                    features['center_nwr'] = [new_tag]
+def nwr_nominatim_lookup(nwr_features, bbox=None):
+    """
+    bbox is a 4-tuple of minlon, minlat, maxlon, maxlat.
+    """
+    new_nwr_features = None
+    n_result = None
+
+    tags = get_tags_in_nwr_features(
+        nwr_features, exclude=('int_name', 'alt_name', 'name:en'))
+    if len(tags) == 1 and tags[0][0] == 'name':
+        name = tags[0][1]
+
+        if bbox:
+            params = {
+                'viewbox': '{b[0]},{b[1]},{b[2]},{b[3]}'.format(b=bbox),
+                'bounded': '1'
+            }
+        else:
+            params = None
+
+        n_result = nominatim_query(name, params=params)
+        results = n_result.toJSON()
+        if results:
+            new_tag = (results[0]['osm_type'], results[0]['osm_id'])
+            new_nwr_features = [new_tag]
+
+    return new_nwr_features, n_result
+
+
+def substitute_name_tags(features, area_n_result):
+    bbox = None
+    if area_n_result:
+        area, _ = get_first_area(area_n_result)
+        if area:
+            bbox = area['boundingbox']
+            # from (minlat, maxlat, minlon, maxlon)
+            # to (minlon, minlat, maxlon, maxlat)
+            bbox = (bbox[2], bbox[0], bbox[3], bbox[1])
+
+    center_nwr = features.get('center_nwr')
+    target_nwr = features.get('target_nwr')
+    if center_nwr:
+        new_center_nwr, _ = nwr_nominatim_lookup(center_nwr, bbox=bbox)
+        if new_center_nwr:
+            features['center_nwr'] = new_center_nwr
+    elif target_nwr:
+        new_target_nwr, _ = nwr_nominatim_lookup(target_nwr, bbox=bbox)
+        if new_target_nwr:
+            features['target_nwr'] = new_target_nwr
 
 
 def chop_to_cardinal_direction(elements, bbox, cardinal_direction):
@@ -402,8 +448,14 @@ def answer_simple_query(features):
     n_result = add_area_id(features)
 
     template_name = features['query_type'] + '.jinja2'
-    substitute_reference_name(features, n_result)
+    substitute_name_tags(features, n_result)
     o_result = overpass_query(features, template_name)
+    if isinstance(o_result, dict):
+        # There was an error and the query function directly returned our
+        # answer.
+        ans = o_result
+        return ans, [], []
+
     elements = o_result.elements()
 
     if (features['query_type'] == 'in_query'
