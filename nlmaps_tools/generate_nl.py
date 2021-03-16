@@ -129,7 +129,7 @@ def choose_poi(pois):
 
 
 def generate_features(thing_table, areas, pois):
-    if optional('dist', 0.1):
+    if optional('dist', 0.2):
         return generate_dist_query_features(thing_table, areas, pois)
     return generate_poi_query_features(thing_table, areas, pois)
 

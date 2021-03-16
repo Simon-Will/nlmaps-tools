@@ -5,8 +5,10 @@
 
 {% include 'meta/dist_tell_distance.jinja2' %}
 
-{{ choose(['from', 'between']) }}
+{% set wording = choose([('from', 'to'), ('between', 'and'), ('', 'from')], [0.4, 0.3, 0.3]) %}
+
+{{ wording[0] }}
 {{ first_thing_plural if first_plural else first_thing_singular }}
-{{ choose(['to', 'and']) }}
+{{ wording[1] }}
 {{ second_thing_plural if second_plural else second_thing_singular }}
 {{ choose(['?', '!', '.', ''], [0.3, 0.15, 0.15, 0.4]) }}

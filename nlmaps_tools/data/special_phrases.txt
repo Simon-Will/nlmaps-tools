@@ -7385,6 +7385,90 @@
 |-
 | Wine Stores near || shop || wine || near || Y 
 |-
+| Basketball || sport || basketball || - || N 
+|-
+| Basketball in || sport || basketball || - || N 
+|-
+| Basketball near || sport || basketball || - || N 
+|-
+| Baseball || sport || baseball || - || N 
+|-
+| Baseball in || sport || baseball || - || N 
+|-
+| Baseball near || sport || baseball || - || N 
+|-
+| Swimming || sport || swimming || - || N 
+|-
+| Swimming in || sport || swimming || - || N 
+|-
+| Swimming near || sport || swimming || - || N 
+|-
+| Golf || sport || golf || - || N 
+|-
+| Golf in || sport || golf || - || N 
+|-
+| Golf near || sport || golf || - || N 
+|-
+| Beachvolleyball || sport || beachvolleyball || - || N 
+|-
+| Beachvolleyball in || sport || beachvolleyball || - || N 
+|-
+| Beachvolleyball near || sport || beachvolleyball || - || N 
+|-
+| Bouldering || sport || climbing || - || N 
+|-
+| Bouldering in || sport || climbing || - || N 
+|-
+| Bouldering near || sport || climbing || - || N 
+|-
+| Volleyball || sport || volleyball || - || N 
+|-
+| Volleyball in || sport || volleyball || - || N 
+|-
+| Volleyball near || sport || volleyball || - || N 
+|-
+| Boules || sport || boules || - || N 
+|-
+| Boules in || sport || boules || - || N 
+|-
+| Boules near || sport || boules || - || N 
+|-
+| Skiing || sport || skiing || - || N 
+|-
+| Skiing in || sport || skiing || - || N 
+|-
+| Skiing near || sport || skiing || - || N 
+|-
+| American Football || sport || american_football || - || N 
+|-
+| American Football in || sport || american_football || - || N 
+|-
+| American Football near || sport || american_football || - || N 
+|-
+| Football || sport || american_football || - || N 
+|-
+| Football in || sport || american_football || - || N 
+|-
+| Football near || sport || american_football || - || N 
+|-
+| Soccer || sport || soccer || - || N 
+|-
+| Soccer in || sport || soccer || - || N 
+|-
+| Soccer near || sport || soccer || - || N 
+|-
+| Table tennis || sport || table_tennis || - || N 
+|-
+| Table tennis in || sport || table_tennis || - || N 
+|-
+| Table tennis near || sport || table_tennis || - || N 
+|-
+| Tennis || sport || tennis || - || N 
+|-
+| Tennis in || sport || tennis || - || N 
+|-
+| Tennis near || sport || tennis || - || N 
+|-
 | Nursing Home || social_facility || nursing_home || - || N 
 |-
 | Nursing Homes || social_facility || nursing_home || - || Y 
@@ -7445,6 +7529,18 @@
 |-
 | Attractions near || tourism || attraction || near || Y 
 |-
+| Sight || tourism || attraction || - || N 
+|-
+| Sights || tourism || attraction || - || Y 
+|-
+| Sight in || tourism || attraction || in || N 
+|-
+| Sights in || tourism || attraction || in || Y 
+|-
+| Sight near || tourism || attraction || near || N 
+|-
+| Sights near || tourism || attraction || near || Y 
+|-
 | Tourist Attraction || tourism || attraction || - || N 
 |-
 | Tourist Attractions || tourism || attraction || - || Y 
@@ -7456,6 +7552,18 @@
 | Tourist Attraction near || tourism || attraction || near || N 
 |-
 | Tourist Attractions near || tourism || attraction || near || Y 
+|-
+| Tourist Sight || tourism || attraction || - || N 
+|-
+| Tourist Sights || tourism || attraction || - || Y 
+|-
+| Tourist Sight in || tourism || attraction || in || N 
+|-
+| Tourist Sights in || tourism || attraction || in || Y 
+|-
+| Tourist Sight near || tourism || attraction || near || N 
+|-
+| Tourist Sights near || tourism || attraction || near || Y 
 |-
 | Campground || tourism || camp_site || - || N 
 |-
