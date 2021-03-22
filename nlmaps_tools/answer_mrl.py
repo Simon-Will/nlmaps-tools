@@ -5,6 +5,7 @@ import json
 import logging
 import math
 import traceback
+from urllib.error import HTTPError
 
 from geopy.distance import geodesic
 import jinja2
@@ -230,10 +231,19 @@ def overpass_query(features, template_name):
     logging.info('Querying Overpass: {}'.format(ql))
     try:
         result = OVERPASS.query(ql)
+    except HTTPError as exc:
+        traceback.print_exc()
+        if exc.code == 429:
+            error = 'Too Many Requests to Overpass API.'
+        elif exc.code == 504:
+            error = 'Gateway Timeout at Overpass API.'
+        else:
+            error = 'HTTP Error with Overpass API.'
+        ans = {'type': 'error', 'error': error}
+        return ans
     except:
         traceback.print_exc()
-        ans = {'type': 'error',
-               'error': 'Error when retrieving result. Maybe a Timeout?'}
+        ans = {'type': 'error', 'error': 'Error when retrieving result.'}
         return ans
     return result
 
@@ -527,17 +537,24 @@ def answer(features):
         features = transform_features(features, add_name_tags)
         print(features)
 
-        if features['query_type'] in ['around_query', 'in_query']:
-            ans, _, _ = answer_simple_query(features)
-            return ans
-        elif features['query_type'] == 'dist' and len(features['sub']) == 1:
-            ans, _, _ = answer_simple_query(features)
-            return ans
-        elif features['query_type'] == 'dist' and len(features['sub']) == 2:
-            ans, _, _ = answer_dist_between_query(features)
-            return ans
-        error = 'query_type {} not supported yet'.format(
-            features['query_type'])
+        try:
+            if features['query_type'] in ['around_query', 'in_query']:
+                ans, _, _ = answer_simple_query(features)
+                return ans
+            elif features['query_type'] == 'dist' and len(features['sub']) == 1:
+                ans, _, _ = answer_simple_query(features)
+                return ans
+            elif features['query_type'] == 'dist' and len(features['sub']) == 2:
+                ans, _, _ = answer_dist_between_query(features)
+                return ans
+            else:
+                error = 'query_type {} not supported yet'.format(
+                    features['query_type'])
+        except Exception as exc:
+            if len(exc.args) > 0:
+                error = exc.args[0]
+            else:
+                error = 'Unknown MRL interpretation error'
     else:
         error = 'No features given'
 
