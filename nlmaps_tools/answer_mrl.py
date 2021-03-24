@@ -13,14 +13,11 @@ from OSMPythonTools.nominatim import Nominatim
 from OSMPythonTools.overpass import Overpass
 
 from nlmaps_tools.parse_mrl import MrlGrammar, Symbol
-
-OVERPASS_URL = 'https://overpass-api.de/api/'
-#OVERPASS_URL = 'https://overpass.openstreetmap.ru/api/'
+from nlmaps_tools.overpass_round_robin import OverpassRoundRobin
 
 USER_AGENT = 'NLMaps Web (https://nlmaps.gorgor.de/)'
 NOMINATIM = Nominatim(userAgent=USER_AGENT, waitBetweenQueries=1)
-OVERPASS = Overpass(endpoint=OVERPASS_URL, userAgent=USER_AGENT,
-                    waitBetweenQueries=1)
+OVERPASS = OverpassRoundRobin(userAgent=USER_AGENT, waitBetweenQueries=1)
 
 DISTS = {
     'WALKING_DIST': '1000',
