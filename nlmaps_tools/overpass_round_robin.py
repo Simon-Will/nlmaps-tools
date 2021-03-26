@@ -1,5 +1,6 @@
 import random
 import logging
+import traceback
 
 from OSMPythonTools.overpass import Overpass
 
@@ -31,6 +32,19 @@ class OverpassRoundRobin:
         return instance
 
     def query(self, *args, **kwargs):
-        overpass = self._get_instance()
-        logging.info('Using Overpass at {}'.format(overpass._endpoint))
-        return overpass.query(*args, **kwargs)
+        tries = kwargs.pop('tries', 2)
+        while tries > 0:
+            tries -= 1
+            overpass = self._get_instance()
+            logging.info('Using Overpass at {}'.format(overpass._endpoint))
+            try:
+                result = overpass.query(*args, **kwargs)
+                return result
+            except Exception as e:
+                logging.error('Error when querying {}:'
+                              .format(overpass._endpoint))
+                logging.error(traceback.format_exc())
+                if tries > 0:
+                    logging.info('Trying again.')
+                else:
+                    raise e
