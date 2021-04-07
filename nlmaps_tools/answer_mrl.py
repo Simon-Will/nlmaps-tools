@@ -72,7 +72,13 @@ def canonicalize_nwr_features(nwr_features):
     parts = []
     for feat in nwr_features:
         if feat[0] in ['or', 'and'] and isinstance(feat[1], (list, tuple)):
-            parts.append((feat[0], *canonicalize_nwr_features(feat[1:])))
+            without_nested_ors = []
+            for part in canonicalize_nwr_features(feat[1:]):
+                if part[0] == 'or':
+                    without_nested_ors.extend(part[1:])
+                else:
+                    without_nested_ors.append(part)
+            parts.append((feat[0], *without_nested_ors))
         elif (len(feat) == 2 and isinstance(feat[1], (list, tuple))
               and feat[1][0] == 'or'):
             or_part = ['or']
