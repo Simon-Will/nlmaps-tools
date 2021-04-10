@@ -536,8 +536,8 @@ def answer_dist_between_query(features):
 def answer(features):
     if features:
         print(features)
-        features = transform_features(features, canonicalize_nwr_features)
         features = transform_features(features, add_name_tags)
+        features = transform_features(features, canonicalize_nwr_features)
         print(features)
 
         try:
