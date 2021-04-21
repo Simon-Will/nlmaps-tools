@@ -108,11 +108,17 @@ def get_findkey_value(mrl):
 
 
 def main(mrl_infile, en_infile, mrl_outfile, en_outfile, quiet=False):
+    deleted = 0
+    modified = 0
+    total = 0
     with open(mrl_infile) as mrl_inf, open(en_infile) as en_inf,\
          open(mrl_outfile, 'w') as mrl_outf, open(en_outfile, 'w') as en_outf:
         for mrl, en in zip(mrl_inf, en_inf):
             mrl = mrl.strip()
             en = en.strip()
+
+            total += 1
+            orig_mrl = mrl
 
             findkey_value = get_findkey_value(mrl)
             if findkey_value and findkey_value not in FINDKEY_WHITELIST:
@@ -121,11 +127,13 @@ def main(mrl_infile, en_infile, mrl_outfile, en_outfile, quiet=False):
                 if en.startswith(prefix):
                     if not quiet:
                         print('Deleting:', en)
+                    deleted += 1
                     continue
 
             if has_unfixable_deprecated_tag(mrl):
                 if not quiet:
                     print('Deleting:', en)
+                deleted += 1
                 continue
 
             for sub in SUBSTITUTIONS:
@@ -139,6 +147,14 @@ def main(mrl_infile, en_infile, mrl_outfile, en_outfile, quiet=False):
 
             print(mrl, file=mrl_outf)
             print(en, file=en_outf)
+
+            if mrl != orig_mrl:
+                modified += 1
+
+    if not quiet:
+        print('Total:', total)
+        print('Modified:', modified)
+        print('Deleted:', deleted)
 
 
 def parse_args():
