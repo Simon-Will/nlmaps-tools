@@ -10,7 +10,6 @@ from urllib.error import HTTPError
 from geopy.distance import geodesic
 import jinja2
 from OSMPythonTools.nominatim import Nominatim
-from OSMPythonTools.overpass import Overpass
 
 from nlmaps_tools.parse_mrl import MrlGrammar, Symbol
 from nlmaps_tools.overpass_round_robin import OverpassRoundRobin
