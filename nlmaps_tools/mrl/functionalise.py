@@ -23,8 +23,13 @@ def main():
     mrl_world = mrl.MRLS['nlmaps']()
     input = local_io.read_lines_in_list(parsed_arguments.input)
     output = []
-    for line in input:
-        output.append(mrl_world.functionalise(line))
+    for i, line in enumerate(input):
+        try:
+            mrl_line = mrl_world.functionalise(line)
+        except:
+            print('Error in line {} with lin {}'.format(i, line))
+            mrl_line = ''
+        output.append(mrl_line)
     local_io.write_list_to_file(output, parsed_arguments.output)
 
 
