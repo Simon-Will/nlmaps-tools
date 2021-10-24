@@ -1,5 +1,5 @@
 geopy
 jinja2
-OSMPythonTools
+OSMPythonTools>=0.3.2
 pyparsing
 requests
