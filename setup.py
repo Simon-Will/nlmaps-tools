@@ -29,7 +29,7 @@ with open(in_this_dir('requirements.txt')) as f:
 VERSION = get_version()
 
 setup(
-    name='nlmaps_tools',
+    name='nlmaps-tools',
     version=VERSION,
     packages=find_packages(),
     long_description=LONG_DESCRIPTION,
