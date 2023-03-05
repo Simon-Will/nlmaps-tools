@@ -4,6 +4,7 @@ import itertools
 import json
 import logging
 import math
+import sys
 import traceback
 from urllib.error import HTTPError
 
@@ -276,8 +277,16 @@ def add_area_id(features):
         n_result = nominatim_query(area)
         area_id = n_result.areaId()
         if area_id:
+            logging.info(
+                'Nominatim query for area {!r} yielded area ID {}.'
+                .format(area, area_id)
+            )
             features['area_id'] = area_id
             return n_result
+    logging.warning(
+        'Nominatim query for area {!r} did not yield an area ID.'
+        .format(area)
+    )
     return None
 
 
@@ -589,13 +598,17 @@ def load_features(mrl, escaped=False):
 
 
 def main(mrl, escaped=False):
+    logging.basicConfig(
+        level=logging.INFO,
+        stream=sys.stdout,
+    )
     features = load_features(mrl, escaped=escaped)
-    print(features)
+    logging.info(features)
     ans = answer(features)
     if 'geojson' in ans:
-        print('Dropping geojson')
+        logging.info('Dropping geojson')
         del ans['geojson']
-    print(ans)
+    logging.info(ans)
 
 
 def parse_args():
