@@ -1,5 +1,0 @@
-include nlmapsweb/data/additional_tags.json
-include nlmapsweb/data/dropped_keys.txt
-include nlmapsweb/data/most_common_tags.json
-include nlmapsweb/data/open_keys.txt
-include nlmapsweb/data/special_phrases.txt
