@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "nlmaps-tools"
+version = "0.0.1"
+description = ""
+authors = ["Simon Will <gorgor@gorgor.de>"]
+readme = "README.md"
+license = "MIT"
+packages = [{include = "nlmaps_tools"}]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+geopy = "^2.2.0"
+jinja2 = "^3.0.2"
+OSMPythonTools = "^0.3.5"
+pyparsing = "^3.0.1"
+requests = "^2.26.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
