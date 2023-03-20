@@ -428,7 +428,7 @@ def handle_around_topx(elements, features):
 
     for i, elm in enumerate(elements):
         if elm.type() == 'separator':
-            print(i, elm, 'FOUND SEP')
+            logging.debug(i, elm, 'FOUND SEP')
             centers = elements[:i]
             targets = elements[i+1:]
             break
@@ -443,8 +443,8 @@ def handle_around_topx(elements, features):
                           .format(features))
 
     cardinal_direction = features.get('cardinal_direction')
-    print('ENTERING?', max_targets, cardinal_direction)
-    print('CEN&TAR', len(centers), len(targets))
+    logging.debug('ENTERING?', max_targets, cardinal_direction)
+    logging.debug('CEN&TAR', len(centers), len(targets))
     if max_targets or cardinal_direction:
         max_dist = int(DISTS.get(str(features['maxdist']),
                                  str(features['maxdist'])))
@@ -453,7 +453,7 @@ def handle_around_topx(elements, features):
             centers, targets, max_dist, max_targets,
             cardinal_direction
         )
-        print('CEN&TAR', len(centers), len(targets))
+        logging.debug('CEN&TAR', len(centers), len(targets))
 
     return centers, targets, target_id_min_dist
 
@@ -543,10 +543,8 @@ def answer_dist_between_query(features):
 
 def answer(features):
     if features:
-        print(features)
         features = transform_features(features, add_name_tags)
         features = transform_features(features, canonicalize_nwr_features)
-        print(features)
 
         try:
             if features['query_type'] in ['around_query', 'in_query']:
