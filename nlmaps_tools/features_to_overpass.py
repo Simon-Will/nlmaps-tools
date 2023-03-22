@@ -16,10 +16,10 @@ from nlmaps_tools.answer_mrl import (
     nwr_nominatim_lookup,
 )
 
-RawFeatures = dict
-CanonicalFeatures = dict
-FeaturesAfterAreaLookup = dict
-FeaturesAfterNwrNameLookup = dict
+Will2021RawFeatures = dict
+Will2021CanonicalFeatures = dict
+Will2021FeaturesAfterAreaLookup = dict
+Will2021FeaturesAfterNwrNameLookup = dict
 OverpassQuery = str
 
 
@@ -58,7 +58,7 @@ def get_first_area(nominatim_result: NominatimResult) -> Optional[OSMArea]:
 
 
 def nominatim_find_area(
-    features: CanonicalFeatures
+    features: Will2021CanonicalFeatures
 ) -> Optional[OSMArea]:
     area_name = features.get('area')
     if area_name:
@@ -77,14 +77,14 @@ def nominatim_find_area(
     return None
 
 
-def canonicalize_features(features: RawFeatures) -> CanonicalFeatures:
+def canonicalize_features(features: Will2021RawFeatures) -> Will2021CanonicalFeatures:
     features = transform_features(features, add_name_tags)
     features = transform_features(features, canonicalize_nwr_features)
     return features
 
 
 def render_simple_overpass_query(
-    features: FeaturesAfterNwrNameLookup,
+    features: Will2021FeaturesAfterNwrNameLookup,
 ) -> OverpassQuery:
     template_name = features['query_type'] + '.jinja2'
     template = ENV.get_template(template_name)
@@ -92,7 +92,7 @@ def render_simple_overpass_query(
     return ql
 
 
-def nominatim_replace_names_in_nwrs(features: FeaturesAfterAreaLookup, area: Optional[OSMArea]) -> FeaturesAfterNwrNameLookup:
+def nominatim_replace_names_in_nwrs(features: Will2021FeaturesAfterAreaLookup, area: Optional[OSMArea]) -> Will2021FeaturesAfterNwrNameLookup:
     if area:
         bbox = area['boundingbox']
         # from (minlat, maxlat, minlon, maxlon)
@@ -117,15 +117,15 @@ def nominatim_replace_names_in_nwrs(features: FeaturesAfterAreaLookup, area: Opt
     return features
 
 
-def add_area_id(features: CanonicalFeatures, area: Optional[OSMArea]) -> FeaturesAfterAreaLookup:
+def add_area_id(features: Will2021CanonicalFeatures, area: Optional[OSMArea]) -> Will2021FeaturesAfterAreaLookup:
     if area:
         features["area_id"] = area.id
     return features
 
 
 def make_overpass_query_from_simple_features(
-    features: RawFeatures
-) -> tuple[FeaturesAfterNwrNameLookup, Optional[OSMArea], OverpassQuery]:
+    features: Will2021RawFeatures
+) -> tuple[Will2021FeaturesAfterNwrNameLookup, Optional[OSMArea], OverpassQuery]:
     features = canonicalize_features(features)
     logging.info(f"Canonicalized features to {features}.")
 
@@ -142,8 +142,8 @@ def make_overpass_query_from_simple_features(
 
 
 def make_overpass_queries_from_features(
-    features: RawFeatures
-) -> tuple[FeaturesAfterNwrNameLookup, list[Optional[OSMArea]], list[OverpassQuery]]:
+    features: Will2021RawFeatures
+) -> tuple[Will2021FeaturesAfterNwrNameLookup, list[Optional[OSMArea]], list[OverpassQuery]]:
     if (
         features['query_type'] in ['around_query', 'in_query']
         or features['query_type'] == 'dist' and len(features['sub']) == 1
@@ -161,7 +161,7 @@ def make_overpass_queries_from_features(
         features["sub"][1] = features_1
         return features, [area_0, area_1], [overpass_query_0, overpass_query_1]
     else:
-        raise ValueError('Unsupported query_type {features["query_type"]}')
+        raise ValueError(f'Unsupported query_type {features["query_type"]}')
 
 
 def main(mrl, escaped=False):

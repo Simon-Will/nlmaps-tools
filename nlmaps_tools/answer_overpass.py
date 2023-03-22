@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, Union, Any
 
 from OSMPythonTools.element import Element
 from geopy.distance import geodesic
@@ -13,10 +13,10 @@ from nlmaps_tools.answer_mrl import (
     element_name,
     geojson, latlong
 )
-from nlmaps_tools.features_to_overpass import FeaturesAfterNwrNameLookup, OSMArea
+from nlmaps_tools.features_to_overpass import Will2021FeaturesAfterNwrNameLookup, OSMArea
 from nlmaps_tools.parse_mrl import Symbol
 
-GeoJSON = dict[str, Union[str, dict]]
+GeoJSON = dict[str, Any]
 
 
 class SingleAnswer(BaseModel):
@@ -84,7 +84,7 @@ def apply_qtype(qtype, elements):
 
 
 def extract_answer_from_simple_overpass_result(
-    features: FeaturesAfterNwrNameLookup,
+    features: Will2021FeaturesAfterNwrNameLookup,
     area: Optional[OSMArea],
     result: OverpassResult,
 ) -> MultiAnswerRawElements:
@@ -124,7 +124,7 @@ def extract_answer_from_simple_overpass_result(
 
 
 def extract_answer_from_dist_overpass_result(
-    features: FeaturesAfterNwrNameLookup,
+    features: Will2021FeaturesAfterNwrNameLookup,
     area_1: Optional[OSMArea],
     area_2: Optional[OSMArea],
     result_1: OverpassResult,
@@ -139,11 +139,13 @@ def extract_answer_from_dist_overpass_result(
 
     if center and target:
         return MultiAnswerRawElements(
-            answers=DistAnswer(
-                dist=dist,
-                target=target,
-                center=center,
-            ),
+            answers=[
+                DistAnswer(
+                    dist=dist,
+                    target=(target.id(), element_name(target)),
+                    center=(center.id(), element_name(center)),
+                )
+            ],
             targets=[target],
             centers=[center],
         )
@@ -158,7 +160,7 @@ def extract_answer_from_dist_overpass_result(
 
 
 def extract_answer_from_overpass_results(
-    features: FeaturesAfterNwrNameLookup,
+    features: Will2021FeaturesAfterNwrNameLookup,
     areas: list[Optional[OSMArea]],
     results: list[OverpassResult],
 ) -> MultiAnswer:
@@ -176,5 +178,5 @@ def extract_answer_from_overpass_results(
     return MultiAnswer(
         answers=answer.answers,
         targets=geojson(answer.targets),
-        centers=geojson(answer.centers),
+        centers=geojson(answer.centers) if answer.centers else None,
     )

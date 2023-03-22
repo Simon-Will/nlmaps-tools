@@ -38,4 +38,4 @@ class ProcessRequest(BaseModel):
 
 
 class ProcessResult(BaseModel):
-    results: dict[str, str | dict]
+    results: dict[str, Any]

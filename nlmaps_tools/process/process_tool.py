@@ -65,8 +65,7 @@ def _build_target_to_processors(
 
 
 class ProcessTool:
-    def __init__(self, processors: list[Processor]) -> None:
-        # TODO: Load processors from directory or installed modules.
+    def __init__(self, processors: set[Processor]) -> None:
         self.processors = processors
         self.target_to_processors = _build_target_to_processors(self.processors)
 
@@ -92,6 +91,10 @@ class ProcessTool:
 
     @staticmethod
     def _choose_solution(solutions: list[set[Processor]]) -> set[Processor]:
+        # This choice pretty random and should be improved.
+        # Ideas:
+        #  - Choose solutions with less processors.
+        #  - Attach penalties to processors and choose based on least penalty
         return solutions[0]
 
     @staticmethod
