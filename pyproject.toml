@@ -14,6 +14,7 @@ jinja2 = "^3.0.2"
 OSMPythonTools = "^0.3.5"
 pyparsing = "^3.0.1"
 requests = "^2.26.0"
+pydantic = "^1.10.6"
 
 [build-system]
 requires = ["poetry-core"]

@@ -3,21 +3,14 @@ import re
 import pyparsing as pp
 
 
-class Symbol:
+class Symbol(str):
     """This is used for handling unquoted MRL literals like latlong or
     count, and it is also used for numbers like 5000."""
-
-    def __init__(self, string):
-        self.string = string
-
-    def __str__(self):
-        return self.string
-
     def __repr__(self):
-        return 'Symbol({!r})'.format(self.string)
+        return f'Symbol({super().__repr__()})'
 
     def __eq__(self, other):
-        return isinstance(other, Symbol) and other.string == self.string
+        return isinstance(other, Symbol) and str(self) == str(other)
 
 
 def escape_backslashes_and_single_quotes(mrl, _ignore_matches=tuple()):
