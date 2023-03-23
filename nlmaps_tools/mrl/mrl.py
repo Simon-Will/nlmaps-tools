@@ -102,17 +102,17 @@ class NLmaps(MRL):
         :return: the preprocessed sentence
         """
         # sequence of characters that does not contain ( or ) : [^\\(\\)]
-        mrl = re.sub(r"(','[^\(\)]*?),([^\(\)]*?')", "\g<1>SAVECOMMA\g<2>", mrl)
+        mrl = re.sub(r"(','[^\(\)]*?),([^\(\)]*?')", r"\g<1>SAVECOMMA\g<2>", mrl)
         # need to protect brackets that occur in values, assumes that there is at most one open ( and 1 close)
-        mrl = re.sub(r",' *([^\(\)]*?)\((.*?) *'\)", ",'\g<1>BRACKETOPEN\g<2>')", mrl)
-        mrl = re.sub(r",' *([^\(\)]*?)\)([^\(\)]*?) *'\)", ",'\g<1>BRACKETCLOSE\g<2>')", mrl)
+        mrl = re.sub(r",' *([^\(\)]*?)\((.*?) *'\)", r",'\g<1>BRACKETOPEN\g<2>')", mrl)
+        mrl = re.sub(r",' *([^\(\)]*?)\)([^\(\)]*?) *'\)", r",'\g<1>BRACKETCLOSE\g<2>')", mrl)
         mrl = mrl.replace(" ", "€")
         mrl = re.sub(r"(?<=([^,\(\)]))'(?=([^,\(\)]))", "SAVEAPO", mrl)
-        mrl = re.sub(r"and\(' *([^\(\)]+?) *',' *([^\(\)]+?) *'\)", "and(\g<1>@s','\g<2>@s)",
+        mrl = re.sub(r"and\(' *([^\(\)]+?) *',' *([^\(\)]+?) *'\)", r"and(\g<1>@s','\g<2>@s)",
                      mrl)  # for when a and() surrounds two end values
-        mrl = re.sub(r"\(' *([^\(\)]+?) *'\)", "(\g<1>@s)",
+        mrl = re.sub(r"\(' *([^\(\)]+?) *'\)", r"(\g<1>@s)",
                      mrl)  # a bracket ( or ) is not allowed withing any key or value
-        mrl = re.sub(r"([,\)\(])or\(([^\(\)]+?)','([^\(\)]+?)@s\)", "\g<1>or(\g<2>@s','\g<3>@s)",
+        mrl = re.sub(r"([,\)\(])or\(([^\(\)]+?)','([^\(\)]+?)@s\)", r"\g<1>or(\g<2>@s','\g<3>@s)",
                      mrl)  # for when a or() surrounds two values
         mrl = re.sub(r"\s+", " ", mrl)
         mrl = re.sub(r"'", "", mrl)
@@ -158,7 +158,7 @@ class NLmaps(MRL):
                 for j, stemmed_element in enumerate(stemmed):
                     if element == stemmed_element: #then word was passed through
                         word_pos = j
-                    if word_pos is not -1:
+                    if word_pos != -1:
                         lin[i] = "%s@s" % non_stemmed[word_pos]
                         word_pos = -1
         return lin
@@ -186,7 +186,7 @@ class NLmaps(MRL):
                 mrl.append("(")
                 stack_arity.append(arity)
             else:
-                if arity_s_found and len(stack_arity) is 0:
+                if arity_s_found and len(stack_arity) == 0:
                     return ""
                 if arity_s_found or prev == "keyval" or prev == "findkey":
                     element = element.replace("€", " ")
@@ -201,7 +201,7 @@ class NLmaps(MRL):
                     else:
                         mrl.append(")")
             prev = element
-        if len(stack_arity) is not 0:
+        if len(stack_arity) != 0:
             return ""
         return ''.join(mrl)
 
@@ -213,17 +213,17 @@ class NLmaps(MRL):
             mrl = mrl.replace(",", " , ")
             mrl = mrl.replace(")", " )")
             mrl = re.sub(r"name:.*? \)", "name:lg )", mrl)
-            mrl = re.sub(r"keyval\( '([^\(\)]+?)' , '[^\(\)]+?' ", "keyval( '\g<1>' , 'valvariable' ", mrl)
-            mrl = re.sub(r"keyval\( '([^\(\)]+?)' , or\( '[^\(\)]+?' , '[^\(\)]+?' ", "keyval( '$1' , or( 'valvariable' , 'valvariable' ", mrl)
-            mrl = re.sub(r"keyval\( '([^\(\)]+?)' , and\( '[^\(\)]+?' , '[^\(\)]+?' ", "keyval( '$1' , and( 'valvariable' , 'valvariable' ", mrl)
-            mrl = re.sub(r" '(.*?)' ", " ' \g<1> ' ", mrl)
-            m = re.search("topx\( (.*?) \)", mrl)
+            mrl = re.sub(r"keyval\( '([^\(\)]+?)' , '[^\(\)]+?' ", r"keyval( '\g<1>' , 'valvariable' ", mrl)
+            mrl = re.sub(r"keyval\( '([^\(\)]+?)' , or\( '[^\(\)]+?' , '[^\(\)]+?' ", r"keyval( '$1' , or( 'valvariable' , 'valvariable' ", mrl)
+            mrl = re.sub(r"keyval\( '([^\(\)]+?)' , and\( '[^\(\)]+?' , '[^\(\)]+?' ", r"keyval( '$1' , and( 'valvariable' , 'valvariable' ", mrl)
+            mrl = re.sub(r" '(.*?)' ", r" ' \g<1> ' ", mrl)
+            m = re.search(r"topx\( (.*?) \)", mrl)
             if m:
                 new_number = ""
                 for digit in m.group(1):
                     new_number = new_number + digit + " "
                     mrl = re.sub(r"topx\( (.*?)\)", r"topx( " + new_number + ")", mrl)
-            m = re.search("maxdist\( (.*?) \)", mrl)
+            m = re.search(r"maxdist\( (.*?) \)", mrl)
             if m:
                 new_number = ""
                 for digit in m.group(1):
