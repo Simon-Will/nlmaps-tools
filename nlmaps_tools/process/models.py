@@ -21,8 +21,8 @@ class Processor(Protocol):
         ...
 
 
-class ProcessRequest(BaseModel):
-    given: dict[str, str]
+class ProcessingRequest(BaseModel):
+    given: dict[str, Any]
     wanted: set[str]
     processors: set[str]
 
@@ -37,5 +37,5 @@ class ProcessRequest(BaseModel):
         return v_set
 
 
-class ProcessResult(BaseModel):
+class ProcessingResult(BaseModel):
     results: dict[str, Any]

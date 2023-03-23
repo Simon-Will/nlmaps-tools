@@ -5,9 +5,9 @@ import logging
 import pytest
 
 from nlmaps_tools.process import (
-    ProcessRequest,
-    ProcessResult,
-    ProcessTool,
+    ProcessingRequest,
+    ProcessingResult,
+    ProcessingTool,
 )
 from nlmaps_tools.process.processors import BuiltinProcessor
 
@@ -53,8 +53,8 @@ def processors() -> set[DummyProcessor]:
 
 
 @pytest.fixture
-def process_tool(processors) -> ProcessTool:
-    return ProcessTool(processors)
+def process_tool(processors) -> ProcessingTool:
+    return ProcessingTool(processors)
 
 
 def _get_processors_by_name(
@@ -67,11 +67,11 @@ def _get_processors_by_name(
     ["process_request", "expected_solutions_by_names"],
     [
         (
-                ProcessRequest(given={"A": "1"}, wanted={"E"}, processors=set()),
+                ProcessingRequest(given={"A": "1"}, wanted={"E"}, processors=set()),
                 [{"A-B", "B-E"}, {"A-B", "B-C", "B-D", "B/C/D-E"}],
         ),
         (
-                ProcessRequest(given={"A": "1", "F": "2"}, wanted={"E"}, processors=set()),
+                ProcessingRequest(given={"A": "1", "F": "2"}, wanted={"E"}, processors=set()),
                 [
                     {"A-B", "B-E"},
                     {"A-B", "B-C", "B-D", "B/C/D-E"},
@@ -80,11 +80,11 @@ def _get_processors_by_name(
                 ],
         ),
         (
-                ProcessRequest(given={"A": "1"}, wanted={"E", "B", "G"}, processors=set()),
+                ProcessingRequest(given={"A": "1"}, wanted={"E", "B", "G"}, processors=set()),
                 [{"A-B", "B-E", "E-G"}, {"A-B", "B-C", "B-D", "B/C/D-E", "E-G"}],
         ),
         (
-                ProcessRequest(given={"A": "1"}, wanted={"E", "C"}, processors=set()),
+                ProcessingRequest(given={"A": "1"}, wanted={"E", "C"}, processors=set()),
                 [{"A-B", "B-C", "B-E"}, {"A-B", "B-C", "B-D", "B/C/D-E"}],
         ),
     ],
@@ -100,7 +100,7 @@ def test_find_solutions(process_tool, process_request, expected_solutions_by_nam
 
 
 def test_process_request(process_tool):
-    request = ProcessRequest(given={"A": "1"}, wanted={"B"}, processors=set())
-    expected_result = ProcessResult(results={"B": "A-B(1)"})
+    request = ProcessingRequest(given={"A": "1"}, wanted={"B"}, processors=set())
+    expected_result = ProcessingResult(results={"B": "A-B(1)"})
     result = process_tool.process_request(request)
     assert result == expected_result

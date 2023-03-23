@@ -46,7 +46,7 @@ class BuiltinProcessor(ABC):
 
     def __repr__(self) -> str:
         return (
-            f"{type(self)}("
+            f"{self.__class__.__name__}("
             f"name={self.name!r}, "
             f"sources={self.sources!r}, "
             f"target={self.target!r}"

@@ -1,7 +1,5 @@
-import argparse
 from copy import deepcopy
 import logging
-import sys
 from typing import Optional, Any, Iterator
 
 from OSMPythonTools.nominatim import NominatimResult
@@ -9,7 +7,6 @@ from OSMPythonTools.nominatim import NominatimResult
 from nlmaps_tools.answer_mrl import (
     add_name_tags,
     canonicalize_nwr_features,
-    load_features,
     transform_features,
     nominatim_query,
     ENV,
@@ -162,32 +159,3 @@ def make_overpass_queries_from_features(
         return features, [area_0, area_1], [overpass_query_0, overpass_query_1]
     else:
         raise ValueError(f'Unsupported query_type {features["query_type"]}')
-
-
-def main(mrl, escaped=False):
-    logging.basicConfig(
-        level=logging.INFO,
-        stream=sys.stdout,
-    )
-    features = load_features(mrl, escaped=escaped)
-    logging.info(features)
-    overpass_qls = make_overpass_queries_from_features(features)
-    logging.info(overpass_qls)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(description="Answer an MRL")
-    parser.add_argument("mrl", help="MRL as string or MRL features as json string")
-    parser.add_argument(
-        "--escaped",
-        action="store_true",
-        default=False,
-        help="Whether the mrl is in escaped form. Default: False",
-    )
-    args = parser.parse_args()
-    return args
-
-
-if __name__ == "__main__":
-    ARGS = parse_args()
-    main(**vars(ARGS))

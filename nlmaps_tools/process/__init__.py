@@ -1,2 +1,2 @@
-from .models import ProcessingError, Processor, ProcessRequest, ProcessResult
-from .process_tool import ProcessTool
+from .models import ProcessingError, Processor, ProcessingRequest, ProcessingResult
+from .process_tool import ProcessingTool

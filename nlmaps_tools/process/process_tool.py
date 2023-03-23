@@ -2,7 +2,7 @@ from collections import defaultdict
 import logging
 from typing import Iterable, Union
 
-from .models import Processor, ProcessRequest, ProcessResult
+from .models import Processor, ProcessingRequest, ProcessingResult
 
 
 class SolutionFindingError(Exception):
@@ -64,24 +64,24 @@ def _build_target_to_processors(
     return target_to_processors
 
 
-class ProcessTool:
+class ProcessingTool:
     def __init__(self, processors: set[Processor]) -> None:
         self.processors = processors
         self.target_to_processors = _build_target_to_processors(self.processors)
 
-    def find_processor_chain(self, request: ProcessRequest) -> list[Processor]:
+    def find_processor_chain(self, request: ProcessingRequest) -> list[Processor]:
         solutions = self._find_solutions(request)
         solution = self._choose_solution(solutions)
         processor_chain = self._order_solution(set(request.given), solution)
         return processor_chain
 
-    def process_request(self, request: ProcessRequest) -> ProcessResult:
+    def process_request(self, request: ProcessingRequest) -> ProcessingResult:
         processor_chain = self.find_processor_chain(request)
         results = self._apply_processor_chain(request.given, processor_chain)
         results = {key: val for key, val in results.items() if key in request.wanted}
-        return ProcessResult(results=results)
+        return ProcessingResult(results=results)
 
-    def _find_solutions(self, request: ProcessRequest) -> list[set[Processor]]:
+    def _find_solutions(self, request: ProcessingRequest) -> list[set[Processor]]:
         solutions = _find_solutions(
             wanted=request.wanted,
             having=set(request.given),
@@ -119,10 +119,9 @@ class ProcessTool:
     def _apply_processor_chain(
         given: dict[str, str], processor_chain: list[Processor]
     ) -> dict[str, str]:
-        logging.info(f"Applying processor chain {processor_chain}")
-        print(f"Applying processor chain {processor_chain}")
+        logging.info(f"Applying processor chain {' -> '.join(str(p) for p in processor_chain)}.")
         for proc in processor_chain:
-            print(f"Applying processor {proc}")
+            logging.info(f"Applying processor {proc}.")
             given[proc.target] = proc(
                 {key: val for key, val in given.items() if key in proc.sources}
             )

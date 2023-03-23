@@ -11,9 +11,13 @@ from nlmaps_tools.answer_mrl import (
     chop_to_cardinal_direction,
     handle_around_topx,
     element_name,
-    geojson, latlong
+    geojson,
+    latlong,
 )
-from nlmaps_tools.features_to_overpass import Will2021FeaturesAfterNwrNameLookup, OSMArea
+from nlmaps_tools.features_to_overpass import (
+    Will2021FeaturesAfterNwrNameLookup,
+    OSMArea,
+)
 from nlmaps_tools.parse_mrl import Symbol
 
 GeoJSON = dict[str, Any]
@@ -65,22 +69,22 @@ def query_overpass(overpass_ql) -> OverpassResult:
 
 
 def apply_qtype(qtype, elements):
-    if qtype == Symbol('latlong'):
+    if qtype == Symbol("latlong"):
         return MapAnswer()
-    elif qtype == ('least', ('topx', Symbol('1'))):
-        text = 'Yes' if len(elements) > 0 else 'No'
+    elif qtype == ("least", ("topx", Symbol("1"))):
+        text = "Yes" if len(elements) > 0 else "No"
         return TextAnswer(text=text)
-    elif qtype == Symbol('count'):
+    elif qtype == Symbol("count"):
         return TextAnswer(text=str(len(elements)))
-    elif isinstance(qtype, tuple) and qtype[0] == 'findkey':
+    elif isinstance(qtype, tuple) and qtype[0] == "findkey":
         # TODO: Handle multiple keys
         key = qtype[1]
-        name = lambda elm: ('{} {}'.format(elm.type(), elm.id())
-                            if key == 'name' else element_name(elm))
-        values = ['{}: {}'.format(name(elm), str(elm.tag(key)))
-                  for elm in elements]
+        name = lambda elm: (
+            "{} {}".format(elm.type(), elm.id()) if key == "name" else element_name(elm)
+        )
+        values = ["{}: {}".format(name(elm), str(elm.tag(key))) for elm in elements]
         return ListAnswer(list=values)
-    raise ValueError(f'Unknown qtype: {qtype}')
+    raise ValueError(f"Unknown qtype: {qtype}")
 
 
 def extract_answer_from_simple_overpass_result(
@@ -90,14 +94,16 @@ def extract_answer_from_simple_overpass_result(
 ) -> MultiAnswerRawElements:
     elements = result.elements()
 
-    if (features['query_type'] == 'in_query'
-            and features.get('cardinal_direction')
-            and area):
-        card = features['cardinal_direction']
-        bbox = [float(coord) for coord in area['boundingbox']]
+    if (
+        features["query_type"] == "in_query"
+        and features.get("cardinal_direction")
+        and area
+    ):
+        card = features["cardinal_direction"]
+        bbox = [float(coord) for coord in area["boundingbox"]]
         elements = chop_to_cardinal_direction(elements, bbox, card)
 
-    if features['query_type'] == 'around_query':
+    if features["query_type"] == "around_query":
         centers, targets, target_id_min_dist = handle_around_topx(elements, features)
     else:
         centers = []
@@ -106,7 +112,7 @@ def extract_answer_from_simple_overpass_result(
     answer = MultiAnswerRawElements(answers=[], targets=targets)
     if centers:
         answer.centers = centers
-    if features['query_type'] == 'around_query' and features["query_type"] == "dist":
+    if features["query_type"] == "around_query" and features["query_type"] == "dist":
         targets_by_id = {target.id(): target for target in targets}
         for center, (target_id, min_dist) in zip(centers, target_id_min_dist):
             if target_id:
@@ -118,7 +124,7 @@ def extract_answer_from_simple_overpass_result(
                     )
                 )
     else:
-        answer.answers = [apply_qtype(qtype, targets) for qtype in features['qtype']]
+        answer.answers = [apply_qtype(qtype, targets) for qtype in features["qtype"]]
 
     return answer
 
@@ -130,8 +136,12 @@ def extract_answer_from_dist_overpass_result(
     result_1: OverpassResult,
     result_2: OverpassResult,
 ) -> MultiAnswerRawElements:
-    answer_1 = extract_answer_from_simple_overpass_result(features["sub"][0], area_1, result_1)
-    answer_2 = extract_answer_from_simple_overpass_result(features["sub"][1], area_2, result_2)
+    answer_1 = extract_answer_from_simple_overpass_result(
+        features["sub"][0], area_1, result_1
+    )
+    answer_2 = extract_answer_from_simple_overpass_result(
+        features["sub"][1], area_2, result_2
+    )
 
     center = answer_1.targets[0] if answer_1.targets else None
     target = answer_2.targets[0] if answer_2.targets else None
@@ -151,11 +161,11 @@ def extract_answer_from_dist_overpass_result(
         )
 
     if center:
-        error =  'No result for query 2.'
+        error = "No result for query 2."
     elif target:
-        error =  'No result for query 1.'
+        error = "No result for query 1."
     else:
-        error =  'No result, neither for query 1 nor for query 2.'
+        error = "No result, neither for query 1 nor for query 2."
     raise ValueError(error)
 
 
@@ -166,7 +176,9 @@ def extract_answer_from_overpass_results(
 ) -> MultiAnswer:
     assert len(areas) == len(results)
     if len(results) == 1:
-        answer = extract_answer_from_simple_overpass_result(features, areas[0], results[0])
+        answer = extract_answer_from_simple_overpass_result(
+            features, areas[0], results[0]
+        )
     elif len(results) == 2:
         answer = extract_answer_from_dist_overpass_result(
             features, areas[0], areas[1], results[0], results[1]

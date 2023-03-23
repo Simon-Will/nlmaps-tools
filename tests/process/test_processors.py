@@ -5,7 +5,7 @@ from OSMPythonTools.cachingStrategy import CachingStrategy, JSON
 
 from nlmaps_tools.answer_overpass import MultiAnswer, DistAnswer, MapAnswer, ListAnswer
 from nlmaps_tools.parse_mrl import Symbol
-from nlmaps_tools.process import ProcessTool, ProcessRequest, ProcessResult
+from nlmaps_tools.process import ProcessingTool, ProcessingRequest, ProcessingResult
 from nlmaps_tools.process.processors import PROCESSORS
 
 # These tests should be more fine-grained, but who has the time.
@@ -172,13 +172,13 @@ def nominatim_and_overpass_cache(monkeypatch):
 def test_most_common_processor_chain(
     nominatim_and_overpass_cache, lin, expected_features_after_nwr_name_lookup, expected_multi_answer
 ):
-    process_tool = ProcessTool(PROCESSORS)
-    request = ProcessRequest(
+    process_tool = ProcessingTool(PROCESSORS)
+    request = ProcessingRequest(
         given={"Will2021Lin": lin},
         wanted={"Will2021FeaturesAfterNwrNameLookup", "Will2021MultiAnswer"},
         processors=set(),
     )
-    expected_result = ProcessResult(
+    expected_result = ProcessingResult(
         results={
             "Will2021FeaturesAfterNwrNameLookup": expected_features_after_nwr_name_lookup,
             "Will2021MultiAnswer": expected_multi_answer,
