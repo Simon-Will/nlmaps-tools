@@ -5,7 +5,7 @@ from OSMPythonTools.cachingStrategy import CachingStrategy, JSON
 
 from nlmaps_tools.answer_overpass import MultiAnswer, DistAnswer, MapAnswer, ListAnswer
 from nlmaps_tools.parse_mrl import Symbol
-from nlmaps_tools.process import ProcessingTool, ProcessingRequest, ProcessingResult
+from nlmaps_tools.process import ProcessingTool, ProcessingRequest
 from nlmaps_tools.process.processors import PROCESSORS
 
 # These tests should be more fine-grained, but who has the time.
@@ -178,11 +178,15 @@ def test_most_common_processor_chain(
         wanted={"Will2021FeaturesAfterNwrNameLookup", "Will2021MultiAnswer"},
         processors=set(),
     )
-    expected_result = ProcessingResult(
-        results={
-            "Will2021FeaturesAfterNwrNameLookup": expected_features_after_nwr_name_lookup,
-            "Will2021MultiAnswer": expected_multi_answer,
-        }
-    )
+    expected_results = {
+        "Will2021FeaturesAfterNwrNameLookup": expected_features_after_nwr_name_lookup,
+        "Will2021MultiAnswer": expected_multi_answer,
+    }
     result = process_tool.process_request(request)
-    assert result == expected_result
+    result = process_tool.select_wanted_from_result(result, request)
+    assert result.results.keys() == expected_results.keys()
+    assert all(expected_results[target] == single_result.result for target, single_result in result.results.items())
+    assert all(isinstance(single_result.wallclock_seconds, float) for single_result in result.results.values())
+    assert result.wallclock_seconds > sum(
+        single_result.wallclock_seconds for single_result in result.results.values()
+    )

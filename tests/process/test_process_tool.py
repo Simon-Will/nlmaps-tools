@@ -9,6 +9,7 @@ from nlmaps_tools.process import (
     ProcessingResult,
     ProcessingTool,
 )
+from nlmaps_tools.process.models import SingleProcessorResult
 from nlmaps_tools.process.processors import BuiltinProcessor
 
 
@@ -101,6 +102,32 @@ def test_find_solutions(process_tool, process_request, expected_solutions_by_nam
 
 def test_process_request(process_tool):
     request = ProcessingRequest(given={"A": "1"}, wanted={"B"}, processors=set())
-    expected_result = ProcessingResult(results={"B": "A-B(1)"})
+    expected_result_key = "B"
+    expected_result_value = "A-B(1)"
+    expected_result_processor_name = "A-B"
+    max_result_time = 0.01  # Pretty randomly chosen.
     result = process_tool.process_request(request)
-    assert result == expected_result
+    assert list(result.results.keys()) == [expected_result_key]
+    assert result.results[expected_result_key].result == expected_result_value
+    assert result.results[expected_result_key].processor_name == expected_result_processor_name
+    assert result.results[expected_result_key].wallclock_seconds < max_result_time
+    assert result.wallclock_seconds > result.results[expected_result_key].wallclock_seconds
+
+
+def test_select_wanted_from_result(process_tool):
+    request = ProcessingRequest(given={"A": "1"}, wanted={"C"}, processors=set())
+    given_result = ProcessingResult(
+        results={
+            "B": SingleProcessorResult(result="A-B(1)", processor_name="A-B", wallclock_seconds=0.05),
+            "C": SingleProcessorResult(result="B-C(A-B(1))", processor_name="B-C", wallclock_seconds=0.05),
+        },
+        wallclock_seconds=0.11
+    )
+    expected_result = ProcessingResult(
+        results={
+            "C": SingleProcessorResult(result="B-C(A-B(1))", processor_name="B-C", wallclock_seconds=0.05),
+        },
+        wallclock_seconds=0.11
+    )
+    selected_result = process_tool.select_wanted_from_result(given_result, request)
+    assert selected_result == expected_result

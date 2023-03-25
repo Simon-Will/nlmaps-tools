@@ -1,8 +1,9 @@
 from collections import defaultdict
 import logging
-from typing import Iterable, Union
+import time
+from typing import Iterable, Union, Any
 
-from .models import Processor, ProcessingRequest, ProcessingResult
+from .models import Processor, ProcessingRequest, ProcessingResult, SingleProcessorResult
 
 
 class SolutionFindingError(Exception):
@@ -77,9 +78,15 @@ class ProcessingTool:
 
     def process_request(self, request: ProcessingRequest) -> ProcessingResult:
         processor_chain = self.find_processor_chain(request)
-        results = self._apply_processor_chain(request.given, processor_chain)
-        results = {key: val for key, val in results.items() if key in request.wanted}
-        return ProcessingResult(results=results)
+        result = self._apply_processor_chain(request.given, processor_chain)
+        return result
+
+    @staticmethod
+    def select_wanted_from_result(
+        result: ProcessingResult, request: ProcessingRequest
+    ) -> ProcessingResult:
+        wanted_results = {key: val for key, val in result.results.items() if key in request.wanted}
+        return ProcessingResult(results=wanted_results, wallclock_seconds=result.wallclock_seconds)
 
     def _find_solutions(self, request: ProcessingRequest) -> list[set[Processor]]:
         solutions = _find_solutions(
@@ -91,9 +98,9 @@ class ProcessingTool:
 
     @staticmethod
     def _choose_solution(solutions: list[set[Processor]]) -> set[Processor]:
-        # This choice pretty random and should be improved.
+        # This choice is pretty random and should be improved.
         # Ideas:
-        #  - Choose solutions with less processors.
+        #  - Choose solutions with fewer processors.
         #  - Attach penalties to processors and choose based on least penalty
         return solutions[0]
 
@@ -117,12 +124,20 @@ class ProcessingTool:
 
     @staticmethod
     def _apply_processor_chain(
-        given: dict[str, str], processor_chain: list[Processor]
-    ) -> dict[str, str]:
+        given: dict[str, Any], processor_chain: list[Processor]
+    ) -> ProcessingResult:
+        total_start = time.perf_counter()
         logging.info(f"Applying processor chain {' -> '.join(str(p) for p in processor_chain)}.")
+        results = {}
         for proc in processor_chain:
             logging.info(f"Applying processor {proc}.")
+            start = time.perf_counter()
             given[proc.target] = proc(
                 {key: val for key, val in given.items() if key in proc.sources}
             )
-        return given
+            results[proc.target] = SingleProcessorResult(
+                result=given[proc.target],
+                processor_name=proc.name,
+                wallclock_seconds=time.perf_counter() - start
+            )
+        return ProcessingResult(results=results, wallclock_seconds=time.perf_counter() - total_start)

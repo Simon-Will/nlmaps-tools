@@ -37,5 +37,12 @@ class ProcessingRequest(BaseModel):
         return v_set
 
 
+class SingleProcessorResult(BaseModel):
+    result: Any
+    processor_name: str
+    wallclock_seconds: float
+
+
 class ProcessingResult(BaseModel):
-    results: dict[str, Any]
+    results: dict[str, SingleProcessorResult]
+    wallclock_seconds: float
