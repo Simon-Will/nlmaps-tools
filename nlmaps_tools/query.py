@@ -5,7 +5,6 @@ from nlmaps_tools.generate_mrl import generate_mrl
 
 
 class Query:
-
     def __init__(self, features, mrl):
         self.features = features
         self.mrl = mrl
@@ -16,9 +15,9 @@ class Query:
         try:
             parseResult = grammar.parseMrl(mrl)
         except ParseException as e:
-            raise ValueError('Invalid MRL') from e
+            raise ValueError("Invalid MRL") from e
 
-        return cls(mrl=mrl, features=parseResult['features'])
+        return cls(mrl=mrl, features=parseResult["features"])
 
     @classmethod
     def from_features(cls, features):

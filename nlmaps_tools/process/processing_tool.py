@@ -3,7 +3,12 @@ import logging
 import time
 from typing import Iterable, Union, Any
 
-from .models import Processor, ProcessingRequest, ProcessingResult, SingleProcessorResult
+from .models import (
+    Processor,
+    ProcessingRequest,
+    ProcessingResult,
+    SingleProcessorResult,
+)
 
 
 class SolutionFindingError(Exception):
@@ -95,8 +100,12 @@ class ProcessingTool:
     def select_wanted_from_result(
         result: ProcessingResult, request: ProcessingRequest
     ) -> ProcessingResult:
-        wanted_results = {key: val for key, val in result.results.items() if key in request.wanted}
-        return ProcessingResult(results=wanted_results, wallclock_seconds=result.wallclock_seconds)
+        wanted_results = {
+            key: val for key, val in result.results.items() if key in request.wanted
+        }
+        return ProcessingResult(
+            results=wanted_results, wallclock_seconds=result.wallclock_seconds
+        )
 
     def _find_solutions(self, request: ProcessingRequest) -> list[set[Processor]]:
         solutions = _find_solutions(
@@ -137,7 +146,9 @@ class ProcessingTool:
         given: dict[str, Any], processor_chain: list[Processor]
     ) -> ProcessingResult:
         total_start = time.perf_counter()
-        logging.info(f"Applying processor chain {' -> '.join(str(p) for p in processor_chain)}.")
+        logging.info(
+            f"Applying processor chain {' -> '.join(str(p) for p in processor_chain)}."
+        )
         results = {}
         for proc in processor_chain:
             logging.info(f"Applying processor {proc}.")
@@ -148,6 +159,8 @@ class ProcessingTool:
             results[proc.target] = SingleProcessorResult(
                 result=given[proc.target],
                 processor_name=proc.name,
-                wallclock_seconds=time.perf_counter() - start
+                wallclock_seconds=time.perf_counter() - start,
             )
-        return ProcessingResult(results=results, wallclock_seconds=time.perf_counter() - total_start)
+        return ProcessingResult(
+            results=results, wallclock_seconds=time.perf_counter() - total_start
+        )

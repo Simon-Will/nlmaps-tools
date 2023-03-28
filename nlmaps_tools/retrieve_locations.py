@@ -5,10 +5,11 @@ import sys
 import jinja2
 import requests
 
-BoundingBox = namedtuple('BoundingBox',
-                         ['lat_start', 'lon_start', 'lat_end', 'lon_end'])
+BoundingBox = namedtuple(
+    "BoundingBox", ["lat_start", "lon_start", "lat_end", "lon_end"]
+)
 
-OVERPASS_URL = 'https://overpass-api.de/api/interpreter'
+OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
 DEFAULT_BOUNDING_BOXES = (
     BoundingBox(52, 7, 55, 10),  # Lower Saxony
@@ -27,7 +28,8 @@ DEFAULT_BOUNDING_BOXES = (
     BoundingBox(-25, -48, -23, -46),  # São Paulo
 )
 
-AREA_TEMPLATE = jinja2.Template("""
+AREA_TEMPLATE = jinja2.Template(
+    """
 [bbox:{{ bbox.lat_start }},{{ bbox.lon_start }},{{ bbox.lat_end }},{{ bbox.lon_end }}]
 [out:json];
 (
@@ -35,9 +37,11 @@ AREA_TEMPLATE = jinja2.Template("""
   rel["admin_level"]["name"];
 );
 out tags;
-""")
+"""
+)
 
-POI_TEMPLATE = jinja2.Template("""
+POI_TEMPLATE = jinja2.Template(
+    """
 [bbox:{{ bbox.lat_start }},{{ bbox.lon_start }},{{ bbox.lat_end }},{{ bbox.lon_end }}]
 [out:json];
 (
@@ -47,41 +51,45 @@ POI_TEMPLATE = jinja2.Template("""
   nwr["tourism"]["name"];
 );
 out tags;
-""")
+"""
+)
 
 
-def get_names(template=AREA_TEMPLATE, bounding_boxes=DEFAULT_BOUNDING_BOXES,
-              url=OVERPASS_URL):
+def get_names(
+    template=AREA_TEMPLATE, bounding_boxes=DEFAULT_BOUNDING_BOXES, url=OVERPASS_URL
+):
     areas = set()
     for bbox in bounding_boxes:
         query = template.render(bbox=bbox)
         resp = requests.post(url, data=query)
         if resp.status_code == 200:
             j = resp.json()
-            areas.update({element['tags']['name'] for element in j['elements']})
+            areas.update({element["tags"]["name"] for element in j["elements"]})
         else:
-            print('Error: {resp.status_code}\n{resp.text}'.format(resp=resp),
-                  file=sys.stderr)
+            print(
+                "Error: {resp.status_code}\n{resp.text}".format(resp=resp),
+                file=sys.stderr,
+            )
 
     return areas
 
 
 def main(action):
-    if action == 'areas':
+    if action == "areas":
         for area in sorted(get_names(template=AREA_TEMPLATE)):
             print(area)
-    elif action == 'pois':
+    elif action == "pois":
         for poi in sorted(get_names(template=POI_TEMPLATE)):
             print(poi)
 
 
 def parse_args():
-    description = 'Retrieve area or POI names from OpenStreetMap'
+    description = "Retrieve area or POI names from OpenStreetMap"
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('action', choices=['areas', 'pois'])
+    parser.add_argument("action", choices=["areas", "pois"])
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ARGS = parse_args()
     main(**vars(ARGS))

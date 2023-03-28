@@ -7,37 +7,34 @@ import re
 import requests
 
 # This is supposed to select older versions, but I didn’t get it to work.
-#DEFAULT_URL = 'https://wiki.openstreetmap.org/w/index.php?title=Special:Export&pages=Nominatim%2FSpecial_Phrases%2FEN&limit=1&offset=2020-10-15T13:18:00Z&curonly=&action=submit'
+# DEFAULT_URL = 'https://wiki.openstreetmap.org/w/index.php?title=Special:Export&pages=Nominatim%2FSpecial_Phrases%2FEN&limit=1&offset=2020-10-15T13:18:00Z&curonly=&action=submit'
 
-DEFAULT_URL = 'https://wiki.openstreetmap.org/wiki/Special:Export/Nominatim/Special_Phrases/EN'
+DEFAULT_URL = (
+    "https://wiki.openstreetmap.org/wiki/Special:Export/Nominatim/Special_Phrases/EN"
+)
 
-PhraseTableLine = namedtuple('PhraseTableLine', ['phrase', 'key', 'value', 'operator', 'plural'])
+PhraseTableLine = namedtuple(
+    "PhraseTableLine", ["phrase", "key", "value", "operator", "plural"]
+)
 
-ThingTableLine = namedtuple('ThingTableLine', ['singular', 'plural', 'tags'])
+ThingTableLine = namedtuple("ThingTableLine", ["singular", "plural", "tags"])
 
 
 def is_plural_of(sg, pl_cand):
     return (
         pl_cand == sg
-        or pl_cand == sg + 's'
-        or pl_cand == sg + 'es'
-        or (
-            pl_cand.endswith('a') and sg.endswith('um')
-            and pl_cand[:-1] == sg[:-2]
-        ) or (
-            pl_cand.endswith('ys') and sg.endswith('y')
-            and pl_cand[:-2] == sg[:-1]
-        ) or (
-            pl_cand.endswith('ies') and sg.endswith('y')
-            and pl_cand[:-3] == sg[:-1]
-        )
+        or pl_cand == sg + "s"
+        or pl_cand == sg + "es"
+        or (pl_cand.endswith("a") and sg.endswith("um") and pl_cand[:-1] == sg[:-2])
+        or (pl_cand.endswith("ys") and sg.endswith("y") and pl_cand[:-2] == sg[:-1])
+        or (pl_cand.endswith("ies") and sg.endswith("y") and pl_cand[:-3] == sg[:-1])
     )
 
 
 def init_thing_table(phrase_table_lines):
     table = []
     for ptl in phrase_table_lines:
-        if ptl.operator == '-':
+        if ptl.operator == "-":
             tag = (ptl.key, ptl.value)
             if ptl.plural:
                 ttl = ThingTableLine(
@@ -64,7 +61,7 @@ def merge_lines(table, criterion):
                 table[i] = ThingTableLine(
                     singular=l1.singular.union(l2.singular),
                     plural=l1.plural.union(l2.plural),
-                    tags=l1.tags.union(l2.tags)
+                    tags=l1.tags.union(l2.tags),
                 )
                 table[j] = None
 
@@ -77,8 +74,7 @@ def make_thing_table(phrase_table_lines):
     table = init_thing_table(phrase_table_lines)
 
     table = merge_lines(
-        table,
-        criterion=lambda line1, line2: line1.tags.intersection(line2.tags)
+        table, criterion=lambda line1, line2: line1.tags.intersection(line2.tags)
     )
 
     def has_singular_plural_match(line1, line2):
@@ -109,36 +105,35 @@ def pre_edit_phrase_table_lines(phrase_table_lines):
     lines = []
     for ptl in phrase_table_lines:
         # Phrase food merges restaurants and fast food, delete for now.
-        if ptl.phrase == 'food':
+        if ptl.phrase == "food":
             continue
 
         # This merges wine shop and off license, delete for now.
-        if ptl.key == 'shop' and ptl.value == 'wine':
+        if ptl.key == "shop" and ptl.value == "wine":
             continue
 
         # This merges shop=convenience|deli|supermarket, delete for now.
-        if ptl.phrase in ['food shop', 'food store',
-                          'food shops', 'food stores']:
+        if ptl.phrase in ["food shop", "food store", "food shops", "food stores"]:
             continue
 
         # This merges amenity=drinking_water and natural=water delete for now.
-        if ptl.phrase == 'water' and ptl.value == 'drinking_water':
+        if ptl.phrase == "water" and ptl.value == "drinking_water":
             continue
 
         # Pubs are not bars, and vice versa.
-        if ptl.key == 'amenity' and ptl.value == 'bar':
-            if 'pub' in ptl.phrase:
+        if ptl.key == "amenity" and ptl.value == "bar":
+            if "pub" in ptl.phrase:
                 continue
-        if ptl.key == 'amenity' and ptl.value == 'pub':
-            if 'bar' in ptl.phrase:
+        if ptl.key == "amenity" and ptl.value == "pub":
+            if "bar" in ptl.phrase:
                 continue
 
         # Place of worship is false in Special Phrases.
-        if ptl.key == 'amenity' and ptl.value == 'place_of_worship':
+        if ptl.key == "amenity" and ptl.value == "place_of_worship":
             continue
 
         # Building tags are strange for this.
-        if ptl.key == 'building' and ptl.value in ['hotel', 'stadium']:
+        if ptl.key == "building" and ptl.value in ["hotel", "stadium"]:
             continue
 
         lines.append(ptl)
@@ -158,93 +153,103 @@ def tags_to_nwr(tags):
         if len(vals) == 1:
             tags.append((key, vals.pop()))
         else:
-            tags.append((key, ('or', *sorted(vals))))
+            tags.append((key, ("or", *sorted(vals))))
 
     # Form a suitable nwr value out of the tags.
     if len(tags) == 1:
         tags = [tags.pop()]
     elif len(tags) > 1:
-        tags = [('or', *sorted(tags))]
+        tags = [("or", *sorted(tags))]
     else:
-        raise ValueError('Empty tags: {}'.format(tags))
+        raise ValueError("Empty tags: {}".format(tags))
     return tags
 
 
 def post_edit_thing_table(table):
     for ttl in table:
-        ttl.tags.discard(('building', 'hotel'))
-        ttl.tags.discard(('building', 'stadium'))
+        ttl.tags.discard(("building", "hotel"))
+        ttl.tags.discard(("building", "stadium"))
 
-    table.append(ThingTableLine(
-        singular={'food'}, plural={'food'},
-        tags={('amenity', 'restaurant'), ('amenity', 'fast_food')}
-    ))
+    table.append(
+        ThingTableLine(
+            singular={"food"},
+            plural={"food"},
+            tags={("amenity", "restaurant"), ("amenity", "fast_food")},
+        )
+    )
 
-    table.append(ThingTableLine(
-        singular={'food shop', 'food store'},
-        plural={'food shops', 'food store'},
-        tags={('shop', 'convenience'), ('shop', 'deli'),
-              ('shop', 'supermarket')}
-    ))
+    table.append(
+        ThingTableLine(
+            singular={"food shop", "food store"},
+            plural={"food shops", "food store"},
+            tags={("shop", "convenience"), ("shop", "deli"), ("shop", "supermarket")},
+        )
+    )
 
-    table.append(ThingTableLine(
-        singular={'wine shop'}, plural={'wine shops'}, tags={('shop', 'wine')}
-    ))
+    table.append(
+        ThingTableLine(
+            singular={"wine shop"}, plural={"wine shops"}, tags={("shop", "wine")}
+        )
+    )
 
-    table.append(ThingTableLine(
-        singular={'place of worship'}, plural={'places of worship'},
-        tags={('amenity', 'place_of_worship')}
-    ))
-
+    table.append(
+        ThingTableLine(
+            singular={"place of worship"},
+            plural={"places of worship"},
+            tags={("amenity", "place_of_worship")},
+        )
+    )
 
     for i, ttl in enumerate(table):
         # Asking for off license also yields wine shop, but not vice versa.
-        if 'off license' in ttl.singular:
-            ttl.tags.add(('shop', 'wine'))
+        if "off license" in ttl.singular:
+            ttl.tags.add(("shop", "wine"))
 
-        if 'water' in ttl.singular:
-            ttl.tags.add(('amenity', 'drinking_water'))
-            ttl.tags.add(('drinking_water', 'yes'))
+        if "water" in ttl.singular:
+            ttl.tags.add(("amenity", "drinking_water"))
+            ttl.tags.add(("drinking_water", "yes"))
 
         tags = tags_to_nwr(ttl.tags)
 
         # Discard building=church etc. because these tags are more sensible.
         # They are not in special phrases because double tags are not supported
         # there.
-        if 'church' in ttl.singular:
-            tags = [('amenity', 'place_of_worship'), ('religion', 'christian')]
-        elif 'mosque' in ttl.singular:
-            tags = [('amenity', 'place_of_worship'), ('religion', 'muslim')]
-        elif 'synagogue' in ttl.singular:
-            tags = [('amenity', 'place_of_worship'), ('religion', 'jewish')]
+        if "church" in ttl.singular:
+            tags = [("amenity", "place_of_worship"), ("religion", "christian")]
+        elif "mosque" in ttl.singular:
+            tags = [("amenity", "place_of_worship"), ("religion", "muslim")]
+        elif "synagogue" in ttl.singular:
+            tags = [("amenity", "place_of_worship"), ("religion", "jewish")]
 
-        table[i] = ThingTableLine(
-            singular=ttl.singular, plural=ttl.plural, tags=tags
+        table[i] = ThingTableLine(singular=ttl.singular, plural=ttl.plural, tags=tags)
+
+    for denomination in ["anglican", "catholic", "orthodox", "protestant"]:
+        table.append(
+            ThingTableLine(
+                singular={denomination + " church"},
+                plural={denomination + " churchs", denomination + " churches"},
+                tags=[("amenity", "place_of_worship"), ("denomination", denomination)],
+            )
         )
-
-    for denomination in ['anglican', 'catholic', 'orthodox', 'protestant']:
-        table.append(ThingTableLine(
-            singular={denomination + ' church'},
-            plural={denomination + ' churchs', denomination + ' churches'},
-            tags=[('amenity', 'place_of_worship'), ('denomination', denomination)]
-        ))
 
     return table
 
 
 def get_phrase_table_lines(wiki_page: str):
-    line_regex = r'^\|(?P<phrase>[^|]+)\|\|(?P<key>[^|]+)\|\|(?P<value>[^|]+)\|\|(?P<operator>[^|]+)\|\|(?P<plural>[ YN-]+)$'
+    line_regex = r"^\|(?P<phrase>[^|]+)\|\|(?P<key>[^|]+)\|\|(?P<value>[^|]+)\|\|(?P<operator>[^|]+)\|\|(?P<plural>[ YN-]+)$"
     phrase_table_lines = []
-    for line in wiki_page.split('\n'):
+    for line in wiki_page.split("\n"):
         m = re.match(line_regex, line)
         if m:
-            phrase_table_lines.append(PhraseTableLine(
-                phrase=m.group('phrase').strip().lower(),
-                key=m.group('key').strip(),
-                value=m.group('value').strip(),
-                operator=m.group('operator').strip(),
-                plural=m.group('plural').strip() == 'Y',
-            ))
+            phrase_table_lines.append(
+                PhraseTableLine(
+                    phrase=m.group("phrase").strip().lower(),
+                    key=m.group("key").strip(),
+                    value=m.group("value").strip(),
+                    operator=m.group("operator").strip(),
+                    plural=m.group("plural").strip() == "Y",
+                )
+            )
     return phrase_table_lines
 
 
@@ -257,10 +262,11 @@ def get_wiki_page(file=None, url=DEFAULT_URL):
         content = resp.text
     return content
 
+
 def get_phrase_to_tags(phrase_table_lines):
     phrase_to_tags = defaultdict(set)
     for ptl in phrase_table_lines:
-        tag = '{}={}'.format(ptl.key, ptl.value)
+        tag = "{}={}".format(ptl.key, ptl.value)
         phrase_to_tags[ptl.phrase].add(tag)
     return phrase_to_tags
 
@@ -268,9 +274,7 @@ def get_phrase_to_tags(phrase_table_lines):
 def action_table(file=None, url=DEFAULT_URL):
     wiki_page = get_wiki_page(file, url)
     phrase_table_lines = get_phrase_table_lines(wiki_page)
-    table = make_thing_table(
-        pre_edit_phrase_table_lines(phrase_table_lines)
-    )
+    table = make_thing_table(pre_edit_phrase_table_lines(phrase_table_lines))
     table = post_edit_thing_table(table)
     return table
 
@@ -295,27 +299,28 @@ def action_tags(file=None, url=DEFAULT_URL):
 
 
 def main(action, file=None, url=DEFAULT_URL):
-    if action == 'table':
+    if action == "table":
         table = action_table(file, url)
         for ttl in table:
             print(
-                '{singular} | {plural} | {tags}'
-                .format(
-                    singular=', '.join(sorted(ttl.singular)),
-                    plural=', '.join(sorted(ttl.plural)),
+                "{singular} | {plural} | {tags}".format(
+                    singular=", ".join(sorted(ttl.singular)),
+                    plural=", ".join(sorted(ttl.plural)),
                     tags=ttl.tags
-                    #tags=', '.join(sorted('{}={}'.format(key, val)
+                    # tags=', '.join(sorted('{}={}'.format(key, val)
                     #                      for key, val in ttl.tags)),
                 )
             )
 
-    elif action == 'duplicates':
+    elif action == "duplicates":
         tags_to_phrases = action_duplicates(file, url)
         for tags, phrases in tags_to_phrases.items():
-            print('{}: {}'.format(
-                ', '.join(tags),
-                ', '.join(phrases),
-            ))
+            print(
+                "{}: {}".format(
+                    ", ".join(tags),
+                    ", ".join(phrases),
+                )
+            )
 
     else:
         all_tags = action_tags(file, url)
@@ -325,13 +330,13 @@ def main(action, file=None, url=DEFAULT_URL):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['tags', 'duplicates', 'table'])
-    parser.add_argument('--url', '-u', default=DEFAULT_URL)
-    parser.add_argument('--file', '-f')
+    parser.add_argument("action", choices=["tags", "duplicates", "table"])
+    parser.add_argument("--url", "-u", default=DEFAULT_URL)
+    parser.add_argument("--file", "-f")
     args = parser.parse_args()
     return args
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ARGS = parse_args()
     main(**vars(ARGS))

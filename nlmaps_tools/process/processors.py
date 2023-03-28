@@ -4,7 +4,10 @@ from typing import Any, Optional, Iterable
 from OSMPythonTools.overpass import OverpassResult
 
 from nlmaps_tools.answer_mrl import OVERPASS
-from nlmaps_tools.answer_overpass import MultiAnswer, extract_answer_from_overpass_results
+from nlmaps_tools.answer_overpass import (
+    MultiAnswer,
+    extract_answer_from_overpass_results,
+)
 from nlmaps_tools.features_to_overpass import (
     make_overpass_queries_from_features,
     OSMArea,
@@ -19,10 +22,7 @@ from .models import ProcessingError
 
 class BuiltinProcessor(ABC):
     def __init__(
-        self,
-        sources: Iterable[str],
-        target: str,
-        name: Optional[str] = None
+        self, sources: Iterable[str], target: str, name: Optional[str] = None
     ) -> None:
         self.sources = frozenset(sources)
         self.target = target
@@ -107,14 +107,18 @@ class OverpassQueryConstructor(BuiltinProcessor):
 
     def __call__(
         self, given: dict[str, Any]
-    ) -> tuple[Will2021FeaturesAfterNwrNameLookup, list[Optional[OSMArea]], list[OverpassQuery]]:
+    ) -> tuple[
+        Will2021FeaturesAfterNwrNameLookup, list[Optional[OSMArea]], list[OverpassQuery]
+    ]:
         features = given[self.source]
         return make_overpass_queries_from_features(features)
 
 
 class Will2021PostFeaturesExtractor(BuiltinProcessor):
     def __init__(self):
-        self.source = "_Will2021FeaturesAfterNwrNameLookup_OSMAreaList_OverpassQueryList"
+        self.source = (
+            "_Will2021FeaturesAfterNwrNameLookup_OSMAreaList_OverpassQueryList"
+        )
         target = "Will2021FeaturesAfterNwrNameLookup"
         super().__init__(sources=[self.source], target=target)
 
@@ -125,7 +129,9 @@ class Will2021PostFeaturesExtractor(BuiltinProcessor):
 
 class OSMAreasExtractor(BuiltinProcessor):
     def __init__(self):
-        self.source = "_Will2021FeaturesAfterNwrNameLookup_OSMAreaList_OverpassQueryList"
+        self.source = (
+            "_Will2021FeaturesAfterNwrNameLookup_OSMAreaList_OverpassQueryList"
+        )
         target = "OSMAreaList"
         super().__init__(sources=[self.source], target=target)
 
@@ -136,7 +142,9 @@ class OSMAreasExtractor(BuiltinProcessor):
 
 class OverpassQueriesExtractor(BuiltinProcessor):
     def __init__(self):
-        self.source = "_Will2021FeaturesAfterNwrNameLookup_OSMAreaList_OverpassQueryList"
+        self.source = (
+            "_Will2021FeaturesAfterNwrNameLookup_OSMAreaList_OverpassQueryList"
+        )
         target = "OverpassQueryList"
         super().__init__(sources=[self.source], target=target)
 
@@ -160,9 +168,11 @@ class OverpassQueriesExecutor(BuiltinProcessor):
 class OverpassAnswerExtractor(BuiltinProcessor):
     def __init__(self):
         sources = [
-            "Will2021FeaturesAfterNwrNameLookup", "OSMAreaList", "OverpassResultList"
+            "Will2021FeaturesAfterNwrNameLookup",
+            "OSMAreaList",
+            "OverpassResultList",
         ]
-        target= "Will2021MultiAnswer"
+        target = "Will2021MultiAnswer"
         super().__init__(sources=sources, target=target)
 
     def __call__(self, given: dict[str, Any]) -> MultiAnswer:
@@ -170,9 +180,7 @@ class OverpassAnswerExtractor(BuiltinProcessor):
         areas = given["OSMAreaList"]
         results = given["OverpassResultList"]
         multi_answer = extract_answer_from_overpass_results(
-            features=features,
-            areas=areas,
-            results=results
+            features=features, areas=areas, results=results
         )
         return multi_answer
 
