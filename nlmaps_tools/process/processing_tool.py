@@ -14,6 +14,7 @@ def _find_solutions(
     wanted: Union[set[str], frozenset[str]],
     having: set[str],
     target_to_processors: dict[str, set[Processor]],
+    targets_causing_cycles: set[str] = frozenset(),
     depth: int = 0,
 ) -> list[set[Processor]]:
     p = (str(depth) + " " * (2 * depth - 1)) if depth else ""
@@ -33,6 +34,14 @@ def _find_solutions(
 
             for proc in target_to_processors.get(target, []):
                 logging.debug(f"{p}Checking for proc {proc}")
+                if proc.sources.intersection(targets_causing_cycles):
+                    # Using this processor would create a cycle.
+                    logging.debug(
+                        f"{p}Detected cycle if using proc {proc}."
+                        f" Targets causing cycles: {targets_causing_cycles}"
+                    )
+                    continue
+
                 if proc.sources.issubset(solution_having):
                     subsequent_partial_solutions = [set()]
                 else:
@@ -43,6 +52,7 @@ def _find_solutions(
                         target_to_processors={
                             t: p for t, p in target_to_processors.items() if t != target
                         },
+                        targets_causing_cycles=targets_causing_cycles | {target},
                         depth=depth + 1,
                     )
 

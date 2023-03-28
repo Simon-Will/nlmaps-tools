@@ -50,6 +50,7 @@ def processors() -> set[DummyProcessor]:
         DummyProcessor(["B", "C", "D"], "E"),
         DummyProcessor(["E"], "G"),
         DummyProcessor(["A", "F"], "B"),
+        DummyProcessor(["0"], "A"),
     }
 
 
@@ -87,6 +88,10 @@ def _get_processors_by_name(
         (
                 ProcessingRequest(given={"A": "1"}, wanted={"E", "C"}, processors=set()),
                 [{"A-B", "B-C", "B-E"}, {"A-B", "B-C", "B-D", "B/C/D-E"}],
+        ),
+        (
+                ProcessingRequest(given={"0": "1"}, wanted={"B"}, processors=set()),
+                [{"0-A", "A-B"}],
         ),
     ],
 )
