@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nlmaps-tools"
-version = "0.0.2"
+version = "0.0.3"
 description = ""
 authors = ["Simon Will <gorgor@gorgor.de>"]
 readme = "README.md"
