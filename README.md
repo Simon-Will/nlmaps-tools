@@ -11,6 +11,6 @@ executing `python3 -m nlmaps_tools.process`.
 
 ```
 python3 -m nlmaps_tools.process \
-    --wanted MultiAnswer --wanted Will2021Features \
-    --given "Will2021Lin=query(area(keyval('name','Paris')),nwr(keyval('amenity','bar')),qtype(latlong))"
+    --wanted Will2021MultiAnswer --wanted Will2021Features \
+    --given "Will2021MRL=query(area(keyval('name','Paris')),nwr(keyval('amenity','library')),qtype(latlong))"
 ```
