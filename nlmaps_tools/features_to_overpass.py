@@ -145,24 +145,28 @@ def make_overpass_queries_from_features(
 ) -> tuple[
     Will2021FeaturesAfterNwrNameLookup, list[Optional[OSMArea]], list[OverpassQuery]
 ]:
-    if (
-        features["query_type"] in ["around_query", "in_query"]
-        or features["query_type"] == "dist"
-        and len(features["sub"]) == 1
-    ):
+    if features["query_type"] in ["around_query", "in_query"]:
         features, area, overpass_query = make_overpass_query_from_simple_features(
             features
         )
         return features, [area], [overpass_query]
-    elif features["query_type"] == "dist" and len(features["sub"]) == 2:
-        features_0, area_0, overpass_query_0 = make_overpass_query_from_simple_features(
+
+    if features["query_type"] == "dist" and len(features["sub"]) == 1:
+        sub_features, area, overpass_query = make_overpass_query_from_simple_features(
             features["sub"][0]
         )
-        features_1, area_1, overpass_query_1 = make_overpass_query_from_simple_features(
+        features["sub"][0] = sub_features
+        return features, [area], [overpass_query]
+
+    if features["query_type"] == "dist" and len(features["sub"]) == 2:
+        sub_features_0, area_0, overpass_query_0 = make_overpass_query_from_simple_features(
+            features["sub"][0]
+        )
+        sub_features_1, area_1, overpass_query_1 = make_overpass_query_from_simple_features(
             features["sub"][1]
         )
-        features["sub"][0] = features_0
-        features["sub"][1] = features_1
+        features["sub"][0] = sub_features_0
+        features["sub"][1] = sub_features_1
         return features, [area_0, area_1], [overpass_query_0, overpass_query_1]
-    else:
-        raise ValueError(f'Unsupported query_type {features["query_type"]}')
+
+    raise ValueError(f'Unsupported query_type {features["query_type"]}')

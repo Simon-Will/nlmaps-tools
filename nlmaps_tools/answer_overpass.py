@@ -94,17 +94,23 @@ def extract_answer_from_simple_overpass_result(
 ) -> MultiAnswerRawElements:
     elements = result.elements()
 
+    if features["query_type"] == "dist":
+        assert len(features["sub"]) == 1
+        simple_features = features["sub"][0]
+    else:
+        simple_features = features
+
     if (
-        features["query_type"] == "in_query"
-        and features.get("cardinal_direction")
+        simple_features["query_type"] == "in_query"
+        and simple_features.get("cardinal_direction")
         and area
     ):
-        card = features["cardinal_direction"]
+        card = simple_features["cardinal_direction"]
         bbox = [float(coord) for coord in area["boundingbox"]]
         elements = chop_to_cardinal_direction(elements, bbox, card)
 
-    if features["query_type"] == "around_query":
-        centers, targets, target_id_min_dist = handle_around_topx(elements, features)
+    if simple_features["query_type"] == "around_query":
+        centers, targets, target_id_min_dist = handle_around_topx(elements, simple_features)
     else:
         centers = []
         targets = elements
@@ -112,7 +118,7 @@ def extract_answer_from_simple_overpass_result(
     answer = MultiAnswerRawElements(answers=[], targets=targets)
     if centers:
         answer.centers = centers
-    if features["query_type"] == "around_query" and features["query_type"] == "dist":
+    if simple_features["query_type"] == "around_query" and features["query_type"] == "dist":
         targets_by_id = {target.id(): target for target in targets}
         for center, (target_id, min_dist) in zip(centers, target_id_min_dist):
             if target_id:
@@ -124,12 +130,12 @@ def extract_answer_from_simple_overpass_result(
                     )
                 )
     else:
-        answer.answers = [apply_qtype(qtype, targets) for qtype in features["qtype"]]
+        answer.answers = [apply_qtype(qtype, targets) for qtype in simple_features["qtype"]]
 
     return answer
 
 
-def extract_answer_from_dist_overpass_result(
+def extract_answer_from_dist_between_overpass_result(
     features: Will2021FeaturesAfterNwrNameLookup,
     area_1: Optional[OSMArea],
     area_2: Optional[OSMArea],
@@ -180,7 +186,7 @@ def extract_answer_from_overpass_results(
             features, areas[0], results[0]
         )
     elif len(results) == 2:
-        answer = extract_answer_from_dist_overpass_result(
+        answer = extract_answer_from_dist_between_overpass_result(
             features, areas[0], areas[1], results[0], results[1]
         )
     else:

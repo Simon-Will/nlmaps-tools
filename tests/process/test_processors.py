@@ -167,6 +167,23 @@ def nominatim_and_overpass_cache(monkeypatch):
                 },
             ),
         ),
+        (
+            "dist@1 query@2 around@4 center@1 nwr@1 keyval@2 name@0 Aston€Design@s search@1 nwr@1 keyval@2 amenity@0 library@s maxdist@1 DIST_INTOWN@0 topx@1 1@0 qtype@1 latlong@0",
+            {
+                "sub": [
+                    {
+                        "center_nwr": [("node", 6173229609)],
+                        "target_nwr": (("amenity", "library"),),
+                        "maxdist": Symbol("DIST_INTOWN"),
+                        "around_topx": Symbol("1"),
+                        "query_type": "around_query",
+                        "qtype": (Symbol("latlong"),),
+                    },
+                ],
+                "query_type": "dist",
+            },
+            MultiAnswer(answers=[DistAnswer(type='dist', dist=0.08982173981564252, target=(591360686, 'Newport Pagnell Library'), center=(6173229609, 'Aston Design'))], targets={'type': 'FeatureCollection', 'features': [{'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.720658, 52.0862578]}, 'properties': {'popupContent': '<b>Newport Pagnell Library</b><br>lat: None lon: None<br>amenity: library<br>building: yes<br>name: Newport Pagnell Library<br>wikidata: Q55183712'}}]}, centers={'type': 'FeatureCollection', 'features': [{'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [-0.7219648, 52.0863175]}, 'properties': {'popupContent': '<b>Aston Design</b><br>lat: 52.0863175 lon: -0.7219648<br>name: Aston Design<br>shop: kitchen'}}]})
+        )
     ],
 )
 def test_most_common_processor_chain(
